@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls sounds attributes. -->
+<!-- volume: Can be set 0 to 1, will scale with default volume -->
+
+<sounds>
+    <sounds type="Volume">
+        <bgMusicPath>0.7</bgMusicPath>
+        <pickUpSound>1</pickUpSound>
+        <powerUpSound>1</powerUpSound>
+        <paintSpraySound>1</paintSpraySound>
+		<enemySpaceship1>1</enemySpaceship1>
+        <loseSound>1</loseSound>
+        <winSound>1</winSound>
+        <lifeLostSound>1</lifeLostSound>
+		<portalEnter>1</portalEnter>
+        <portalExit>1</portalExit>
+        <portalLoop>1</portalLoop>
+        <shieldSound>1</shieldSound>
+    </sounds>
+</sounds>

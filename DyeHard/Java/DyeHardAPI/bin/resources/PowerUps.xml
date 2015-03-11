@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls power up attributes. -->
+
+<!-- duration: The amount of time in seconds a power up remains
+active. -->
+<!-- magnitude: Measures how potent a power up is. For example, a
+higher magnitude for the gravity power up will increase the downward
+force on Dye. Not all power ups have a magnitude. -->
+
+<powerUps>
+    <!-- These are attributes shared between all power ups. -->
+    <!-- Changing any of these attributes will change them for 
+    all power ups. -->
+    <sharedAttributes type="Shared">
+        <width>5.1</width>
+		<height>3.9</height>
+		<speed>0.3</speed>
+    </sharedAttributes>
+	
+    <powerUp type="GHOST">
+        <duration>6</duration>
+    </powerUp>
+    <powerUp type="GRAVITY">
+        <duration>2</duration>
+        <magnitude>1.5</magnitude>
+    </powerUp>
+    <powerUp type="INVINCIBILITY">
+        <duration>3.5</duration>
+    </powerUp>
+    <powerUp type="MAGNETISM">
+        <duration>5</duration>
+        <magnitude>25</magnitude>
+    </powerUp>
+    <powerUp type="REPEL">
+        <duration>5</duration>
+        <magnitude>25</magnitude>
+    </powerUp>
+    <powerUp type="OVERLOAD">
+        <duration>5</duration>
+    </powerUp>
+    <powerUp type="SLOWDOWN">
+        <duration>7</duration>
+        <magnitude>0.5</magnitude>
+    </powerUp>
+    <powerUp type="SPEEDUP">
+        <duration>3</duration>
+        <magnitude>1.75</magnitude>
+    </powerUp>
+    <powerUp type="UNARMED">
+        <duration>3</duration>
+    </powerUp>
+</powerUps>

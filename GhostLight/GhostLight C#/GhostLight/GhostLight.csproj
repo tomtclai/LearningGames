@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81A3298D-CAB4-49F8-B7A0-5B5FDED6EA35}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GhostLight</RootNamespace>
+    <AssemblyName>GhostLight</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GhostLight\GhostLight\GhostEngine\BaseCode.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\BaseEnemy.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\ButtonAccess.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Cat.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\ChangeGameStateButton.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\EnemySet.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\EnemySoundManager.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\EnemySubSet.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\EnemySubSetNode.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Frankenstein.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Ghost.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\GhostFinder.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\LevelButton.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Life.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\LightBeam.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\LightButton.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\MouseInfo.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Mummy.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Player.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\PowerBar.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Pumpkin.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Representative.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Spider.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\StateChange.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Vampire.cs" />
+    <Compile Include="GhostLight\GhostLight\GhostEngine\Zombie.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\FlashLight.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\GameState.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\GhostFinderInterface.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\InteractableObject.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\MouseState.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\ObjectSet.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\OnScreenButtons.cs" />
+    <Compile Include="GhostLight\GhostLight\Interface\PrimitiveSet.cs" />
+    <Compile Include="GhostLight\MenueSystem\Button.cs" />
+    <Compile Include="GhostLight\MenueSystem\Label.cs" />
+    <Compile Include="GhostLight\MenueSystem\LabeledBar.cs" />
+    <Compile Include="GhostLight\MenueSystem\Menue.cs" />
+    <Compile Include="GhostLight\MenueSystem\Panel.cs" />
+    <Compile Include="GhostLight\MenueSystem\SegmentedBar.cs" />
+    <Compile Include="GhostLight\MenueSystem\TextWithNewLines.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GhostLight\GhostLight\resources\angry-ghost1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\angry-ghost2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\angry-ghost3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\angry-ghost4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\angry-ghost5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_down_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_down_good.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_left_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_left_good.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_right_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_right_good.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_up_bad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\arrow_up_good.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\cat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\dracula.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\explode\explode9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\flashlightBot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\frankenstein.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\gameOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\ghost1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\ghost2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\ghost3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\glow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\hollowCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\infected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lazer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lazerGuid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lazerGuide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\life.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\light.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\circleBlank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\LaserIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\LaserMouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\LaserMouseOverSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\LaserSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\RevealIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\RevealMouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\RevealMouseOverSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\RevealSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\WideIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\WideMouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\WideMouseOverSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightButtons\WideSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\lightGuide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Logo Clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\menuArt\ButtonDown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\menuArt\ButtonIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\menuArt\ButtonIdleMouseOver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\mummy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\particle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\particle2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\powerdown_row.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\powerup_pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\powerup_row.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\powerup_wide_beam.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\pumpkin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_cat_attack.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_dracular_introduction.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_dracula_attack.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_frankenstein.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_ghost.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_laser_beam_fire.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_lose_life.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_mummy.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_remove_tile.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghostlight_zombie.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\Sounds\ghotstlight_background_music.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\sparcle\sparcle1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\sparcle\sparcle2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\sparcle\sparcle3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\sparcle\sparcle4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\sparcle\sparcle5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\spider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\unrevealed-friendly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\unrevealed-unfriendly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\unrevealed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\win.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GhostLight\GhostLight\resources\zombie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.csproj">
+      <Project>{48E6E345-E295-40F5-AECB-4322213E6469}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

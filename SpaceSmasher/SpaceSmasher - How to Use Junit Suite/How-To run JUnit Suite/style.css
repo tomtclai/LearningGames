@@ -1,0 +1,141 @@
+@charset "utf-8";
+
+/*
+	@author:		Chris Sullivan 2014
+    @email:			themiszelus@gmail.com
+    
+    The following css mimics the layout of a Windows doc, all styles 
+	where created by me, in hopes of extending them someday to a simple
+    web-based document writer like GoogleDocs, perhaps using Node.js
+*/
+
+html {
+	background-color: #CCC;
+	height: 100%
+}
+
+body {
+	margin: 0 auto;
+	height: 100%;
+	overflow: auto;
+}
+
+/* unvisited link */
+a:link, a:visited, a:active {
+    color: #000000;
+	font-size: 12px;
+	font-family: Calibri, Helvetica, sans-serif;
+	text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #3399CC;
+	font-size: 16px;
+	font-family: Calibri, Helvetica, sans-serif;
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;	
+}
+
+#toc {
+	background-color: #FFF;
+	box-shadow: 0px 0px 8px #999;
+	display: block;
+	border: thin solid #999;
+	position: fixed;
+	margin-top: 32px;
+	width: 200px;
+	left: 10px;
+	top: 0px;
+	padding: 10px;
+}
+.page {
+	background-color: #FFF;
+	box-shadow: 0px 0px 8px #999;
+	width: 540px;
+	height: 880px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 32px;
+	margin-bottom: 32px;
+	border: thin solid #999;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: lighter;
+	color: #000;
+	padding-right: 72px;
+	padding-left: 72px;
+	padding-top: 72px;
+	padding-bottom: 36px;
+	position: relative;
+}
+.page_num {
+	position: absolute;
+	width: 100%;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: lighter;
+	color: #000;
+	bottom: 16px;
+	text-align: center;
+	left: 0px;
+}
+
+.title_ {
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: lighter;
+	color: #000;
+	float: right;
+	display: compact;
+	padding: 0px;
+	margin: 0px;
+}
+
+.header1 {
+	font-size: 16px;
+	font-weight: lighter;
+	font-family: Calibri, Helvetica, sans-serif;
+	color: #3399CC;
+	clear: both;
+}
+.ralign {
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: lighter;
+	color: #000;
+	float: right;
+	display: compact;
+	clear: right;
+	margin: 0px;
+	padding: 0px;
+	text-align: right;
+}
+
+.center {
+	display: block;
+	width: 300px;
+	height: auto;
+	margin-left: 105px;
+	margin-top: 16px;
+	margin-bototm: 16px;
+}
+
+
+
+
+.lalign {
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: lighter;
+	color: #000;
+	float: left;
+	display: compact;
+	margin: 0px;
+	padding: 0px;
+	text-align: left;
+}

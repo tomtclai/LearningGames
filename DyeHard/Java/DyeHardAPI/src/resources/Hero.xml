@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls Dye's attributes. -->
+
+<!-- jetSpeed: How fast Dye accelerates. -->
+<!-- speedLimit: The maximum speed that Dye can travel. -->
+<!-- drag: Makes Dye harder or easier to move. A higher number
+makes Dye easier to move, and a lower number makes Dye harder 
+to move -->
+
+<hero>
+    <dye id="Dye">
+        <width>4.25</width>
+        <height>9</height>
+        <jetSpeed>0.2</jetSpeed>
+        <speedLimit>2</speedLimit>
+        <drag>0.97</drag>
+    </dye>
+</hero>

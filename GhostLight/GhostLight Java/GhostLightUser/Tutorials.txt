@@ -1,0 +1,99 @@
+TODO: I need activateLightPrimitive
+BUGBUG: primitiveGrid.getUniqueID() doesn't work in the init method
+T06: How to display info on the monsters?  (Reveal?)
+T04: Do we actually use the health array?
+
+
+Does it make sense to have all the init stuff (setDefaultHealth, etc) for all tutorials?
+MikeP: I need to get a better handle on the health (int vs. float) thing
+
+
+(Mention Eclipse-spell-checker to MikeL?)	
+
+#0: Preview of the finished game
+	No coding nor topics, just show the students the game
+	We should specify that their game will not have the "in-game tutorial" feature
+
+#1: 
+	TOPICS: Basic orientation to our custom API
+	Init:   Basic setup (health, score, light power)
+	Update: Basic response to user input (keyboard input, mouse buttons, on-screen buttons)
+			(This is APIExamples 1 and 2, merged)
+************TODO: Add player movement?  (Is this simple & easy?)
+
+#2:
+	TOPICS: Variable definition, allocating the array
+			Creating a monster, moving a monster
+			Accessing (with literal numbers, variables)
+	Init:   Allocate a 1D array, put something (ghost?) into it
+	Update: Pushing a button swaps two elements of the array (ghost moves to new spot & back)
+
+#3:
+	TOPICS: For loops & arrays
+			API: How to detect where the light is shining
+	Init:   <same as prior>
+	Update: Pushing space bar calls 'activateLight', which figures out which
+				monsters have a light shining on them.  It will produce an 
+				array of indeces into the ID array (both are one-dimensional), 
+				which we then use to change the corresponding array elements
+				(i.e., reduce the monster's health or whatever)
+
+#:4
+	TOPICS: Array Traversal: Sum, average, etc
+	Init:   Put several monsters into array
+	Update: <same as prior, plus the following:>
+			Display on-screen the number of remaining enemies, and their average health
+
+#:5
+	TOPICS: Arrays as parameters
+				Passing an individual element vs. passing the entire array
+				Pass by reference vs. pass by value
+				Swap: pass by value - swap doesn’t work with primitive values
+	Init:   <same as prior>
+	Update: Refactor prior so that sum, average are separate functions?
+
+#: 6
+	Ghost-buster / Ghost-booster
+	TOPICS: Arrays as return values
+				Example of getting the return value back
+	Init:   
+	Update: Create a function, FindGhosts, which goes through the type array
+			and generates a list of locations that contain ghosts.
+			One key is bound to a 'ghostbuster' command which reduces the health
+				of all the ghosts
+			One key is bound to a 'ghostbooster' command which increases the health
+				of all the ghosts
+
+#: 7
+	Switch to using the 'native' API of InteractibleObjects (just use the first row & ignore the rest)
+	TOPICS: Arrays of objects
+				Need to allocate each object individually
+	Init:	   
+	Update: 
+
+#: 8
+	A quick intro in case people want to work towards completing the game on their own...
+	TOPICS: Multidimensional arrays
+				Java only has ragged/jagged arrays, but can fake a 2D contiguous array if asked
+				As param, as return value
+	Init:   
+	Update: 
+		Follow this with APIExample6 (snaking the monsters)
+	
+#: 9
+	Snaking the monsters
+	TOPICS: 
+	Init:   
+	Update: 
+		Follow APIExample6
+
+
+>>> TODO <<<  
+#7: accidentally left 'moving flashlight' section in
+	left out comments for start/end of code sections
+
+Replace 'enemies' with 'monsters'
+
+BasicAPIandMovement doesn't have any flashlight movement
+
+ArraysAndLoops: the locations -> health array bit is actually kinda complicated

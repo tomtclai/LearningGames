@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls various attributes of the game world. -->
+
+<!-- enemySpawnTimer: The amount of time in seconds inbetween 
+each enemy spawn. -->
+<!-- powerUpCount: The amount of power ups per Space region. -->
+<!-- dyePackCount: The amount of dye packs per Space region. -->
+<!-- debrisCount: The amount of debris per Space region. -->
+<!-- mapLength: The distance Dye has to travel before reaching
+the end of the map. -->
+<!-- gameSpeed: How fast game regions travel. -->
+
+
+<world>
+    <dyeHard>
+        <enemySpawnTimer>8</enemySpawnTimer>
+        <powerUpCount>5</powerUpCount>
+        <dyePackCount>11</dyePackCount>
+        <debrisCount>8</debrisCount>
+        <mapLength>3000</mapLength>
+        <gameSpeed>0.3</gameSpeed>
+    </dyeHard>
+</world>

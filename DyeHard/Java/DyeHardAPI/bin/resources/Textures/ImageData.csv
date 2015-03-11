@@ -1,0 +1,7 @@
+ID,Screen Width,Screen Height,Image Width,Image Height,Path
+UI_HUD,1920,1080,1920,134,Textures/UI/Dyehard_UI_HudFrame.png
+UI_PATH,1920,1080,1104,54,Textures/UI/Dyehard_UI_Progress_Path.png
+UI_PATH_MARKER,1920,1080,76,76,Textures/UI/Dyehard_UI_Progress_marker_empty.png
+UI_DYE_PATH_MARKER,1920,1080,76,76,Textures/UI/Dyehard_UI_Progress_marker_full.png
+UI_PATH_MARKER_FULL,1920,1080,76,76,Textures/UI/Dyehard_UI_Progress_Dye.png
+UI_HEART,1920,1080,40,40,Textures/UI/dyehard_ui_health_full.png

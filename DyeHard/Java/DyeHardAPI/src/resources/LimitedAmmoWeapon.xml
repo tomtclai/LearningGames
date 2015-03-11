@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls the attributes for the limited 
+ammo weapon. -->
+
+<!-- firingRate: The time in milliseconds that Dye has to wair
+inbetween each shot. -->
+<!-- maxAmmo: The maximum amount of ammo Dye can have. This number
+should be a whole number. -->
+<!-- reloadAmount: The amount of ammo that is reloaded. This number
+should be a whole number. -->
+
+<weapon>
+    <limitedAmmoWeapon id="Limited">
+        <firingRate>250</firingRate>
+        <maxAmmo>10</maxAmmo>
+        <reloadAmount>10</reloadAmount>
+    </limitedAmmoWeapon>
+</weapon>

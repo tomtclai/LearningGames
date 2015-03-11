@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls the attributes for dye packs. -->
+
+<dyePacks>
+    <dyePack>
+        <width>3</width>
+        <height>3.5</height>
+        <speed>0.3</speed>
+    </dyePack>
+</dyePacks>

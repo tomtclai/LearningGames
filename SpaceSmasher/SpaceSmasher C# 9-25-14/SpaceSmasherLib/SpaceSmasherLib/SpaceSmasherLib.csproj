@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C91AE0B5-BF0B-4550-97EB-D809ED9B83F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpaceSmasherLib</RootNamespace>
+    <AssemblyName>SpaceSmasherLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BezierCurveLibrary">
+      <HintPath>Support Files\BezierCurveLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>Support Files\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>Support Files\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomCircle.cs" />
+    <Compile Include="CustomRectangle.cs" />
+    <Compile Include="Entities\Ball.cs" />
+    <Compile Include="Entities\BallSet.cs" />
+    <Compile Include="Entities\Block.cs" />
+    <Compile Include="Entities\BlockSet.cs" />
+    <Compile Include="Entities\EndScreen.cs" />
+    <Compile Include="Entities\StartScreen.cs" />
+    <Compile Include="Entities\CageBlock.cs" />
+    <Compile Include="Entities\Decorations.cs" />
+    <Compile Include="Entities\EmptyBlock.cs" />
+    <Compile Include="Entities\FireBlock.cs" />
+    <Compile Include="Entities\FreezingBlock.cs" />
+    <Compile Include="Entities\JokerBlock.cs" />
+    <Compile Include="Entities\KeyBoard.cs" />
+    <Compile Include="Entities\Life.cs" />
+    <Compile Include="Entities\LifeSet.cs" />
+    <Compile Include="Entities\MouseDevice.cs" />
+    <Compile Include="Entities\Paddle.cs" />
+    <Compile Include="Entities\PaddleSet.cs" />
+    <Compile Include="Entities\Set.cs" />
+    <Compile Include="Entities\Switch.cs" />
+    <Compile Include="Entities\Trap.cs" />
+    <Compile Include="Entities\TrapSet.cs" />
+    <Compile Include="GameObjects.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpaceSmasherBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SDL.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MonoGameEngineLib\GTCS1Lib.csproj">
+      <Project>{3cde3bad-ba33-44f9-8d3e-046b46195a5c}</Project>
+      <Name>GTCS1Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

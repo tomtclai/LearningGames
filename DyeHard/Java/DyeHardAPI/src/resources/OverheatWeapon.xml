@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file controls attributes for the overheat weapon. -->
+
+<!-- firingRate: The time in milliseconds that Dye has to wair
+inbetween each shot. -->
+<!-- cooldownRate: How fast this weapon cools down when not firing. -->
+<!-- heatLimit: The maximum amount of heat allowed before this weapon
+overheats. -->
+
+<weapon>
+    <overheatWeapon type="Overheat">
+		<firingRate>350</firingRate>
+	    <cooldownRate>0.02</cooldownRate>
+	    <heatLimit>5</heatLimit>
+	</overheatWeapon>
+</weapon>

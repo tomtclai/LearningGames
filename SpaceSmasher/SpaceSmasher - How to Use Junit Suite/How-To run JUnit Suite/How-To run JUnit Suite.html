@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>How to Run SpaceSmasher Suite</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<!--   
+	@author:		Chris Sullivan 2014
+    @email:			themiszelus@gmail.com
+    
+    The following html mimics the layout of a Windows doc, all  markup was
+    created by me, in hopes of extending them someday to a simple
+    web-based document writer like GoogleDocs, perhaps using Node.js
+    
+    // html specific unicode entities
+	apostrophe		&#39;
+    period			&#46; 
+
+-->
+
+<body>
+	<div id="toc">
+    	<p class="header1">Table of Contents</p>
+        <ul>
+        	<li><a href="#sutp" target="_self">Setting up the Project</a></li>
+            <li><a href="#itapi" target="_self">Importing the API</a></li>
+            <li><a href="#ieproj" target="_self">Importing an Existing Project</a></li>
+            <li><a href="#rtjs" target="_self">Running the JUnit Suite</a></li>
+        </ul>
+    </div>
+
+
+<div class="page">
+    	<p class="title_">Using Spacesmasher Test Suite</p>
+        <pre class="ralign">Chris Sullivan
+        June 7th, 2014</pre>
+    
+    
+   	<pre class="lalign">
+        
+        
+        
+<span class="header1"><a id="sutp">Setting up the Project</a></span>
+		
+To set up the project in eclipse right-click on File > Import, the following window will appear.
+        </pre>
+    <img class="center" src="imgs/import_dialog.png" alt="import_dialog">
+        
+  <pre class="lalign">
+      
+      Click Existing Projects into Workspace > Next and the Import screen will open.
+      </pre>
+	  <img class="center" src="imgs/import_dialog.png" alt="import_browse">
+      
+      <p class="page_num">Page 1</p>
+    </div>
+    
+    <div class="page">
+   	  <pre class="lalign">Browse to the root directory where the JUnit Suite is located and click Okay. Under options make sure 
+the Copy projects into workspace is checked and click Finish. SpaceSmasherUnit will now be located in
+Eclipse&#39;s Package Manager to the left of the Eclipse IDE.
+        </pre>
+    	<img class="center"  src="imgs/import_finish.png" alt="import_finish"> 
+    
+    	<pre class="lalign">
+        <span class="header1">
+<a id="itapi">Importing the API</a></span>
+To test a new API remove the already imported SpaceSmasherAPI from the build path. To do this right 
+click the project > Build Path > Configure Build Path, then select the Libraries tab.
+        </pre>
+    <img class="center" src="imgs/libs.png" alt="libs">
+    	<pre class="lalign">
+
+To remove the existing SpaceSmasherAPI select it and then click Remove. To add a new API click the 
+Add External JARs&#46;&#46;&#46; button and browse to the JAR file.</pre>
+    
+    	<p class="page_num">Page 2</p>    
+    </div>
+    
+    <div class="page">
+    	<pre class="lalign"><span class="header1"><a id="ieproj">Importing an Existing Project</a></span>
+		
+To test an existing project in Eclipse right-click SpaceSmasherUnit > Build Path > Configure Build Path
+and in the Properties dialog select the Projects Tab.
+        </pre>
+    	<img class="center" src="imgs/proj.png" alt="proj">
+        <pre class="lalign">
+
+Click the Add&#46;&#46;&#46; button and select all relevant projects to include in the test, and press Okay on 
+the Required Projects dialog, and Okay again on the Properties Dialog.  
+
+</pre>
+        
+    
+    	<pre class="lalign"><span class="header1"><a id="rtjs">Running the JUnit Suite</a></span>
+
+Finally to test the included API click on the SpaceSmasherUnit package > tests > runners > and right-click
+on AllTestRunner. Then select Run As > Java Application.
+
+Output of the test results will be created in the same directory as the SpaceSmasher package, if it is not 
+visible after the tests, right-click the package and select refresh. The output file will be statically 
+named SpaceSmasher JUnit Suite Results.html.
+
+For further questions or help contact Chris Sullivan at themiszelus@gmail.com.
+        </pre>
+    
+    	<p class="page_num">Page 3</p>
+    </div>
+
+</body>
+</html>
