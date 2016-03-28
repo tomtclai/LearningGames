@@ -21,7 +21,7 @@ class Rectangle extends Primitive
     ANIMATE_FORWARD_STOP,    // Animates from first to last frame then
                              //   stops on final frame.
     
-    ANIMATE_BACKWORDS_STOP   // Animates from last to first frame then
+    ANIMATE_BACKWARD_STOP   // Animates from last to first frame then
                              //   stops on first frame.
   };
   
@@ -56,7 +56,9 @@ class Rectangle extends Primitive
   private boolean mHorizontalFlip = false;     // Flips on horizontal axis. (Up and Down swapped)
   private boolean mVerticalFlip = false;       // Flips on vertical axis (Left and Right swapped)
   
-  
+  private boolean mNonLoopingAnimationInProgress = false;	// This is used to tell whether or not an ANIMATE_FORWARD_STOP
+  															// or ANIMATED_BACKWARD_STOP is finished yet.
+  private boolean mLoopingAnimationInProgress = false;		// Used to tell if we are animation a looping animation.
 
   public Rectangle()
   {
@@ -70,6 +72,22 @@ class Rectangle extends Primitive
     mDrawImage = other.mDrawImage;
     mDrawFilledRect = other.mDrawFilledRect;
   }
+  
+  public boolean hasNonLoopingAnimationInProgress()
+  {
+	  return mNonLoopingAnimationInProgress;
+  }
+  
+  public boolean hasLoopingAnimationInProgress()
+  {
+	  return mLoopingAnimationInProgress;
+  }
+  
+  public boolean hasAnimationInProgress()
+  {
+	  return mLoopingAnimationInProgress || mNonLoopingAnimationInProgress;
+  }
+  
   
   public boolean usingSpriteSheet()
   {
@@ -197,7 +215,7 @@ class Rectangle extends Primitive
 	  mAnimationMode = animationMode;
 	  
 	  if(animationMode == SpriteSheetAnimationMode.ANIMATE_BACKWARD ||
-			  animationMode == SpriteSheetAnimationMode.ANIMATE_BACKWORDS_STOP)
+			  animationMode == SpriteSheetAnimationMode.ANIMATE_BACKWARD_STOP)
 	  {
 		  mCurrentFrame = mLastFrame;
 	  }
@@ -321,7 +339,7 @@ class Rectangle extends Primitive
 	  case ANIMATE_BACKWARD:
 		  updateBackwardAnimation();
 		  break;
-	  case ANIMATE_BACKWORDS_STOP:
+	  case ANIMATE_BACKWARD_STOP:
 		  updateBackwardStopAnimation();
 		  break;
 	  case ANIMATE_FORWARD_STOP:
@@ -336,6 +354,9 @@ class Rectangle extends Primitive
   }
   private void updateForwardAnimation()
   {
+	  mNonLoopingAnimationInProgress = false;
+	  mLoopingAnimationInProgress = true;
+	  
 	  // Waits for as many ticks per draw opportunity.
 	  if(mCurrentTick < mTicksPerFrame)
 	  {
@@ -355,6 +376,9 @@ class Rectangle extends Primitive
   }
   private void updateForwardStopAnimation()
   {
+	  mNonLoopingAnimationInProgress = true;
+	  mLoopingAnimationInProgress = false;
+	  
 	  // Waits for as many ticks per draw opportunity.
 	  if(mCurrentTick < mTicksPerFrame)
 	  {
@@ -367,12 +391,17 @@ class Rectangle extends Primitive
 	  // Updates frames, stop animation if at final frame.
 	  if(mCurrentFrame >= mLastFrame)
 	  {
+		  mNonLoopingAnimationInProgress = false;
 		  return;
 	  }
+	  
 	  ++mCurrentFrame;
   }
   private void updateBackwardAnimation()
   {
+	  mNonLoopingAnimationInProgress = false;
+	  mLoopingAnimationInProgress = true;
+	  
 	  // Waits for as many ticks per draw opportunity.
 	  if(mCurrentTick < mTicksPerFrame)
 	  {
@@ -393,6 +422,9 @@ class Rectangle extends Primitive
   
   private void updateBackwardStopAnimation()
   {
+	  mNonLoopingAnimationInProgress = true;
+	  mLoopingAnimationInProgress = false;
+	  
 	  // Waits for as many ticks per draw opportunity.
 	  if(mCurrentTick < mTicksPerFrame)
 	  {
@@ -405,6 +437,7 @@ class Rectangle extends Primitive
 	  // Updates frames, stops on firstFrame
 	  if(mCurrentFrame <= mFirstFrame)
 	  {
+		  mNonLoopingAnimationInProgress = false;
 		  return;
 	  }
 	  --mCurrentFrame;
@@ -412,6 +445,9 @@ class Rectangle extends Primitive
   
   private void updateSwingAnimation()
   {
+	  mNonLoopingAnimationInProgress = false;
+	  mLoopingAnimationInProgress = true;
+	  
 	  // Waits for as many ticks per draw opportunity.
 	  if(mCurrentTick < mTicksPerFrame)
 	  {

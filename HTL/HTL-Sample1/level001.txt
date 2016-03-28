@@ -1,0 +1,11 @@
+100			Number of Attackers
+2			Paths
+2			Spawn Delay
+20			Wave Delay
+
+
+
+
+
+
+

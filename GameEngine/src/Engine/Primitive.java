@@ -11,7 +11,7 @@ abstract class Primitive
 {
 
   public static ResourceHandler resources = null;
-
+  
   public Vector2 center = new Vector2();
   public Vector2 size = new Vector2(50.0f, 50.0f);
   public Color color = Color.GREEN;
@@ -27,6 +27,12 @@ abstract class Primitive
 
   public boolean visible = true;
 
+  // the DrawingLayer that contains this object
+  protected Primitive myDrawingLayer = null;
+  
+  
+ 
+  
   public Primitive()
   {
     Random rand = new Random();
@@ -69,6 +75,27 @@ abstract class Primitive
     BaseCode.resources.removeFromAutoDrawSet(this);
   }
 
+  /**
+   * Moves this object to the end of the AutoDrawSet or the DrawingLayer it is in,
+   * meaning it will be drawn last (And hence be on top of everything else).
+   */
+  public void moveToFront()
+  {
+	  if(myDrawingLayer == null)
+	  {
+		  removeFromAutoDrawSet();
+		  addToAutoDrawSet();  
+	  }
+	  else
+	  {
+		  Primitive drawingLayerBackup = myDrawingLayer;
+		  drawingLayerBackup.remove(this);
+		  drawingLayerBackup.add(this);
+	  }
+  }
+  
+  
+  
   /**
    * Move this object to the back.
    */
@@ -178,11 +205,68 @@ abstract class Primitive
    */
   public void destroy()
   {
+    if(myDrawingLayer != null)
+    {
+    	myDrawingLayer.remove(this);
+    }
+
     removeFromAutoDrawSet();
+    
     texture = null;
     visible = false;
   }
+  
+  
+  /**
+   * If this object is in a DrawingLayer, removes
+   * it from that DrawingLayer and places it back in
+   * the AutoDrawSet.
+   */
+  public void removeFromDrawingLayer()
+  {
+	  if(myDrawingLayer != null)
+	  {
+		  myDrawingLayer.remove(this);
+	  }
+  }
+  
+  /**
+   * This is only here so it can be overridden by extending class DrawingLayer,
+   * so it can be used by the above destroy() method and moveToFront().
+   * 
+   * This is probably NOT the best way to do this, but since I am trying
+   * to get DrawingLayers working without rewriting the Engine, it seems
+   * like a good solution for now.
+   * 
+   * @param prim		Any primitive you want
+   * @return			True
+   */
+  public boolean remove(Primitive prim)
+  {
+	  return true;
+  }
+  
+  /**
+   * This is only here so it can be overridden by extending class DrawingLayer,
+   * so it can be used by the above moveToFront() method.
+   * 
+   * This is probably NOT the best way to do this, but since I am trying
+   * to get DrawingLayers working without rewriting the Engine, it seems
+   * like a good solution for now.
+   * 
+   * @param prim		The primitive we will do nothing to	
+   */
+  public void add(Primitive prim)
+  {
+  }
 
+  
+  
+  
+  
+  
+  
+  
   /**
    * Draw the object.
    */

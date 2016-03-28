@@ -1,0 +1,24 @@
+0.01		Walkers - Default speed of Basic Walker
+
+3.0			Medic Tower - Seconds between spellcasts
+10.0		Medic Tower - Health adjusted per spellcast (note that negative values will lower health)
+
+1.5			Speedy Tower - Offset between initial Medic Tower cast and Speedy Tower cast
+3.0			Speedy Tower - Seconds between spellcasts
+1.0			Speedy Tower - Seconds speed is boosted per spellcast
+3.0			Speedy Tower - Multiply Walker speed by this much (you can slow them down with numbers below one)
+
+25			Maximum number of tower movements the player can make
+2			Maximum number of HEAL towers that can be placed
+2			Maximum number of SPEED towers that can be placed				
+30000		Minimum score needed to win the level
+
+
+Welcome to the Fabulous Text File, where changing numbers makes your dreams come truuuuuuue!
+
+	
+
+	
+
+
+

@@ -3,13 +3,33 @@ package Engine;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import Engine.Rectangle.SpriteSheetAnimationMode;
+
 /**
  * GameObject, base class of all game objects that encapsulate all common behaviors
  * of objects in the game. 
  */
 public class GameObject {
 	
+	public enum AnimationMode
+	  {
+	    ANIMATE_FORWARD,         // Animates from first frame to last frame.
+	    
+	    ANIMATE_BACKWARD,        // Animates from last frame to first.
+	    
+	    ANIMATE_SWING,           // Animates from first to last then to first
+	                             //   again and so forth.
+	    
+	    ANIMATE_FORWARD_STOP,    // Animates from first to last frame then
+	                             //   stops on final frame.
+	    
+	    ANIMATE_BACKWARD_STOP   // Animates from last to first frame then
+	                             //   stops on first frame.
+	  };
+	  
 	private Rectangle mTheObject;
+	
+	private boolean isDestroyed = false;
 	
 	/**
 	 * Default constructor
@@ -58,6 +78,33 @@ public class GameObject {
 		return mTheObject.containsPoint(pos);
 	}
 	
+	public boolean containsPoint(float x, float y)
+	{
+		Vector2 pos = new Vector2(x, y);
+		return mTheObject.containsPoint(pos);
+	}
+	
+	/**
+	 * What does this object do when clicked?
+	 * This function is meant to be overridden.
+	 */
+	public void click() {
+		// override me please!
+	}
+	
+	/**
+	 * Measures the total distance between two objects' centers.
+	 * @param obj The other object to compare this object to.
+	 * @return Returns the distance between the objects' centers.
+	 */
+	public float distanceTo(GameObject obj)
+	{
+		float xDif = this.getCenterX() - obj.getCenterX();
+		float yDif = this.getCenterY() - obj.getCenterY();
+		float sum = (float)(Math.pow(xDif, 2) + Math.pow(yDif, 2));
+		return (float)Math.sqrt(sum);
+	}
+	
 	/**
 	 * Updates this game object
 	 */
@@ -69,15 +116,24 @@ public class GameObject {
 	 * Destroy this game object. Call when ready to dispose of this object.
 	 */
 	public void destroy() {
+		isDestroyed = true;
 		mTheObject.destroy();
+	}
+	
+	
+	/**
+	 * @return	True if the destroy() method has been called, indicating that this object shouldn't be used.
+	 */
+	public boolean isDestroyed()
+	{
+		return isDestroyed;
 	}
 	
 	/**
 	 * Move this game object to the front so that it will be drawn over all other objects
 	 */
 	public void moveToFront() {
-		mTheObject.removeFromAutoDrawSet();
-		mTheObject.addToAutoDrawSet();
+		mTheObject.moveToFront();
 	}
 	/**
 	 * Attempts will be made (no promise!) to always draw this GameObject in front of all other objects
@@ -276,17 +332,17 @@ public class GameObject {
 	// Region: get/set rotation
 	/**
 	 * Access the current rotation of the game object
-	 * @return rotation of the game object (in radian)
+	 * @return rotation of the game object (in degrees)
 	 */
 	public float getRotation() { return mTheObject.rotate; }
 	/**
 	 * sets the rotation of this object
-	 * @param r the new rotation for the object (in radian)
+	 * @param r the new rotation for the object (in degrees)
 	 */
 	public void setRotation(float r) { mTheObject.rotate = r; }
 	/**
 	 * changes the rotation of this object
-	 * @param dr the amount of rotation to change (in radian)
+	 * @param dr the amount of rotation to change (in degrees)
 	 */
 	public void changeRotationBy(float dr) { mTheObject.rotate += dr; }
 	// EndRegion
@@ -349,6 +405,77 @@ public class GameObject {
 		mTheObject.setDrawFilledRect(!onlyOutlined);
 	}
 	
+	
+	/**
+	   * Sets the mode of animation for the spritesheet animation.
+	   * Will do nothing if firstFrame or lastFrame is less than 0.
+	   * 
+	   * During the animation, if LastFrame exceeds mTotalFrames,
+	   *  an error will occur.
+	   * 
+	   * @param firstFrame First frame in the spritesheet to animate.
+	   * @param lastFrame  Last frame in the spritesheet to animate.
+	   * @param animationMode The type of animation that will be followed.
+	   */
+	  public void setAnimationMode(int firstFrame, int lastFrame, AnimationMode animationMode)
+	  {
+		  SpriteSheetAnimationMode temp;
+		  
+		  switch(animationMode)
+		  {
+		  		case ANIMATE_FORWARD:
+		  			temp = SpriteSheetAnimationMode.ANIMATE_FORWARD;
+		  			break;
+		  		case ANIMATE_BACKWARD:
+		  			temp = SpriteSheetAnimationMode.ANIMATE_BACKWARD;
+		  			break;
+		  		case ANIMATE_SWING:
+		  			temp = SpriteSheetAnimationMode.ANIMATE_SWING;
+		  			break;
+		  		case ANIMATE_FORWARD_STOP:
+		  			temp = SpriteSheetAnimationMode.ANIMATE_FORWARD_STOP;
+		  			break;
+		  		case ANIMATE_BACKWARD_STOP:
+		  			temp = SpriteSheetAnimationMode.ANIMATE_BACKWARD_STOP;
+		  			break;
+			  default:
+				  return;
+		  }
+		  mTheObject.setAnimationMode(firstFrame, lastFrame, temp);
+	  }
+	  
+	  
+	  /**
+	   * Is there a non-looping animation going on?
+	   * @return True if a non-looping animation is currently animating, otherwise false.
+	   */
+	  public boolean hasNonLoopingAnimationInProgress()
+	  {
+		  return mTheObject.hasNonLoopingAnimationInProgress();
+	  }
+	  
+	  
+	  /**
+	   * Is there a looping animation going on?
+	   * @return True if a looping animation is currently animating, otherwise false.
+	   */
+	  public boolean hasLoopingAnimationInProgress()
+	  {
+		  return mTheObject.hasLoopingAnimationInProgress();
+	  }
+	  
+	  
+	  /**
+	   * Is there an animation going on?
+	   * @return True if an animation is currently animating, otherwise false.
+	   */
+	  public boolean hasAnimationInProgress()
+	  {
+		  return mTheObject.hasAnimationInProgress();
+	  }
+	  
+
+	  
 	// EndRegion: get/set image and spriteSheet
 	
 	// Region: Auto drawing support
@@ -370,6 +497,37 @@ public class GameObject {
 	 * GameObject's draw should not be called explicitly (AutoDraw will take care of drawing!)
 	 */
 	public void draw() {	mTheObject.draw();	}
+	
+	
+	
+	/**
+	 * Moves this GameObject to a DrawingLayer, so that it will
+	 * be drawn with all of the other GameObjects in that layer.
+	 * Will remove this GameObject from the DrawingLayer it
+	 * is already in and/or the AutoDraw set.
+	 * An argument of null will remove this GameObject from
+	 * any DrawingLayer it is in and move it back to
+	 * the AutoDrawSet.
+	 * @param drawingLayer		The layer to move this GameObject to.
+	 */
+	public void moveToDrawingLayer(DrawingLayer drawingLayer)
+	{
+		if(drawingLayer != null)
+		{
+			drawingLayer.add(mTheObject);
+		}
+		else
+		{
+			mTheObject.removeFromDrawingLayer();
+		}	
+	}	
+	
+	
+	
+	
+	
+	
+	
 	// EndRegion
 
 	// Region: protected operations Not visible to the world

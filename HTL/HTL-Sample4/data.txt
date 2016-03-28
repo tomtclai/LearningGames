@@ -1,0 +1,74 @@
+.005	Attacker - movement speed (units per second; for reference, a character is 1 unit tall and wide)
+3		Attacker - seconds between attacks
+-10		Attacker - health adjustment per attack
+.1		Attacker - how close they need to be to a path Waypoint before moving to the next
+.1		Attacker - actual speed of any given Attacker will be within a standard deviation of (this_value * movement_speed)
+.5		Attacker - at what percentage should we consider Attackers to have low badFeels?
+.5		Attacker - when Attackers have low badFeels, their attack is multiplied by this value
+
+5		All Defenders - Amount of distress gained from murdering an attacker
+0		All Defenders - Amount of distress lost when they get an Attacker to run away
+5		All Defenders - Amount of distress caused to others in the zone when a Defender dies
+
+100		All Defenders, Attackers, & Barriers - Max health
+0		All Defenders, Attackers, & Barriers - Minimum health
+100		All Defenders & Attackers - Maximum bad feels (distress/hostility)
+0		All Defenders & Attackers - Minimum bad feels (distress/hostility) for everyone.
+0		All Defenders & Attackers - Bad feels added when damage is taken.
+
+.2		Projectiles - average travel speed (some projectiles may move faster or slower)
+
+3		Stance Axe (Warrior) - seconds between attacks
+40		Stance Axe (Warrior) - Adjustment in health of the target after attack
+0		Stance Axe (Warrior) - Distress added to zone with each attack.
+-3		Stance Axe (Warrior) - Maximum amount of health lost by warrior when they are attacked.
+
+-1		Stance Shield (Warrior) - Maximum amount of health lost by warrior when they are attacked
+
+3		Stance Crossbow (Negotiator) - seconds between attacks
+5		Stance Crossbow (Negotiator) - Maximum attack range
+10		Stance Crossbow (Negotiator) - Adjustment in health of target after attack
+0		Stance Crossbow (Negotiator) - Amount of distress added after shooting the crossbow
+1		Stance Crossbow (Negotiator) - Chance of attack success if with NO bad feels (1 = 100% chance)
+.7		Stance Crossbow (Negotiator) - Chance of attack success if bad feels is maxed (.7 = 70% chance)
+
+3		Stance Negotiation (Negotiator) - seconds between attacks
+-40		Stance Negotiation (Negotiator) - Adjustment in target's hostility when negotiated with
+1		Stance Negotiation (Negotiator) - Chance of attack success if with NO bad feels
+.7		Stance Negotiation (Negotiator) - Chance of attack success if bad feels is maxed
+
+5		Stance Drinks for Them (Bartender) - seconds between attacks
+5		Stance Drinks for Them (Bartender) - Maximum attack range
+-6		Stance Drinks for Them (Bartender) - Adjustment in targets' hostility when given a drink
+-7.5	Stance Drinks for Them (Bartender) - Adjustment in targets' health when given a drink while bartender's distress is maxed
+
+7.5		Stance Drinks for Us (Bartender) - seconds between attacks
+-5		Stance Drinks for Us (Bartender) - Adjustment in target(friend)'s distress when given a drink
+-5 		Stance Drinks for Us (Bartender) - Adjustment in target(friend)'s health when given a drink while bartender's distress is maxed
+
+5		Stance Fire (Mage) - seconds between attacks
+5		Stance Fire (Mage) - Maximum attack range
+10		Stance Fire (Mage) - Adjustment in target's health when hit
+0		Stance Fire (Mage) - Adjustment in mage's distress when they hit something
+
+3		Stance Freeze (Mage) - seconds between attacks
+5		Stance Freeze (Mage) - Maximum attack range
+3		Stance Freeze (Mage) - seconds target will be frozen
+
+5		Stance Heal (Healer) - seconds between attacks
+5 		Stance Heal (Healer) - Adjustment in target's health when healed
+-2.5	Stance Heal (Healer) - Adjustment in zone's distress when a target is healed
+
+5		Stance Pacify (Healer) - seconds between attacks
+5		Stance Pacify (Healer) - Maximum attack range
+15		Stance Pacify (Healer) - Adjustment in target's hostility when pacified
+-10		Stance Pacify (Healer) - Adjustment in healer's health when a target is pacified
+
+	
+
+	
+
+	
+
+
+

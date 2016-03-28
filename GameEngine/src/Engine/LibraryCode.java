@@ -3,8 +3,8 @@ package Engine;
 public abstract class LibraryCode extends BaseCode {
 	private Rectangle background = null;
 
-	private static final int INIT_WIDTH = 800;
-	private static final int INIT_HEIGHT = 480;
+	public static final int INIT_WIDTH = true ? 1280 : 800;
+	public static final int INIT_HEIGHT = true ? 720 : 480;
 
 	public void initConfig(GameWindow theWindow) {
 		super.initConfig(theWindow);

@@ -129,4 +129,43 @@ public class Text extends Primitive
   public void update()
   {
   }
+  
+  
+  	/**
+	 * Access the visibility of the game object.
+	 * @return true (visible on the game window), or false (not visible)
+	 */
+	public boolean isVisible() { return visible; }
+	/**
+	 * Sets the visibility of this object
+	 * @param flag	True: visible, false: not visible
+	 */
+	public void setVisibilityTo(boolean flag) { visible = flag; }
+	
+	
+	/**
+	 * Moves this Text to a DrawingLayer, so that it will
+	 * be drawn with all of the other Text in that layer.
+	 * Will remove this Text from the DrawingLayer it
+	 * is already in and/or the AutoDraw set.
+	 * An argument of null will remove this Text from
+	 * any DrawingLayer it is in and move it back to
+	 * the AutoDrawSet.
+	 * Note that Text already tries to draw on top of everything,
+	 * so this is mainly useful for trying to manage Text associated
+	 * with other Text or GameObjects within a DrawingLayer.
+	 * @param drawingLayer		The layer to move this Text to.
+	 */
+	public void moveToDrawingLayer(DrawingLayer drawingLayer)
+	{
+		if(drawingLayer != null)
+		{
+			drawingLayer.add(this);
+
+		}
+		else
+		{
+			this.removeFromDrawingLayer();
+		}
+	}
 }

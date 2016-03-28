@@ -1,0 +1,32 @@
+3.0					Spawn Delay - Seconds between each spawn
+45.0				Wave Delay - Seconds until next wave when finished
+bbbqq
+
+3.0					Spawn Delay - Seconds between each spawn
+45.0					Wave Delay - Seconds until next wave when finished
+bbqqb
+
+3.0					Spawn Delay - Seconds between each spawn
+45.0					Wave Delay - Seconds until next wave when finished
+bbqqbbbqqb
+
+3.0					Spawn Delay - Seconds between each spawn
+45.0					Wave Delay - Seconds until next wave when finished
+bbqqbqqqqb
+
+3.0					Spawn Delay - Seconds between each spawn
+45.0					Wave Delay - Seconds until next wave when finished
+bbqqbbbqqbbbqbq
+
+Welcome to the Level One text file!
+There are three lines for every wave: spawn delay, wave delay, and a list of the Walkers to spawn.
+The letter b stands for BASIC, and the letter q stands for QUICK.
+They will spawn in the order you write them. :)
+
+
+
+
+
+
+
+
