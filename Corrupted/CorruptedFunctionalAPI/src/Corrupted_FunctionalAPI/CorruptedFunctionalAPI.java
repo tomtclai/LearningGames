@@ -58,6 +58,7 @@ public class CorruptedFunctionalAPI extends Game
     
     //Should elements be drawn on the screen
     public boolean gameWon = false;
+    public boolean gameLost = false;
     public boolean hasCounter = false;
     public boolean needColorMap = false;
     public boolean shouldDrawMeter = false;
@@ -76,10 +77,12 @@ public class CorruptedFunctionalAPI extends Game
      */
     public void buildGame()
     {
+        /*
       drawLaser();
       drawBoard();  
       drawCounter();      
       startTimerForTiles();
+      */
     }
 
      /**
@@ -93,7 +96,7 @@ public class CorruptedFunctionalAPI extends Game
      */
     public void updateGame()
     {
-        
+        /*
        checkGameWon();
        
         if(pressingUp())
@@ -125,7 +128,7 @@ public class CorruptedFunctionalAPI extends Game
         }
        
         deleteMissedTiles();
-        
+        */
     }
     
 
@@ -140,7 +143,7 @@ public class CorruptedFunctionalAPI extends Game
     public void setCounterValue(int count)
     {
         counter.setValue(count);
-        rowsRemainingText.setText(""+ tilesNeededToWin);
+        rowsRemainingText.setText(""+ count);
     }
     
 
@@ -186,7 +189,15 @@ public class CorruptedFunctionalAPI extends Game
     {
         setGameWon(true);
     }
-    
+
+   /**
+     * Sets the game state to lost.
+     * Calling this method will trigger the lost screen to appear.
+     */
+    public void loseGame()
+    {
+        setGameLost(true);
+    }
     
     
   /*
@@ -569,6 +580,15 @@ public class CorruptedFunctionalAPI extends Game
     {
         gameWon = a;
     }
+    
+   /**
+    * Sets the game lose state to true or false.
+    * @param a boolean of whether or not the game has been lost
+    */
+    public void setGameLost(boolean a)
+    {
+        gameLost = a;
+    }
  
     
             /**
@@ -652,7 +672,12 @@ public class CorruptedFunctionalAPI extends Game
             mWinScreen.setVisible(true);
             mWinScreen.draw();
         }
-
+        
+        if (gameLost) {
+            mWinScreen = new StatusScreen(StatusScreenType.LOSE);
+            mWinScreen.setVisible(true);
+            mWinScreen.draw();
+        }
     }
     
         /**
