@@ -4,10 +4,10 @@ import TowerDefense.*;
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab01 extends HTL
+public class Lab7 extends HTL
 {
 	
-	public Lab01()
+	public Lab7()
 	{
 		super();
 	}

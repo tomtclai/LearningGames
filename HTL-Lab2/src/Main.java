@@ -25,7 +25,7 @@ public class Main extends GameWindow
 	
   public Main()
   {
-    setRunner(new Lab1());
+    setRunner(new Lab2());
   }
   
   public static void main(String[] args)
