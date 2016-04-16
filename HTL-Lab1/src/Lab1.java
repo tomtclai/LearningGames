@@ -7,7 +7,17 @@ import TowerDefense.*;
 public class Lab1 extends HTL
 {
 	public void buildWorld() {
-		
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
+		drawTower();
 	}
 	
 }
