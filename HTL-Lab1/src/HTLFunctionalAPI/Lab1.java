@@ -10,6 +10,7 @@ public class Lab1 extends HTLFunctionalAPI
 {
 	public void buildWorld()
 	{
+		System.out.println("hi");
 		drawMedicWizard();
 	}
 	

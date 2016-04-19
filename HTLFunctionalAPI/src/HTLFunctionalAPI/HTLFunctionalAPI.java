@@ -10,8 +10,11 @@ import TowerDefense.*;
  */
 
 public class HTLFunctionalAPI extends HTL {
-
-	public void buildGame(){}
+	public void initializeWorld() {
+		super.initializeWorld();
+		buildWorld();
+	}
+	public void buildWorld(){}
 	
 	public void updateGame(){}
 	
@@ -28,6 +31,8 @@ public class HTLFunctionalAPI extends HTL {
 		
 		Tower medicWizard = new TowerMedic();
 		medicWizard.teleportTo(position);
+		
+		medicWizard.update();
 	}
 	
 	/*

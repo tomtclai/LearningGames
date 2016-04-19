@@ -8,6 +8,7 @@ public class LAB1 extends CorruptedFunctionalAPI
 {
     public void buildGame()
     {
+    	
         drawTile();
         drawTile();
         drawTile();
