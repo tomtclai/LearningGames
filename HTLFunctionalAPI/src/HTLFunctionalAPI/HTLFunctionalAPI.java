@@ -10,13 +10,13 @@ import TowerDefense.*;
  */
 
 public class HTLFunctionalAPI extends HTL {
-	
+
 	public void buildGame(){}
 	
 	public void updateGame(){}
 	
 	/*
-	 * 
+	 * Draws a medic tower at a random tile
 	 */
 	public void drawMedicWizard()
 	{		
@@ -26,9 +26,12 @@ public class HTLFunctionalAPI extends HTL {
 		
 		Tile position = grid.getTile(3, 3);
 		
-		Tower medicWizard = null;
+		Tower medicWizard = new TowerMedic();
 		medicWizard.teleportTo(position);
 	}
 	
+	/*
+	 * Draws a speedy tower at a random tile
+	 */
 	public void drawSpeedyWizard(){}
 }

@@ -64,6 +64,7 @@ public class UserGame02 extends HTL
 			{
 				bob.teleportTo(newTile);
 			}
+			
 		}
 	}
 }
