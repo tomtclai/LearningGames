@@ -1,13 +1,14 @@
+package HTLFunctionalAPI;
 import TowerDefense.*;
 
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab9 extends HTL
+public class Lab6 extends HTLFunctionalAPI
 {
 	
-	public Lab9()
+	public Lab6()
 	{
 		super();
 	}

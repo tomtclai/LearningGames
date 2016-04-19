@@ -1,3 +1,4 @@
+package HTLFunctionalAPI;
 
 import Engine.GameWindow;
 @SuppressWarnings("serial")
@@ -25,7 +26,7 @@ public class Main extends GameWindow
 	
   public Main()
   {
-    setRunner(new Lab3());
+    setRunner(new Lab8());
   }
   
   public static void main(String[] args)
