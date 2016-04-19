@@ -4,48 +4,83 @@ import java.util.*;
 import TowerDefense.*;
 
 /**
+ * This is a functional API for the game Hug The Line (HTL).
+ * It is designed for use the introductory computer science lessons.
  * 
  * @author Kunlakan (Jeen) Cherdchusilp
  * @author Tom Lai
  *
  */
 
-public class HTLFunctionalAPI extends HTL {
-	Vector<TowerDefense.Character> characters = new Vector<TowerDefense.Character>();
-	public void initializeWorld() {
+public class HTLFunctionalAPI extends HTL
+{
+	public void initializeWorld()
+	{
 		super.initializeWorld();
 		buildWorld();
 	}
-	public void buildWorld(){}
-	
-	public void updateWorld(){
-		for (TowerDefense.Character c : characters) {
-			c.update();
-		}
+
+	public void updateWorld()
+	{
+		super.updateWorld();
+		
+		towerSet.update();
 	}
 	
-	/*
-	 * Draws a medic tower at a random tile
+	 /**
+     * The function to be overridden by the student. This method should be used
+     * to "build the world" of the game by drawing key elements.
+     */
+	public void buildWorld(){}
+	
+	//-------------------------------------------------------------------------
+	
+	/**
+	 * Draws a medic tower at a random tile.
 	 */
 	public void drawMedicWizard()
 	{		
-
 		Random random = new Random();
-		int x = random.nextInt((int)SCREEN_WIDTH);
+		int x = random.nextInt((int)SCREEN_WIDTH - 1);
 		int y = random.nextInt((int)SCREEN_HEIGHT);
-		
-		Tile position = grid.getTile(3, 3);
-		
-		Tower medicWizard = new TowerMedic();
-		medicWizard.teleportTo(position);
-		characters.add(medicWizard);
+
+		drawMedicWizard(x, y);
 	}
 	
-	/*
-	 * Draws a speedy tower at a random tile
+	/**
+	 * Draws a medic tower at the given x and y coordinate.
+	 * @param x		The x coordinate of the position of the medic wizard
+	 * @param y		The y coordinate of the position of the medic wizard
 	 */
-	public void drawSpeedyWizard(){}
+	public void drawMedicWizard(int x, int y)
+	{
+		Tile position = grid.getTile(x, y);
+		towerSet.addTowerAt(position, true);
+	}
 
+	/**
+	 * Draws a speedy tower at a random tile.
+	 */
+	public void drawSpeedyWizard()
+	{
+		Random random = new Random();
+		int x = random.nextInt((int)SCREEN_WIDTH - 1);
+		int y = random.nextInt((int)SCREEN_HEIGHT);
+
+		drawSpeedyWizard(x, y);
+	}
+	
+	/**
+	 * Draws a speedy tower at the given x and y coordinate.
+	 * @param x		The x coordinate of the position of the speedy wizard
+	 * @param y		The y coordinate of the position of the speedy wizard
+	 */
+	public void drawSpeedyWizard(int x, int y)
+	{
+		Tile position = grid.getTile(x, y);
+		towerSet.addTowerAt(position, false);
+	}
+	
 	/**
 	 * @return true if the user is pressing the up arrow
 	 */
@@ -73,5 +108,4 @@ public class HTLFunctionalAPI extends HTL {
 	public boolean pressingRight() {
 		return keyboard.isButtonTapped(KeyEvent.VK_RIGHT);
 	}
-
 }

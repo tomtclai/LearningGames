@@ -11,5 +11,12 @@ public class Lab1 extends HTLFunctionalAPI
 	public void buildWorld()
 	{
 		drawMedicWizard();
+		drawMedicWizard();
+		drawMedicWizard();
+		drawMedicWizard();
+		drawSpeedyWizard();
+		drawSpeedyWizard();
+		drawSpeedyWizard();
+		drawSpeedyWizard();
 	}
 }
