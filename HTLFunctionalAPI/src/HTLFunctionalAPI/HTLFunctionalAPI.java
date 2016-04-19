@@ -1,4 +1,5 @@
 package HTLFunctionalAPI;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import TowerDefense.*;
 
@@ -44,4 +45,33 @@ public class HTLFunctionalAPI extends HTL {
 	 * Draws a speedy tower at a random tile
 	 */
 	public void drawSpeedyWizard(){}
+
+	/**
+	 * @return true if the user is pressing the up arrow
+	 */
+	public boolean pressingUp() {
+		return keyboard.isButtonTapped(KeyEvent.VK_UP);
+	}
+
+	/**
+	 * @return true if the user is pressing the down arrow
+	 */
+	public boolean pressingDown() {
+		return keyboard.isButtonTapped(KeyEvent.VK_DOWN);
+	}
+
+	/**
+	 * @return true if the user is pressing the left arrow
+	 */
+	public boolean pressingLeft() {
+		return keyboard.isButtonTapped(KeyEvent.VK_LEFT);
+	}
+
+	/**
+	 * @return true if the user is pressing the right arrow
+	 */
+	public boolean pressingRight() {
+		return keyboard.isButtonTapped(KeyEvent.VK_RIGHT);
+	}
+
 }
