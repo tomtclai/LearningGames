@@ -27,7 +27,7 @@ public class HTLFunctionalAPI extends HTL
 		towerSet.update();
 	}
 	
-	 /**
+	 /*
      * The function to be overridden by the student. This method should be used
      * to "build the world" of the game by drawing key elements.
      */
@@ -35,7 +35,7 @@ public class HTLFunctionalAPI extends HTL
 	
 	//-------------------------------------------------------------------------
 	
-	/**
+	/*
 	 * Draws a medic tower at a random tile.
 	 */
 	public void drawMedicWizard()
@@ -47,7 +47,7 @@ public class HTLFunctionalAPI extends HTL
 		drawMedicWizard(x, y);
 	}
 	
-	/**
+	/*
 	 * Draws a medic tower at the given x and y coordinate.
 	 * @param x		The x coordinate of the position of the medic wizard
 	 * @param y		The y coordinate of the position of the medic wizard
@@ -58,7 +58,7 @@ public class HTLFunctionalAPI extends HTL
 		towerSet.addTowerAt(position, true);
 	}
 
-	/**
+	/*
 	 * Draws a speedy tower at a random tile.
 	 */
 	public void drawSpeedyWizard()
@@ -70,7 +70,7 @@ public class HTLFunctionalAPI extends HTL
 		drawSpeedyWizard(x, y);
 	}
 	
-	/**
+	/*
 	 * Draws a speedy tower at the given x and y coordinate.
 	 * @param x		The x coordinate of the position of the speedy wizard
 	 * @param y		The y coordinate of the position of the speedy wizard
