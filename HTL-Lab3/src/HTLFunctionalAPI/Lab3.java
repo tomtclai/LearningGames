@@ -14,19 +14,19 @@ public class Lab3 extends HTLFunctionalAPI
 	{
        if(pressingRight())
        {
-	   drawMedicWizard(20,5);
+	       drawMedicWizard(20,5);
        }
        else if(pressingLeft())
        {
-	   drawMedicWizard(1,5);
+	       drawMedicWizard(1,5);
        }
        else if (pressingUp())
        {
-	   drawMedicWizard(8,8);
+	       drawMedicWizard(8,8);
        }
        else if (pressingDown())
        {
-	   drawMedicWizard(1,1);
+	       drawMedicWizard(1,1);
        }
 	}
 }
