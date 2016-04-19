@@ -1,5 +1,5 @@
 package HTLFunctionalAPI;
-import java.util.Random;
+import java.util.*;
 import TowerDefense.*;
 
 /**
@@ -10,19 +10,25 @@ import TowerDefense.*;
  */
 
 public class HTLFunctionalAPI extends HTL {
+	Vector<TowerDefense.Character> characters = new Vector<TowerDefense.Character>();
 	public void initializeWorld() {
 		super.initializeWorld();
 		buildWorld();
 	}
 	public void buildWorld(){}
 	
-	public void updateGame(){}
+	public void updateWorld(){
+		for (TowerDefense.Character c : characters) {
+			c.update();
+		}
+	}
 	
 	/*
 	 * Draws a medic tower at a random tile
 	 */
 	public void drawMedicWizard()
 	{		
+
 		Random random = new Random();
 		int x = random.nextInt((int)SCREEN_WIDTH);
 		int y = random.nextInt((int)SCREEN_HEIGHT);
@@ -31,8 +37,7 @@ public class HTLFunctionalAPI extends HTL {
 		
 		Tower medicWizard = new TowerMedic();
 		medicWizard.teleportTo(position);
-		
-		medicWizard.update();
+		characters.add(medicWizard);
 	}
 	
 	/*
