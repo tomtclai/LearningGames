@@ -6,13 +6,9 @@ package HTLFunctionalAPI;
  */
 public class Lab3 extends HTLFunctionalAPI
 {
-	public void buildWorld()
-	{
-
-	}
 	public void updateWorld()
 	{
-		// TODO: fix this so they don't look like colored boxes
+		super.updateWorld();
 		if (keyboardIsPressingRight()) 
 		{
 			drawSpeedyWizard(19, 5); // x = 19, y = 5
@@ -29,5 +25,6 @@ public class Lab3 extends HTLFunctionalAPI
 		{
 			drawMedicWizard(10, 0); // x = 10, y = 0
 		}
+
 	}
 }
