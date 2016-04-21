@@ -84,28 +84,28 @@ public class HTLFunctionalAPI extends HTL
 	/**
 	 * @return true if the user is pressing the up arrow
 	 */
-	public boolean pressingUp() {
+	public boolean keyboardIsPressingUp() {
 		return keyboard.isButtonTapped(KeyEvent.VK_UP);
 	}
 
 	/**
 	 * @return true if the user is pressing the down arrow
 	 */
-	public boolean pressingDown() {
+	public boolean keyboardIsPressingDown() {
 		return keyboard.isButtonTapped(KeyEvent.VK_DOWN);
 	}
 
 	/**
 	 * @return true if the user is pressing the left arrow
 	 */
-	public boolean pressingLeft() {
+	public boolean keyboardIsPressingLeft() {
 		return keyboard.isButtonTapped(KeyEvent.VK_LEFT);
 	}
 
 	/**
 	 * @return true if the user is pressing the right arrow
 	 */
-	public boolean pressingRight() {
+	public boolean keyboardIsPressingRight() {
 		return keyboard.isButtonTapped(KeyEvent.VK_RIGHT);
 	}
 }
