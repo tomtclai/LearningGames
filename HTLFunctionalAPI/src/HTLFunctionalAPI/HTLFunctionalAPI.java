@@ -17,13 +17,13 @@ public class HTLFunctionalAPI extends HTL
 	public void initializeWorld()
 	{
 		super.initializeWorld();
+		setHUDVisibilityTo(false);
 		buildWorld();
 	}
 
 	public void updateWorld()
 	{
 		super.updateWorld();
-		
 		towerSet.update();
 	}
 
