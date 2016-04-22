@@ -7,13 +7,13 @@ package HTLFunctionalAPI;
 public class Lab4 extends HTLFunctionalAPI
 {
 	
-    //Declare variables for the start position of the "player tile"
+    //Declare variables for the start position of the "player wizard"
     int x = 0;
     int y = 0;
     
 	public void buildWorld()
 	{
-        // Player tile start
+        // Player wizard start
 		drawSpeedyWizard(0,0);
     
         // Build the maze board!
