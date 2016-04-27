@@ -330,7 +330,7 @@ public class HTL extends LibraryCode
 	 * This is used to create a path,
 	 * and the Tiles use it so that they know to draw differently (if tiles are being drawn).
 	 */
-	private void placePathTiles()
+	protected void placePathTiles()
 	{
 		// begin
 		grid.addPathLeftRight(0, 6);
@@ -408,7 +408,7 @@ public class HTL extends LibraryCode
 	 * Sets up the Blocking Tiles for the default grid.
 	 * Blocking Tiles are places where Towers can't move to.
 	 */
-	private void placeBlockingTiles()
+	protected void placeBlockingTiles()
 	{		
 		// bottom right mushroom
 		for(int y = 0; y < 4; y++)
