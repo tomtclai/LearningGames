@@ -112,7 +112,7 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the right and top. This means that when
+	 * ability to connect to Tiles to the top and bottom. This means that when
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
@@ -128,7 +128,7 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the right and top. This means that when
+	 * ability to connect to Tiles to the left and right. This means that when
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
@@ -144,7 +144,7 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the right and top. This means that when
+	 * ability to connect to Tiles to the left and top. This means that when
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
@@ -176,7 +176,7 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the right and top. This means that when
+	 * ability to connect to Tiles to the left and bottom. This means that when
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
@@ -192,7 +192,7 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the right and top. This means that when
+	 * ability to connect to Tiles to the right and bottom. This means that when
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
@@ -206,19 +206,9 @@ public class HTLFunctionalAPI extends HTL
 		return grid.addPathDownRight(x, y);
 	}
 
-	/**
-	 * Sets the dimensions of the game grid.
-	 * Note that this will overwrite any existing game grid,
-	 * including destroying all of the things on it.
-	 * @param columns
-	 * @param rows
-	 */
-	public void setDimension(int x, int y) {
-		grid.setDimensions(x, y);
-	}
 	
 	/**
-	 * Set whether Tiles with paths in the grid are visible.
+	 * Make paths in the grid visible.
 	 * Note that Tiles without paths are never drawn,
 	 * because it ends up being really expensive.
 	 * @param isVisible		True if Path Tiles should be visible.
