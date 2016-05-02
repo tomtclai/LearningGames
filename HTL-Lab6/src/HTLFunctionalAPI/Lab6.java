@@ -7,12 +7,6 @@ import TowerDefense.*;
  */
 public class Lab6 extends HTLFunctionalAPI
 {
-	
-	public Lab6()
-	{
-		super();
-	}
-	
 	public void initializeWorld()
 	{
 		super.initializeWorld();
@@ -52,11 +46,5 @@ public class Lab6 extends HTLFunctionalAPI
 		}
 		// 2. Make path visible
 		makePathsVisible();
-	}
-	
-	public void updateWorld()
-	{
-		super.updateWorld();
-		
 	}
 }
