@@ -109,81 +109,121 @@ public class HTLFunctionalAPI extends HTL
 		return keyboard.isButtonTapped(KeyEvent.VK_RIGHT);
 	}
 	
+
 	/**
-	 * Initializes the game's Grid.
-	 * 	1. Sets the Grid size.
-	 * 	2. Makes specific Tiles into Path Tiles.
-	 * 	3. Connects the Path Tiles into a Path.
-	 * 	4. Hooks the WaveSystem (spawner) up to use this Path.
-	 *  5. Sets the background to a custom background that is pretty and not empty
-	 *  6. Sets Tiles with paths to be invisible, since the background already contains a visual path.
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
 	 * 
-	 * Precondition: spawner object has been initialized
-	 * 
-	 * The specific path that this method makes is one that aligns
-	 * with the default background image of this game.  Because of
-	 * this design decision, we don't actually draw the path by default.
-	 * However, this is only the default initialization.
-	 * If you want, you can reshape this grid to be whatever you want,
-	 * even after calling this method.
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
 	 */
-	public void createPlaygroundPath()
-	{
-		// 1. Set grid size
-		grid.setDimensions(20, 10);
-		
-		// 2. Set path tile placement
-		placePlaygroundPathTiles();
-		
-		// 3. Construct the path.
-		grid.constructPath(0, 5, 7, 0); 
-		Path thePath = grid.getPath();
-		
-		// 4. Pass the path to the spawner.
-		spawner.setPath(thePath);
-		
-		// 5. Set up blocking zones
-		placeBlockingTiles();
-		
-		background.setImage(IMAGE_BACKGROUND_EMPTY);
-		grid.setPathTileVisibilityTo(true);
+	public boolean addPathUpDown(int x, int y) {
+		return grid.addPathUpDown(x, y);
 	}
+
 	/**
-	 * Turns the Tiles that align with the path on the
-	 * default background image into Path Tiles.
-	 * This is used to create a path,
-	 * and the Tiles use it so that they know to draw differently (if tiles are being drawn).
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
+	 * 
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
 	 */
-	private void placePlaygroundPathTiles() {
-		/*      9| 
-		 *      8| 
-		 *      7| 
-		 *      6|               X X X
-		 * rows 5| X X X X X X X X   X
-		 *      4|               X X X 
-		 *      3|               X
-		 *      2|               X
-		 *      1|               X
-		 *      0|_______________X______
-		 *         0 1 2 3 4 5 6 7 8 9 ...
-		 *            columns
-		 */
-		
-		// Starting from left
-		for (int i = 0; i < 7; i++) {
-			grid.addPathLeftRight(i, 5);
-		}
-		grid.addPathUpLeft(7, 5);
-		grid.addPathDownRight(7, 6);
-		grid.addPathLeftRight(8, 6);
-		grid.addPathDownLeft(9, 6);
-		grid.addPathUpDown(9, 5);
-		grid.addPathUpLeft(9, 4);
-		grid.addPathLeftRight(8, 4);
-		grid.addPathDownRight(7, 4);
-		for (int i = 3; i >= 0; i--) {
-			grid.addPathUpDown(7, i);
-		}
+	public boolean addPathLeftRight(int x, int y) {
+		return grid.addPathLeftRight(x, y);
+	}
+
+	/**
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
+	 * 
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
+	 */
+	public boolean addPathUpLeft(int x, int y) {
+		return grid.addPathUpLeft(x, y);
+	}
+
+	/**
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
+	 * 
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
+	 */
+	public boolean addPathUpRight(int x, int y) {
+		return grid.addPathUpRight(x, y);
+	}
+
+	/**
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
+	 * 
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
+	 */
+	public boolean addPathDownLeft(int x, int y) {
+		return grid.addPathDownLeft(x, y);
+	}
+
+	/**
+	 * Marks the corresponding Tile as being a part of the Path, with the
+	 * ability to connect to Tiles to the right and top. This means that when
+	 * the Path is created using constructPath(), this Tile can be included in
+	 * the Path.
+	 * 
+	 * @param column
+	 *            Column of the Tile to include in the Path
+	 * @param row
+	 *            Row of the Tile to include in the Path
+	 * @return True if Tile was successfully marked
+	 */
+	public boolean addPathDownRight(int x, int y) {
+		return grid.addPathDownRight(x, y);
+	}
+
+	/**
+	 * Sets the dimensions of the game grid.
+	 * Note that this will overwrite any existing game grid,
+	 * including destroying all of the things on it.
+	 * @param columns
+	 * @param rows
+	 */
+	public void setDimension(int x, int y) {
+		grid.setDimensions(x, y);
+	}
+	
+	/**
+	 * Set whether Tiles with paths in the grid are visible.
+	 * Note that Tiles without paths are never drawn,
+	 * because it ends up being really expensive.
+	 * @param isVisible		True if Path Tiles should be visible.
+	 */
+	public void makePathVisible() {
 		grid.setPathTileVisibilityTo(true);
 	}
 }
