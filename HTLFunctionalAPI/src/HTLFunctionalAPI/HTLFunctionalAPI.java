@@ -146,7 +146,7 @@ public class HTLFunctionalAPI extends HTL
 		placeBlockingTiles();
 		
 		background.setImage(IMAGE_BACKGROUND_EMPTY);
-		grid.setPathTileVisibilityTo(false);
+		grid.setPathTileVisibilityTo(true);
 	}
 	/**
 	 * Turns the Tiles that align with the path on the

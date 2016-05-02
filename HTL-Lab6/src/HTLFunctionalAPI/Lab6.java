@@ -21,12 +21,7 @@ public class Lab6 extends HTLFunctionalAPI
 		WalkerBasic.preloadResources();
 		
 		createPlaygroundPath();
-//		
-//		wizard = new TowerMedic();
-//		wizard.setTile(grid.getTile(5, 5));
-//		
-//		cutiepie = new WalkerBasic(grid.getPath());
-//		cutiepie.setDamageTakenPerSecond(5);
+
 	}
 	
 	public void updateWorld()
