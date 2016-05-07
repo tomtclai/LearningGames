@@ -9,8 +9,6 @@ public class Lab6 extends HTLFunctionalAPI
 {
 	public void buildWorld()
 	{
-		
-		super.buildWorld();
 		// 1. Make paths
 		/*      9| 
 		 *      8| 
