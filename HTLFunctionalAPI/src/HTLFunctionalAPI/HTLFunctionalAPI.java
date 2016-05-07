@@ -213,7 +213,9 @@ public class HTLFunctionalAPI extends HTL
 	 * because it ends up being really expensive.
 	 * @param isVisible		True if Path Tiles should be visible.
 	 */
-	public void makePathsVisible() {
+	public void makePathVisible() {
 		grid.setPathTileVisibilityTo(true);
 	}
+	
+	
 }
