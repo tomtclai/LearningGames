@@ -230,7 +230,7 @@ public class HTLFunctionalAPI extends HTL
 		return grid.constructPath(startColumn,startRow,endColumn,endRow);
 	}
 	
-	public void addBasicWalker() {
+	public void addWalker() {
 		walkers.add(new WalkerBasic(grid.getPath()));
 	}
 	public void updateWalkers() {

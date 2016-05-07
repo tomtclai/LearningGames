@@ -21,7 +21,7 @@ public class Lab8 extends HTLFunctionalAPI
 		preparePathForWalkers(0,5,19,5);
 		
 		
-		addBasicWalker();
+		addWalker();
 	}
 	
 	public void updateWorld() {
