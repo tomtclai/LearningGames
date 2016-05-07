@@ -26,10 +26,10 @@ public class Lab7 extends HTLFunctionalAPI
 		 *            columns
 		 */
 		
-		int currentNum1 = 0;
-		while (currentNum1 < 20) {
-			addPathLeftRight(currentNum1, 5);
-			currentNum1 = currentNum1 + 1;
+		int currentNum = 0;
+		while (currentNum < 20) {
+			addPathLeftRight(currentNum, 5);
+			currentNum = currentNum + 1;
 		}
 
 		/*      9| 
