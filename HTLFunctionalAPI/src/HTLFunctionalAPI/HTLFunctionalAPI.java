@@ -14,6 +14,7 @@ import TowerDefense.*;
 
 public class HTLFunctionalAPI extends HTL
 {
+	Vector<Walker> walkers = new Vector<Walker>();
 	public void initializeWorld()
 	{
 		super.initializeWorld();
@@ -217,5 +218,24 @@ public class HTLFunctionalAPI extends HTL
 		grid.setPathTileVisibilityTo(true);
 	}
 	
+	/**
+	 * It is necessary to call this method so that walkers can walk on a custom path.
+	 * @param startColumn		The column of the Tile where the Path begins.
+	 * @param startRow			The row of the Tile where the Path begins.
+	 * @param endColumn			The column of the Tile where the Path ends.
+	 * @param endRow			The row of the Tile where the Path ends.
+	 * @return					True if the Path was successfully prepared.
+	 */
+	public boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
+		return grid.constructPath(startColumn,startRow,endColumn,endRow);
+	}
 	
+	public void addBasicWalker() {
+		walkers.add(new WalkerBasic(grid.getPath()));
+	}
+	public void updateWalkers() {
+		for (Walker w: walkers) {
+			w.update();
+		}
+	}
 }

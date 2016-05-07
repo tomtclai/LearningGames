@@ -6,22 +6,25 @@ import TowerDefense.*;
  * @author Jeen Cherdchusilp
  */
 public class Lab8 extends HTLFunctionalAPI
-{
-	
-	public Lab8()
+{	
+	public void buildWorld()
 	{
-		super();
-	}
-	
-	public void initializeWorld()
-	{
-		super.initializeWorld();
-
-	}
-	
-	public void updateWorld()
-	{
-		super.updateWorld();
+		super.buildWorld();
 		
+		
+		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
+			addPathLeftRight(currentNum, 5);
+		}
+
+		makePathVisible();
+		
+		preparePathForWalkers(0,5,19,5);
+		
+		
+		addBasicWalker();
+	}
+	
+	public void updateWorld() {
+		updateWalkers();
 	}
 }
