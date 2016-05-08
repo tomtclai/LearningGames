@@ -22,5 +22,11 @@ public class Lab8 extends HTLFunctionalAPI
 	
 	public void updateWorld() {
 		updateWalkers();
+		
+		if(mouse.isButtonTapped(1)) {
+			Tile clickedTile = grid.getClickedTile();
+			if(clickedTile == null) return;		
+			towerSet.addTowerAt(clickedTile, true);
+		}
 	}
 }
