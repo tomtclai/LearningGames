@@ -7,7 +7,7 @@ import TowerDefense.*;
  */
 public class Lab6 extends HTLFunctionalAPI
 {
-	public void buildWorld()
+	public void buildGame()
 	{
 		// 1. Make paths
 		/*      9| 

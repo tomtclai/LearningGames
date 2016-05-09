@@ -7,7 +7,7 @@ import TowerDefense.*;
  */
 public class Lab8 extends HTLFunctionalAPI
 {	
-	public void buildWorld()
+	public void buildGame()
 	{			
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
@@ -18,9 +18,11 @@ public class Lab8 extends HTLFunctionalAPI
 		preparePathForWalkers(0,5,19,5);
 		
 		addWalker();
+	
 	}
 	
 	public void updateWorld() {
+		
 		updateWalkers();
 		
 		if(mouse.isButtonTapped(1)) {

@@ -11,7 +11,7 @@ public class Lab4 extends HTLFunctionalAPI
     int x = 0;
     int y = 0;
     
-	public void buildWorld()
+	public void buildGame()
 	{
         // Player wizard start
 		drawSpeedyWizard(0,0);
@@ -149,9 +149,8 @@ public class Lab4 extends HTLFunctionalAPI
 
 	}
 	
-	public void updateWorld()
+	public void updateGame()
 	{
-		super.updateWorld();
         if(keyboardIsPressingRight())
         {
             x = x + 1;

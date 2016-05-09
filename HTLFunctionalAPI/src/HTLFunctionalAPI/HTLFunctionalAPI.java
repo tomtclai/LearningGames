@@ -19,20 +19,28 @@ public class HTLFunctionalAPI extends HTL
 	{
 		super.initializeWorld();
 		setHUDVisibilityTo(false);
-		buildWorld();
+		buildGame();
 	}
 
 	public void updateWorld()
 	{
 		super.updateWorld();
 		towerSet.update();
+		updateGame();
+		
 	}
 
 	/**
 	 * The function to be overridden by the student. This method should be used
 	 * to "build the world" of the game by drawing key elements.
 	 */
-	public void buildWorld(){}
+	public void buildGame(){
+		
+	}
+	
+	public void updateGame() {
+	
+	}
 	
 	//-------------------------------------------------------------------------
 	

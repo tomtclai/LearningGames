@@ -6,7 +6,7 @@ package HTLFunctionalAPI;
  */
 public class Lab2 extends HTLFunctionalAPI
 {
-	public void buildWorld()
+	public void buildGame()
 	{
 		drawMedicWizard(10,9);  // x = 10, y = 9
 		drawMedicWizard(10,0);  // x = 10, y = 0
