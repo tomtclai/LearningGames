@@ -16,7 +16,7 @@ public class HTLFunctionalAPI extends HTL
 {
 
 
-	protected Tower selectedTower = null;
+	private Tower selectedTower = null;
 
 	Vector<Walker> walkers = new Vector<Walker>();
 	public void initializeWorld()
@@ -253,8 +253,26 @@ public class HTLFunctionalAPI extends HTL
 	public boolean mouseClicked() {
 		return mouse.isButtonTapped(1);
 	}
-
-	
+	public boolean aTowerIsSelected() {
+		return selectedTower != null;
+	}
+	public void moveTowerToClickedTile() {
+		selectedTower.teleportTo(grid.getClickedTile());
+		unselectTower();
+		selectedTower.playSoundMove();
+	}
+	public boolean clickedTowerIsSelected() {
+		return grid.getClickedTile().getOccupant() == selectedTower;
+	}
+	public boolean clickedTileHasTower() {
+		return grid.getClickedTile().hasOccupant();
+	}
+	public void selectClickedTower() {
+		selectTower(grid.getClickedTile().getOccupant());
+	}
+	public void addTowerAtClickedTile() {
+		towerSet.addTowerAt(grid.getClickedTile(), true);
+	}
 	/**
 	 * Sets a tower to be the currently selected tower. Used when the player
 	 * clicks a tower.

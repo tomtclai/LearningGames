@@ -24,35 +24,26 @@ public class Lab8 extends HTLFunctionalAPI
 	public void updateGame() {
 		
 		updateWalkers();
-		
 		// in-game
 		if (mouseClicked()) {
 
-			Tile clickedTile = grid.getClickedTile();
-			if (clickedTile == null)
-				return;
-
 			// if a Tower is selected, can it be moved to this Tile?
-			if (selectedTower != null && clickedTile.isAvailable() && !clickedTile.hasPath()) {
-				selectedTower.teleportTo(clickedTile);
-				unselectTower();
-				selectedTower.playSoundMove();
-			}
-			// otherwise, if there's no Tower selected, can we place a
-			// Tower?
-			else if (clickedTile.isAvailable() && !clickedTile.hasPath()) {
-				towerSet.addTowerAt(clickedTile, true);
+			if (aTowerIsSelected()) {
+				moveTowerToClickedTile();
 			}
 			// otherwise, if there's a Tower on the tile, toggle selection
 			// of the tower
-			else if (clickedTile.hasOccupant()) {
-				Tower clickedTower = clickedTile.getOccupant();
+			else if (clickedTileHasTower()) {
 
-				if (clickedTower == selectedTower) {
+				if (clickedTowerIsSelected()) {
 					unselectTower();
 				} else {
-					selectTower(clickedTower);
+					selectClickedTower();
 				}
+			}
+			// otherwise, place a Tower
+			else {
+				addTowerAtClickedTile();
 			}
 
 		}
