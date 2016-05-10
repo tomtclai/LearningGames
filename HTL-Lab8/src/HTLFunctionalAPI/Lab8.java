@@ -21,7 +21,7 @@ public class Lab8 extends HTLFunctionalAPI
 	
 	}
 	
-	public void updateWorld() {
+	public void updateGame() {
 		
 		updateWalkers();
 		
