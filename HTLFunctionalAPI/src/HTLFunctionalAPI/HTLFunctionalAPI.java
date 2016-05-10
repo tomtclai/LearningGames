@@ -14,6 +14,10 @@ import TowerDefense.*;
 
 public class HTLFunctionalAPI extends HTL
 {
+
+
+	protected Tower selectedTower = null;
+
 	Vector<Walker> walkers = new Vector<Walker>();
 	public void initializeWorld()
 	{
@@ -245,5 +249,33 @@ public class HTLFunctionalAPI extends HTL
 		for (Walker w: walkers) {
 			w.update();
 		}
+	}
+	public boolean mouseClicked() {
+		return mouse.isButtonTapped(1);
+	}
+
+	
+	/**
+	 * Sets a tower to be the currently selected tower. Used when the player
+	 * clicks a tower.
+	 * 
+	 * @param tower
+	 *            The tower to select.
+	 */
+	protected void selectTower(Tower tower) {
+		if (tower != null) {
+			unselectTower();
+			selectedTower = tower;
+			selectedTower.setSelectedTo(true);
+		}
+	}
+	/**
+	 * If there is a selected tower, it is no longer selected.
+	 */
+	protected void unselectTower() {
+		if (selectedTower != null) {
+			selectedTower.setSelectedTo(false);
+		}
+		selectedTower = null;
 	}
 }
