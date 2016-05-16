@@ -1,77 +1,73 @@
 package HTLFunctionalAPI;
+
 import java.awt.event.KeyEvent;
 import java.util.*;
 import Engine.Vector2;
 import TowerDefense.*;
 
 /**
- * This is a functional API for the game Hug The Line (HTL).
- * It is designed for use the introductory computer science lessons.
+ * This is a functional API for the game Hug The Line (HTL). It is designed for
+ * use the introductory computer science lessons.
  * 
  * @author Kunlakan (Jeen) Cherdchusilp
  * @author Tom Lai
  *
  */
 
-public class HTLFunctionalAPI extends HTL
-{
-
+public class HTLFunctionalAPI extends HTL {
 
 	private Tower selectedTower = null;
-	private boolean towerMedicSoundPlayed = false;
-	private boolean towerSpeedySoundPlayed = false;
-	
+	protected boolean towerSoundPlayed = false;
+	ArrayList<Long> lastSoundPlayedTime = new ArrayList<Long>();
 	Vector<Walker> walkers = new Vector<Walker>();
-	public void initializeWorld()
-	{
+
+	public void initializeWorld() {
 		super.initializeWorld();
 		setHUDVisibilityTo(false);
 		buildGame();
 	}
 
-	public void updateWorld()
-	{
+	public void updateWorld() {
 		super.updateWorld();
 		towerSet.update();
-		towerMedicSoundPlayed = false;
-		towerSpeedySoundPlayed = false;
 		updateGame();
-		
+
 	}
 
 	/**
 	 * The function to be overridden by the student. This method should be used
 	 * to "build the world" of the game by drawing key elements.
 	 */
-	public void buildGame(){
-		
+	public void buildGame() {
+
 	}
-	
+
 	public void updateGame() {
-	
+
 	}
-	
-	//-------------------------------------------------------------------------
-	
+
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Draws a medic tower at a random tile.
 	 */
-	public void drawMedicWizard()
-	{		
+	public void drawMedicWizard() {
 		Random random = new Random();
-		int x = random.nextInt((int)SCREEN_WIDTH - 1);
-		int y = random.nextInt((int)SCREEN_HEIGHT);
+		int x = random.nextInt((int) SCREEN_WIDTH - 1);
+		int y = random.nextInt((int) SCREEN_HEIGHT);
 
 		drawMedicWizard(x, y);
 	}
-	
+
 	/**
 	 * Draws a medic tower at the given x and y coordinate.
-	 * @param x		The x coordinate of the position of the medic wizard
-	 * @param y		The y coordinate of the position of the medic wizard
+	 * 
+	 * @param x
+	 *            The x coordinate of the position of the medic wizard
+	 * @param y
+	 *            The y coordinate of the position of the medic wizard
 	 */
-	public void drawMedicWizard(int x, int y)
-	{
+	public void drawMedicWizard(int x, int y) {
 		Tile position = grid.getTile(x, y);
 		towerSet.addTowerAt(position, true);
 	}
@@ -79,26 +75,27 @@ public class HTLFunctionalAPI extends HTL
 	/**
 	 * Draws a speedy tower at a random tile.
 	 */
-	public void drawSpeedyWizard()
-	{
+	public void drawSpeedyWizard() {
 		Random random = new Random();
-		int x = random.nextInt((int)SCREEN_WIDTH - 1);
-		int y = random.nextInt((int)SCREEN_HEIGHT);
+		int x = random.nextInt((int) SCREEN_WIDTH - 1);
+		int y = random.nextInt((int) SCREEN_HEIGHT);
 
 		drawSpeedyWizard(x, y);
 	}
-	
+
 	/**
 	 * Draws a speedy tower at the given x and y coordinate.
-	 * @param x		The x coordinate of the position of the speedy wizard
-	 * @param y		The y coordinate of the position of the speedy wizard
+	 * 
+	 * @param x
+	 *            The x coordinate of the position of the speedy wizard
+	 * @param y
+	 *            The y coordinate of the position of the speedy wizard
 	 */
-	public void drawSpeedyWizard(int x, int y)
-	{
+	public void drawSpeedyWizard(int x, int y) {
 		Tile position = grid.getTile(x, y);
 		towerSet.addTowerAt(position, false);
 	}
-	
+
 	/**
 	 * @return true if the user is pressing the up arrow
 	 */
@@ -126,7 +123,6 @@ public class HTLFunctionalAPI extends HTL
 	public boolean keyboardIsPressingRight() {
 		return keyboard.isButtonTapped(KeyEvent.VK_RIGHT);
 	}
-	
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
@@ -162,9 +158,9 @@ public class HTLFunctionalAPI extends HTL
 
 	/**
 	 * Marks the corresponding Tile as being a part of the Path, with the
-	 * ability to connect to Tiles to the left and top. This means that when
-	 * the Path is created using constructPath(), this Tile can be included in
-	 * the Path.
+	 * ability to connect to Tiles to the left and top. This means that when the
+	 * Path is created using constructPath(), this Tile can be included in the
+	 * Path.
 	 * 
 	 * @param column
 	 *            Column of the Tile to include in the Path
@@ -224,60 +220,76 @@ public class HTLFunctionalAPI extends HTL
 		return grid.addPathDownRight(x, y);
 	}
 
-	
 	/**
-	 * Make paths in the grid visible.
-	 * Note that Tiles without paths are never drawn,
-	 * because it ends up being really expensive.
-	 * @param isVisible		True if Path Tiles should be visible.
+	 * Make paths in the grid visible. Note that Tiles without paths are never
+	 * drawn, because it ends up being really expensive.
+	 * 
+	 * @param isVisible
+	 *            True if Path Tiles should be visible.
 	 */
 	public void makePathVisible() {
 		grid.setPathTileVisibilityTo(true);
 	}
-	
+
 	/**
-	 * It is necessary to call this method so that walkers can walk on a custom path.
-	 * @param startColumn		The column of the Tile where the Path begins.
-	 * @param startRow			The row of the Tile where the Path begins.
-	 * @param endColumn			The column of the Tile where the Path ends.
-	 * @param endRow			The row of the Tile where the Path ends.
-	 * @return					True if the Path was successfully prepared.
+	 * It is necessary to call this method so that walkers can walk on a custom
+	 * path.
+	 * 
+	 * @param startColumn
+	 *            The column of the Tile where the Path begins.
+	 * @param startRow
+	 *            The row of the Tile where the Path begins.
+	 * @param endColumn
+	 *            The column of the Tile where the Path ends.
+	 * @param endRow
+	 *            The row of the Tile where the Path ends.
+	 * @return True if the Path was successfully prepared.
 	 */
 	public boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
-		return grid.constructPath(startColumn,startRow,endColumn,endRow);
+		return grid.constructPath(startColumn, startRow, endColumn, endRow);
 	}
-	
+
 	public void addWalker() {
 		walkers.add(new WalkerBasic(grid.getPath()));
 	}
+
 	public void updateWalkers() {
-		for (Walker w: walkers) {
+		for (Walker w : walkers) {
 			w.update();
 		}
 	}
+
 	public boolean mouseClicked() {
 		return mouse.isButtonTapped(1);
 	}
+
 	public boolean aTowerIsSelected() {
 		return selectedTower != null;
 	}
+
 	public void moveTowerToClickedTile() {
 		selectedTower.teleportTo(grid.getClickedTile());
 		unselectTower();
 		selectedTower.playSoundMove();
 	}
+
 	public boolean clickedTowerIsSelected() {
 		return grid.getClickedTile().getOccupant() == selectedTower;
 	}
+
 	public boolean clickedTileHasTower() {
 		return grid.getClickedTile().hasOccupant();
 	}
+
 	public void selectClickedTower() {
 		selectTower(grid.getClickedTile().getOccupant());
 	}
+
 	public void addTowerAtClickedTile() {
 		towerSet.addTowerAt(grid.getClickedTile(), true);
+		lastSoundPlayedTime.add((long) 0);
 	}
+
 	/**
 	 * Sets a tower to be the currently selected tower. Used when the player
 	 * clicks a tower.
@@ -292,6 +304,7 @@ public class HTLFunctionalAPI extends HTL
 			selectedTower.setSelectedTo(true);
 		}
 	}
+
 	/**
 	 * If there is a selected tower, it is no longer selected.
 	 */
@@ -301,22 +314,33 @@ public class HTLFunctionalAPI extends HTL
 		}
 		selectedTower = null;
 	}
+
 	protected int numOfTowers() {
 		return towerSet.getArrayOfTowers().length;
-	}	
-	protected int numOfWalkers() {
-		return towerSet.getArrayOfTowers().length;
 	}
+
+	protected int numOfWalkers() {
+		return walkerSet.getArrayOfWalkers().length;
+	}
+
 	protected boolean towerIsSpeedy(int index) {
 		return towerSet.getArrayOfTowers()[index].getTowerType() == Tower.Type.SPEEDY;
 	}
+
 	protected boolean towerIsMedic(int index) {
 		return towerSet.getArrayOfTowers()[index].getTowerType() == Tower.Type.MEDIC;
 	}
+
 	protected boolean towerShouldFire(int towerIndex, int walkerIndex) {
+		long lastSoundTime = lastSoundPlayedTime.get(towerIndex);
+		if (System.currentTimeMillis() - lastSoundTime > 5000) { //todo: check with branden how often they should fire
+			towerSoundPlayed = false;
+			lastSoundPlayedTime.set(towerIndex, System.currentTimeMillis());
+		}
+
 		Walker walker = walkerSet.getArrayOfWalkers()[walkerIndex];
 		Tower tower = towerSet.getArrayOfTowers()[towerIndex];
-		
+
 		if (!towerSet.getArrayOfTowers()[towerIndex].cooldownIsReady()) {
 			return false;
 		}
@@ -324,48 +348,45 @@ public class HTLFunctionalAPI extends HTL
 			return false;
 		}
 		Tile towerTile = tower.getTile();
-		if(towerTile == null)
-		{
+		if (towerTile == null) {
 			return false;
 		}
-		
+
 		int mapColumnOfTower = towerTile.getGridColumn();
-		int mapRowOfTower = towerTile.getGridRow();		
+		int mapRowOfTower = towerTile.getGridRow();
 		Vector2 walkerPos = walker.getCenter();
 
 		// search surrounding tiles in 3x3 for walker
-		for(int row = mapRowOfTower-1; row <= mapRowOfTower+1; row++)
-		{
-			for(int column = mapColumnOfTower-1; column <= mapColumnOfTower+1; column++)
-			{
+		for (int row = mapRowOfTower - 1; row <= mapRowOfTower + 1; row++) {
+			for (int column = mapColumnOfTower - 1; column <= mapColumnOfTower + 1; column++) {
 				Tile testTile = grid.getTile(column, row);
-				if(testTile != null && testTile.containsPoint(walkerPos))
-				{								
+				if (testTile != null && testTile.containsPoint(walkerPos)) {
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
+
 	protected void towerCastMedicSpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
-		if (!towerMedicSoundPlayed && t.getTowerType() == Tower.Type.MEDIC) {
+		if (!towerSoundPlayed) {
 			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
 			t.playEffectSpellcast();
 			t.playSoundSpellcast();
-			towerMedicSoundPlayed = true;
+			towerSoundPlayed = true;
 			w.addHealth(t.getCastHealthAdjust());
 		}
 	}
 
 	protected void towerCastSpeedySpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
-		if (!towerSpeedySoundPlayed && t.getTowerType() == Tower.Type.SPEEDY) {
+		if (!towerSoundPlayed) {
 			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
 			t.playEffectSpellcast();
 			t.playSoundSpellcast();
-			towerSpeedySoundPlayed = true;
+			towerSoundPlayed = true;
 			w.applySpeedBuff(t.getCastSpeedAdjustMultiplier(), t.getCastSpeedAdjustDuration());
 		}
 	}
