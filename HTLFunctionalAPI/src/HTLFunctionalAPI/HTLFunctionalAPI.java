@@ -18,7 +18,7 @@ public class HTLFunctionalAPI extends HTL {
 
 	private Tower selectedTower = null;
 	protected boolean towerSoundPlayed = false;
-	ArrayList<Long> lastSoundPlayedTime = new ArrayList<Long>();
+	ArrayList<Long> towersFireTime = new ArrayList<Long>(); 
 	Vector<Walker> walkers = new Vector<Walker>();
 
 	public void initializeWorld() {
@@ -287,7 +287,7 @@ public class HTLFunctionalAPI extends HTL {
 
 	public void addTowerAtClickedTile() {
 		towerSet.addTowerAt(grid.getClickedTile(), true);
-		lastSoundPlayedTime.add((long) 0);
+		towersFireTime.add((long) 0);
 	}
 
 	/**
@@ -332,10 +332,10 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	protected boolean towerShouldFire(int towerIndex, int walkerIndex) {
-		long lastSoundTime = lastSoundPlayedTime.get(towerIndex);
+		long lastSoundTime = towersFireTime.get(towerIndex);
 		if (System.currentTimeMillis() - lastSoundTime > 5000) { //todo: check with branden how often they should fire
 			towerSoundPlayed = false;
-			lastSoundPlayedTime.set(towerIndex, System.currentTimeMillis());
+			towersFireTime.set(towerIndex, System.currentTimeMillis());
 		}
 
 		Walker walker = walkerSet.getArrayOfWalkers()[walkerIndex];
