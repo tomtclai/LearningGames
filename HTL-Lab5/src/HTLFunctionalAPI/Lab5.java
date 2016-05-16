@@ -13,15 +13,7 @@ public class Lab5 extends HTLFunctionalAPI
 		super();
 	}
 	
-	public void initializeWorld()
-	{
-		super.initializeWorld();
 
-	}
 	
-	public void updateWorld()
-	{
-		super.updateWorld();
-		
-	}
+
 }

@@ -24,11 +24,45 @@ public class Lab8 extends HTLFunctionalAPI
 	public void updateGame() {
 		
 		updateWalkers();
-		
-		if(mouse.isButtonTapped(1)) {
-			Tile clickedTile = grid.getClickedTile(); // returns null, dunno why
-			if(clickedTile == null) return;		
-			towerSet.addTowerAt(clickedTile, true);
+		// in-game
+		if (mouseClicked()) {
+
+			// if a Tower is selected, can it be moved to this Tile?
+			if (aTowerIsSelected()) {
+				moveTowerToClickedTile();
+			}
+			// otherwise, if there's a Tower on the tile, toggle selection
+			// of the tower
+			else if (clickedTileHasTower()) {
+
+				if (clickedTowerIsSelected()) {
+					unselectTower();
+				} else {
+					selectClickedTower();
+				}
+			}
+			// otherwise, place a Tower
+			else {
+				addTowerAtClickedTile();
+			}
+
 		}
+		
+		
+		// heal walkers or make walkers faster
+		for (int i = 0; i < numOfTowers(); i++) {
+			for (int j = 0; j < numOfWalkers(); j++) {
+				if (towerShouldFire(i, j)) {
+					if (towerIsMedic(i)) {
+						towerCastMedicSpellOnWalker(i, j);
+					} else if (towerIsSpeedy(i)) {
+						towerCastSpeedySpellOnWalker(i, j);
+					}
+				}
+			}
+		}
+		
+		
+		
 	}
 }

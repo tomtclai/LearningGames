@@ -1,6 +1,7 @@
 package HTLFunctionalAPI;
 import java.awt.event.KeyEvent;
 import java.util.*;
+import Engine.Vector2;
 import TowerDefense.*;
 
 /**
@@ -14,6 +15,12 @@ import TowerDefense.*;
 
 public class HTLFunctionalAPI extends HTL
 {
+
+
+	private Tower selectedTower = null;
+	private boolean towerMedicSoundPlayed = false;
+	private boolean towerSpeedySoundPlayed = false;
+	
 	Vector<Walker> walkers = new Vector<Walker>();
 	public void initializeWorld()
 	{
@@ -26,6 +33,8 @@ public class HTLFunctionalAPI extends HTL
 	{
 		super.updateWorld();
 		towerSet.update();
+		towerMedicSoundPlayed = false;
+		towerSpeedySoundPlayed = false;
 		updateGame();
 		
 	}
@@ -244,6 +253,120 @@ public class HTLFunctionalAPI extends HTL
 	public void updateWalkers() {
 		for (Walker w: walkers) {
 			w.update();
+		}
+	}
+	public boolean mouseClicked() {
+		return mouse.isButtonTapped(1);
+	}
+	public boolean aTowerIsSelected() {
+		return selectedTower != null;
+	}
+	public void moveTowerToClickedTile() {
+		selectedTower.teleportTo(grid.getClickedTile());
+		unselectTower();
+		selectedTower.playSoundMove();
+	}
+	public boolean clickedTowerIsSelected() {
+		return grid.getClickedTile().getOccupant() == selectedTower;
+	}
+	public boolean clickedTileHasTower() {
+		return grid.getClickedTile().hasOccupant();
+	}
+	public void selectClickedTower() {
+		selectTower(grid.getClickedTile().getOccupant());
+	}
+	public void addTowerAtClickedTile() {
+		towerSet.addTowerAt(grid.getClickedTile(), true);
+	}
+	/**
+	 * Sets a tower to be the currently selected tower. Used when the player
+	 * clicks a tower.
+	 * 
+	 * @param tower
+	 *            The tower to select.
+	 */
+	protected void selectTower(Tower tower) {
+		if (tower != null) {
+			unselectTower();
+			selectedTower = tower;
+			selectedTower.setSelectedTo(true);
+		}
+	}
+	/**
+	 * If there is a selected tower, it is no longer selected.
+	 */
+	protected void unselectTower() {
+		if (selectedTower != null) {
+			selectedTower.setSelectedTo(false);
+		}
+		selectedTower = null;
+	}
+	protected int numOfTowers() {
+		return towerSet.getArrayOfTowers().length;
+	}	
+	protected int numOfWalkers() {
+		return towerSet.getArrayOfTowers().length;
+	}
+	protected boolean towerIsSpeedy(int index) {
+		return towerSet.getArrayOfTowers()[index].getTowerType() == Tower.Type.SPEEDY;
+	}
+	protected boolean towerIsMedic(int index) {
+		return towerSet.getArrayOfTowers()[index].getTowerType() == Tower.Type.MEDIC;
+	}
+	protected boolean towerShouldFire(int towerIndex, int walkerIndex) {
+		Walker walker = walkerSet.getArrayOfWalkers()[walkerIndex];
+		Tower tower = towerSet.getArrayOfTowers()[towerIndex];
+		
+		if (!towerSet.getArrayOfTowers()[towerIndex].cooldownIsReady()) {
+			return false;
+		}
+		if (walker.isDead()) {
+			return false;
+		}
+		Tile towerTile = tower.getTile();
+		if(towerTile == null)
+		{
+			return false;
+		}
+		
+		int mapColumnOfTower = towerTile.getGridColumn();
+		int mapRowOfTower = towerTile.getGridRow();		
+		Vector2 walkerPos = walker.getCenter();
+
+		// search surrounding tiles in 3x3 for walker
+		for(int row = mapRowOfTower-1; row <= mapRowOfTower+1; row++)
+		{
+			for(int column = mapColumnOfTower-1; column <= mapColumnOfTower+1; column++)
+			{
+				Tile testTile = grid.getTile(column, row);
+				if(testTile != null && testTile.containsPoint(walkerPos))
+				{								
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	protected void towerCastMedicSpellOnWalker(int towerIndex, int walkerIndex) {
+		Tower t = towerSet.getArrayOfTowers()[towerIndex];
+		if (!towerMedicSoundPlayed && t.getTowerType() == Tower.Type.MEDIC) {
+			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
+			t.playEffectSpellcast();
+			t.playSoundSpellcast();
+			towerMedicSoundPlayed = true;
+			w.addHealth(t.getCastHealthAdjust());
+		}
+	}
+
+	protected void towerCastSpeedySpellOnWalker(int towerIndex, int walkerIndex) {
+		Tower t = towerSet.getArrayOfTowers()[towerIndex];
+		if (!towerSpeedySoundPlayed && t.getTowerType() == Tower.Type.SPEEDY) {
+			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
+			t.playEffectSpellcast();
+			t.playSoundSpellcast();
+			towerSpeedySoundPlayed = true;
+			w.applySpeedBuff(t.getCastSpeedAdjustMultiplier(), t.getCastSpeedAdjustDuration());
 		}
 	}
 }
