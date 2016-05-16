@@ -6,9 +6,8 @@ package HTLFunctionalAPI;
  */
 public class Lab3 extends HTLFunctionalAPI
 {
-	public void updateWorld()
+	public void updateGame()
 	{
-		super.updateWorld();
 		if (keyboardIsPressingRight()) 
 		{
 			drawSpeedyWizard(19, 5); // x = 19, y = 5
