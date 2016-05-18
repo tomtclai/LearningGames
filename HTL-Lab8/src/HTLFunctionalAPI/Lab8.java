@@ -50,19 +50,7 @@ public class Lab8 extends HTLFunctionalAPI
 			}
 
 		}
-		
-		
-		// heal walkers or make walkers faster
-		for (int i = 0; i < numOfTowers(); i++) {
-			for (int j = 0; j < numOfWalkers(); j++) {
-				if (towerShouldFire(i, j)) {
-					// either speedy or medic, pick one
-					// towerCastMedicSpellOnWalker(i, j);
-					towerCastSpeedySpellOnWalker(i, j);
-				}
-			}
-		}
-		
+		makeTowersFire();
 		
 		
 	}
