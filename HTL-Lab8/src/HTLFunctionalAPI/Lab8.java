@@ -16,8 +16,9 @@ public class Lab8 extends HTLFunctionalAPI
 		makePathVisible();
 		
 		preparePathForWalkers(0,5,19,5);
-		
-		addWalker();
+		// either Walker or QuickWalker, pick one  
+		// addWalker();
+		addQuickWalker();
 	
 	}
 	
@@ -43,7 +44,9 @@ public class Lab8 extends HTLFunctionalAPI
 			}
 			// otherwise, place a Tower
 			else {
-				addTowerAtClickedTile();
+				// either speedy or medic, pick one
+				// addMedicTowerAtClickedTile();
+				addSpeedyTowerAtClickedTile();
 			}
 
 		}
@@ -53,11 +56,9 @@ public class Lab8 extends HTLFunctionalAPI
 		for (int i = 0; i < numOfTowers(); i++) {
 			for (int j = 0; j < numOfWalkers(); j++) {
 				if (towerShouldFire(i, j)) {
-					if (towerIsMedic(i)) {
-						towerCastMedicSpellOnWalker(i, j);
-					} else if (towerIsSpeedy(i)) {
-						towerCastSpeedySpellOnWalker(i, j);
-					}
+					// either speedy or medic, pick one
+					// towerCastMedicSpellOnWalker(i, j);
+					towerCastSpeedySpellOnWalker(i, j);
 				}
 			}
 		}
