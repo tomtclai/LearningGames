@@ -62,8 +62,7 @@ public class Lab9 extends HTLFunctionalAPI
 				}
 			}
 		}
-		
-		
+
 		
 	}
 }
