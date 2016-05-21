@@ -29,7 +29,13 @@ public class HTLFunctionalAPI extends HTL {
 	protected boolean towerSoundPlayed = false;
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
 	protected WaveSystem spawner = new WaveSystem();;
-
+	private enum gamePhase
+	{
+		GAMEPLAY, WIN, LOSE
+	}
+	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
+	private gamePhase previousGamePhase = null;
+	
 	/**
 	* Initializes the world
 	* Calls buildGame, the method to be overridden by the student
@@ -350,7 +356,10 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return true if the clicked tile is occupied; false otherwise
 	 */
 	public boolean clickedTileHasTower() {
-		return grid.getClickedTile().hasOccupant();
+		if ( grid.getClickedTile() != null){ 
+			return grid.getClickedTile().hasOccupant();
+		}
+		return false;
 	}
 
 	/**
@@ -547,12 +556,9 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return Whether the game is considered over.
 	 */
 	protected boolean gameIsOver() {
-		if (!spawner.isDone()) { //expected isDone to return true, but it is false
-			return false;
-		}
 
 		for (Walker walker : walkerSet.getArrayOfWalkers()) {
-			if (!walker.isDead()) { //expected isDead to return true; but it is false
+			if (!walker.isAtPathEnd()) { //expected isDead to return true; but it is false
 				return false;
 			}
 		}
@@ -575,48 +581,60 @@ public class HTLFunctionalAPI extends HTL {
 	 * Transition to the win screen.
 	 */
 	protected void enterWin() {
-		resources.stopSound(MUSIC_TITLE);
-		resources.stopSound(MUSIC_LOSE);
-		resources.stopSound(MUSIC_BACKGROUND);
-		resources.playSound(MUSIC_WIN);
+		if (currentGamePhase == gamePhase.GAMEPLAY) {
+			resources.stopSound(MUSIC_TITLE);
+			resources.stopSound(MUSIC_LOSE);
+			resources.stopSound(MUSIC_BACKGROUND);
+			resources.playSound(MUSIC_WIN);
 
-		winScoreText.setText("" + (int) score);
+			winScoreText.setText("" + (int) score);
 
-		// visuals
-		phaseLayerWin.setVisibilityTo(true);
-		layerScreenDarkener.setVisibilityTo(true);
-		phaseLayerGameplay.setVisibilityTo(true);
+			// visuals
+			phaseLayerWin.setVisibilityTo(true);
+			layerScreenDarkener.setVisibilityTo(true);
+			phaseLayerGameplay.setVisibilityTo(true);
 
-		phaseLayerTitleScreen.setVisibilityTo(false);
-		phaseLayerCredits.setVisibilityTo(false);
-		phaseLayerRestartConfirm.setVisibilityTo(false);
-		phaseLayerQuitConfirm.setVisibilityTo(false);
-		phaseLayerLose.setVisibilityTo(false);
-		phaseLayerLevelIntro.setVisibilityTo(false);
-		phaseLayerPause.setVisibilityTo(false);
+			phaseLayerTitleScreen.setVisibilityTo(false);
+			phaseLayerCredits.setVisibilityTo(false);
+			phaseLayerRestartConfirm.setVisibilityTo(false);
+			phaseLayerQuitConfirm.setVisibilityTo(false);
+			phaseLayerLose.setVisibilityTo(false);
+			phaseLayerLevelIntro.setVisibilityTo(false);
+			phaseLayerPause.setVisibilityTo(false);
+			
+			setCurrentGamePhase(gamePhase.WIN);
+		}
 	}
 
 	/**
 	 * Transition to the Lose screen.
 	 */
 	protected void enterLose() {
+		if (currentGamePhase == gamePhase.GAMEPLAY) {
+			resources.stopSound(MUSIC_TITLE);
+			resources.stopSound(MUSIC_WIN);
+			resources.stopSound(MUSIC_BACKGROUND);
+			resources.playSound(MUSIC_LOSE);
 
-		resources.stopSound(MUSIC_TITLE);
-		resources.stopSound(MUSIC_WIN);
-		resources.stopSound(MUSIC_BACKGROUND);
-		resources.playSound(MUSIC_LOSE);
+			// visuals
+			phaseLayerLose.setVisibilityTo(true);
+			layerScreenDarkener.setVisibilityTo(true);
+			phaseLayerGameplay.setVisibilityTo(true);
 
-		// visuals
-		phaseLayerLose.setVisibilityTo(true);
-		layerScreenDarkener.setVisibilityTo(true);
-		phaseLayerGameplay.setVisibilityTo(true);
+			phaseLayerTitleScreen.setVisibilityTo(false);
+			phaseLayerCredits.setVisibilityTo(false);
+			phaseLayerRestartConfirm.setVisibilityTo(false);
+			phaseLayerQuitConfirm.setVisibilityTo(false);
+			phaseLayerWin.setVisibilityTo(false);
+			phaseLayerLevelIntro.setVisibilityTo(false);
+			phaseLayerPause.setVisibilityTo(false);
+			
+			setCurrentGamePhase(gamePhase.LOSE);
+		}
+	}
 
-		phaseLayerTitleScreen.setVisibilityTo(false);
-		phaseLayerCredits.setVisibilityTo(false);
-		phaseLayerRestartConfirm.setVisibilityTo(false);
-		phaseLayerQuitConfirm.setVisibilityTo(false);
-		phaseLayerWin.setVisibilityTo(false);
-		phaseLayerLevelIntro.setVisibilityTo(false);
-		phaseLayerPause.setVisibilityTo(false);
+	private void setCurrentGamePhase(gamePhase currentGamePhase) {
+		previousGamePhase = this.currentGamePhase;
+		this.currentGamePhase = currentGamePhase;
 	}
 }
