@@ -23,8 +23,6 @@ public class Lab8 extends HTLFunctionalAPI
 	}
 	
 	public void updateGame() {
-		
-		updateWalkers();
 		// in-game
 		if (mouseClicked()) {
 

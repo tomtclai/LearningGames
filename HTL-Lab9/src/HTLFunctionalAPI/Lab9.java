@@ -24,7 +24,6 @@ public class Lab9 extends HTLFunctionalAPI
 	
 	public void updateGame() {
 		
-		updateWalkers();
 		// in-game
 		if (mouseClicked()) {
 
