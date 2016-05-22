@@ -19,7 +19,7 @@ public class Lab10 extends HTLFunctionalAPI
 		// either Walker or QuickWalker, pick one  
 		// addWalker();
 		addQuickWalker();
-	
+//	
 		setHUDVisibilityTo(true);
 	}
 	

@@ -3,6 +3,8 @@ package HTLFunctionalAPI;
 import java.awt.event.KeyEvent;
 import java.util.*;
 
+import Engine.DrawingLayer;
+import Engine.GameObject;
 import Engine.Text;
 import Engine.Vector2;
 import TowerDefense.*;
@@ -25,16 +27,45 @@ public class HTLFunctionalAPI extends HTL {
 	private static final String MUSIC_BACKGROUND = "audio/Music/It's a Wonderful World.mp3";
 	private static final String MUSIC_WIN = "audio/Music/Together we Survive.mp3";
 	private static final String MUSIC_LOSE = "audio/Music/Sea of Sadness.mp3";
+	public static final String IMAGE_LOSE_POP_UP = "art/UI/HTL_PopUp_Lose.png";
+	public static final String IMAGE_LOSE_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
+	public static final String IMAGE_LOSE_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
+	
+	public static final String IMAGE_WIN_POP_UP = "art/UI/HTL_PopUp_Win.png";
+	public static final String IMAGE_WIN_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
+	public static final String IMAGE_WIN_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
+	
+	private GameObject winPopUp = null;
+	private GameObject winButtonRestart = null;
+	private GameObject winButtonQuit = null;
+	
+	private GameObject losePopUp = null;
+	private GameObject loseButtonRestart = null;
+	private GameObject loseButtonQuit = null;
+	
+	
 	private Tower selectedTower = null;
 	protected boolean towerSoundPlayed = false;
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
-	protected WaveSystem spawner = new WaveSystem();;
+	protected WaveSystem spawner = new WaveSystem();
+	
+	
+	// HUD stuff
+	private GameObject hud = null;
+	protected GameObject buttonPause = null;
+	private Text textMovesRemaining = null;
+	private Text textTowerMedicRemaining = null;
+	private Text textTowerSpeedyRemaining = null;
+	private Text textSurvivalsBasic = null;
+	private Text textSurvivalsQuick = null;
+	private Text textScore = null;
+	private Text textTimeUntilNextWave = null;
+	
 	private enum gamePhase
 	{
 		GAMEPLAY, WIN, LOSE
 	}
 	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
-	private gamePhase previousGamePhase = null;
 	
 	/**
 	* Initializes the world
@@ -42,10 +73,14 @@ public class HTLFunctionalAPI extends HTL {
 	*/
 	public void initializeWorld() {
 		super.initializeWorld();
-		setHUDVisibilityTo(false);
+		phaseLayerLose.setVisibilityTo(false);
+		phaseLayerWin.setVisibilityTo(false);
 		buildGame();
 		initializeSettings();
 		initializeWinScreenAssets();
+		initializeLoseScreenAssets();
+		initializeDrawingLayers();
+		initializeHUD();
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		
@@ -58,9 +93,93 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	private void initializeWinScreenAssets() {
-		winScoreText = makeText(SCREEN_CENTER_X - .95f, SCREEN_CENTER_Y + 1.3f);
-		winScoreText.setFontSize(38);
-		winScoreText.moveToDrawingLayer(phaseLayerWin);
+		if(winPopUp == null)
+		{
+			float popUpWidth = gameUnitsFromPixels(445);
+			float popUpHeight = gameUnitsFromPixels(515);
+			winPopUp = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, popUpWidth, popUpHeight);
+			winPopUp.setImage(IMAGE_WIN_POP_UP);
+			winPopUp.moveToDrawingLayer(phaseLayerWin);
+			
+			float buttonWidth = gameUnitsFromPixels(224); 
+			float buttonHeight = gameUnitsFromPixels(85);			
+			winButtonRestart = new GameObject(SCREEN_CENTER_X, 5.4f, buttonWidth, buttonHeight);
+			winButtonRestart.setImage(IMAGE_WIN_BUTTON_RESTART);
+			winButtonRestart.moveToDrawingLayer(phaseLayerWin);
+			
+			winButtonQuit = new GameObject(SCREEN_CENTER_X, 3.9f, buttonWidth, buttonHeight);
+			winButtonQuit.setImage(IMAGE_WIN_BUTTON_QUIT);
+			winButtonQuit.moveToDrawingLayer(phaseLayerWin);
+			
+			winScoreText = makeText(SCREEN_CENTER_X - .95f, SCREEN_CENTER_Y + 1.3f);	
+			winScoreText.setFontSize(38);
+			winScoreText.moveToDrawingLayer(phaseLayerWin);
+		}
+	}
+	/**
+	 * Initializes assets for Lose screen.
+	 */
+	private void initializeLoseScreenAssets()
+	{
+		if(losePopUp == null)
+		{
+			float popUpWidth = gameUnitsFromPixels(445);
+			float popUpHeight = gameUnitsFromPixels(515);
+			losePopUp = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, popUpWidth, popUpHeight);
+			losePopUp.setImage(IMAGE_LOSE_POP_UP);
+			losePopUp.moveToDrawingLayer(phaseLayerLose);
+			
+			float buttonWidth = gameUnitsFromPixels(224); 
+			float buttonHeight = gameUnitsFromPixels(85);			
+			loseButtonRestart = new GameObject(SCREEN_CENTER_X, 5.4f, buttonWidth, buttonHeight);
+			loseButtonRestart.setImage(IMAGE_LOSE_BUTTON_RESTART);
+			loseButtonRestart.moveToDrawingLayer(phaseLayerLose);
+			
+			loseButtonQuit = new GameObject(SCREEN_CENTER_X, 3.9f, buttonWidth, buttonHeight);
+			loseButtonQuit.setImage(IMAGE_LOSE_BUTTON_QUIT);
+			loseButtonQuit.moveToDrawingLayer(phaseLayerLose);
+		}
+	}
+	/**
+	 * Initialize the Default HUD
+	 */
+	private void initializeHUD()
+	{	
+		// HUD should probably become its own object type someday
+		if(hud == null)
+		{
+			// panes
+			hud = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
+			hud.moveToDrawingLayer(layerHUD);		
+			hud.setImage(IMAGE_HUD);
+					
+			// pause button
+			float pauseButtonSize = gameUnitsFromPixels(31);
+			buttonPause = new GameObject(0.95f, 10.67f, pauseButtonSize, pauseButtonSize);
+			buttonPause.setImage(IMAGE_PAUSE_BUTTON);
+			buttonPause.moveToDrawingLayer(layerHUD);
+			
+			float topRowHeight = 10.53f;			
+			
+			textTimeUntilNextWave = makeText(3.62f, topRowHeight);
+			textMovesRemaining = makeText(6.1f, topRowHeight);
+			textScore = makeText(18.2f, topRowHeight);			
+			
+			float bottomRowHeight = 0.2f;
+			
+			textTowerMedicRemaining = makeText(0.55f, bottomRowHeight);
+			textTowerSpeedyRemaining = makeText(2.4f, bottomRowHeight);	
+			textSurvivalsQuick = makeText(16.6f, bottomRowHeight);
+			textSurvivalsBasic = makeText(18.46f, bottomRowHeight);
+
+			textTimeUntilNextWave.moveToDrawingLayer(layerHUD);
+			textMovesRemaining.moveToDrawingLayer(layerHUD);
+			textScore.moveToDrawingLayer(layerHUD);
+			textTowerMedicRemaining.moveToDrawingLayer(layerHUD);
+			textTowerSpeedyRemaining.moveToDrawingLayer(layerHUD);
+			textSurvivalsQuick.moveToDrawingLayer(layerHUD);
+			textSurvivalsBasic.moveToDrawingLayer(layerHUD);
+		}
 	}
 
 	/**
@@ -294,7 +413,7 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
 		if (grid.constructPath(startColumn, startRow, endColumn, endRow)) {
-			System.out.println(spawner);
+
 			spawner.setPath(grid.getPath());
 			return true;
 		} else {
@@ -557,6 +676,9 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected boolean gameIsOver() {
 
+		if (walkerSet.isEmpty()) {
+			return false;
+		}
 		for (Walker walker : walkerSet.getArrayOfWalkers()) {
 			if (!walker.isAtPathEnd()) { //expected isDead to return true; but it is false
 				return false;
@@ -577,6 +699,46 @@ public class HTLFunctionalAPI extends HTL {
 		this.scoreToWin = scoreToWin;
 	}
 
+	
+	
+	/**
+	 * Creates the DrawingLayers in order from bottom to top,
+	 * which makes sure things in upper layers draw last,
+	 * and hence on top.
+	 */
+	private void initializeDrawingLayers()
+	{
+		if(layerBackground == null)
+		{
+			// ORDER MATTERS - later ones are on top of the others in the same layer
+			phaseLayerGameplay = new DrawingLayer();			
+			phaseLayerLose = new DrawingLayer();
+			phaseLayerWin = new DrawingLayer();
+			phaseLayerPause = new DrawingLayer();
+			phaseLayerRestartConfirm = new DrawingLayer();
+			phaseLayerQuitConfirm = new DrawingLayer();
+			phaseLayerLevelIntro = new DrawingLayer();
+			phaseLayerTitleScreen = new DrawingLayer();
+			phaseLayerCredits = new DrawingLayer();
+			phaseLayerDebug = new DrawingLayer();
+
+			layerBackground = new DrawingLayer(phaseLayerGameplay);
+			layerPath = new DrawingLayer(phaseLayerGameplay);
+			layerEnvironmentUnder = new DrawingLayer(phaseLayerGameplay);
+			layerTowers = new DrawingLayer(phaseLayerGameplay);
+			layerSpellcastEffects = new DrawingLayer(phaseLayerGameplay);
+			layerWalkers = new DrawingLayer(phaseLayerGameplay);
+			layerEnvironmentOver = new DrawingLayer(phaseLayerGameplay);
+			layerCharacterEffectsOver = new DrawingLayer(phaseLayerGameplay);
+			layerShadowsSky = new DrawingLayer(phaseLayerGameplay);
+			layerCharacterFeedback = new DrawingLayer(phaseLayerGameplay);
+			layerHUD = new DrawingLayer(phaseLayerGameplay);
+			layerScreenDarkener = new DrawingLayer(phaseLayerGameplay);
+			layerScreenDarkener.setVisibilityTo(false);
+		}
+	}
+	
+	
 	/**
 	 * Transition to the win screen.
 	 */
@@ -634,7 +796,7 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	private void setCurrentGamePhase(gamePhase currentGamePhase) {
-		previousGamePhase = this.currentGamePhase;
+		
 		this.currentGamePhase = currentGamePhase;
 	}
 }
