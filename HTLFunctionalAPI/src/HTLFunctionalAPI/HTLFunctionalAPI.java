@@ -63,7 +63,7 @@ public class HTLFunctionalAPI extends HTL {
 	
 	private enum gamePhase
 	{
-		GAMEPLAY, WIN, LOSE
+		GAMEPLAY, WIN, LOSE, PAUSE, RESTART_CONFIRM, QUIT_CONFIRM
 	}
 	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
 	
@@ -73,16 +73,12 @@ public class HTLFunctionalAPI extends HTL {
 	*/
 	public void initializeWorld() {
 		super.initializeWorld();
-		phaseLayerLose.setVisibilityTo(false);
-		phaseLayerWin.setVisibilityTo(false);
-		buildGame();
-		initializeSettings();
-		initializeWinScreenAssets();
-		initializeLoseScreenAssets();
-		initializeDrawingLayers();
-		initializeHUD();
+
+
+
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
+		enterGameplay();
 		
 	}
 
@@ -420,12 +416,12 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 	}
-
 	/**
 	 * Add a basic walker
 	 */
 	public void addWalker() {
-		spawner.addWave((float) 0.1, (float) 0.1, "bbbbbb");
+		
+		spawner.addWave((float) 0.1, (float) 0.1, "b");
 		spawner.startWaves();
 	}
 
@@ -433,6 +429,23 @@ public class HTLFunctionalAPI extends HTL {
 	 * Add a fast walker
 	 */
 	public void addQuickWalker() {
+		spawner.addWave((float) 0.1, (float) 0.1, "q");
+		spawner.startWaves();
+	}
+
+	/**
+	 * Add a basic walker
+	 */
+	public void addWalkers() {
+		
+		spawner.addWave((float) 0.1, (float) 0.1, "bbbbbb");
+		spawner.startWaves();
+	}
+
+	/**
+	 * Add a fast walker
+	 */
+	public void addQuickWalkers() {
 		spawner.addWave((float) 0.1, (float) 0.1, "qqqqqq");
 		spawner.startWaves();
 	}
@@ -738,6 +751,57 @@ public class HTLFunctionalAPI extends HTL {
 		}
 	}
 	
+	/**
+	 * When the game transitions from the pre-level message to the actual game level,
+	 * do this.
+	 */
+	protected void enterGameplay()
+	{
+		resources.stopSound(MUSIC_WIN);
+		resources.stopSound(MUSIC_LOSE);
+		if(currentGamePhase != gamePhase.PAUSE)
+		{
+			spawner.clearWaves();
+			buildGame();
+			initializeSettings();
+			initializeWinScreenAssets();
+			initializeLoseScreenAssets();
+			initializeDrawingLayers();
+			initializeHUD();
+			spawner.setDrawingLayer(null);
+			Walker.setRepository(walkerSet);
+	
+			
+			// logic
+			spawner.startWaves();
+			phaseLayerLose.setVisibilityTo(false);
+			phaseLayerWin.setVisibilityTo(false);
+		}
+		
+		// logic
+		paused = false;
+		CooldownTimer.unpauseAll();
+		//setAnimationPauseStatus(false);
+		
+		// music
+		//resources.resumeSound();
+		
+		// visuals
+		phaseLayerGameplay.setVisibilityTo(true);
+		
+		phaseLayerTitleScreen.setVisibilityTo(false);		
+		phaseLayerCredits.setVisibilityTo(false);		
+		phaseLayerRestartConfirm.setVisibilityTo(false);
+		phaseLayerQuitConfirm.setVisibilityTo(false);
+		phaseLayerPause.setVisibilityTo(false);
+		phaseLayerWin.setVisibilityTo(false);
+		phaseLayerLose.setVisibilityTo(false);
+		phaseLayerLevelIntro.setVisibilityTo(false);
+		layerScreenDarkener.setVisibilityTo(false);
+		
+		// done
+		currentGamePhase = gamePhase.GAMEPLAY;
+	}	
 	
 	/**
 	 * Transition to the win screen.
@@ -798,5 +862,34 @@ public class HTLFunctionalAPI extends HTL {
 	private void setCurrentGamePhase(gamePhase currentGamePhase) {
 		
 		this.currentGamePhase = currentGamePhase;
+	}
+	
+	protected void setWalkerDamagePerSecond(int damage) {
+		Walker.setDamageTakenPerSecond(damage);
+	}
+	protected boolean winRestartButtonSelected() {
+		float mouseX = mouse.getWorldX();
+		float mouseY = mouse.getWorldY();
+		return winButtonRestart.containsPoint(mouseX, mouseY);
+	}
+	
+	protected boolean winQuitButtonSelected() {
+		float mouseX = mouse.getWorldX();
+		float mouseY = mouse.getWorldY();
+		return winButtonQuit.containsPoint(mouseX, mouseY);
+	}
+	protected boolean loseRestartButtonSelected() {
+		float mouseX = mouse.getWorldX();
+		float mouseY = mouse.getWorldY();
+		return loseButtonRestart.containsPoint(mouseX, mouseY);
+	}
+	
+	protected boolean loseQuitButtonSelected() {
+		float mouseX = mouse.getWorldX();
+		float mouseY = mouse.getWorldY();
+		return loseButtonQuit.containsPoint(mouseX, mouseY);
+	}
+	protected void exitGame() {
+		System.exit(0);
 	}
 }

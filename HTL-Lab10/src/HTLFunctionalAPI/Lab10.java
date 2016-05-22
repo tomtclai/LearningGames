@@ -17,36 +17,62 @@ public class Lab10 extends HTLFunctionalAPI
 		
 		preparePathForWalkers(0,5,19,5);
 		// either Walker or QuickWalker, pick one  
-		// addWalker();
-		addQuickWalker();
-//	
+//		addWalkers();
+		addQuickWalkers();
+		
 		setHUDVisibilityTo(true);
+		setWalkerDamagePerSecond(1);
 	}
 	
 	public void updateGame() {
 		
 		// in-game
+		
+		if (gameIsOver()) {
+			if (userWon()) {
+				enterWin();
+			} else {
+				enterLose();
+			}
+		} 
+		
 		if (mouseClicked()) {
-
-			// if a Tower is selected, can it be moved to this Tile?
-			if (aTowerIsSelected()) {
-				moveTowerToClickedTile();
-			}
-			// otherwise, if there's a Tower on the tile, toggle selection
-			// of the tower
-			else if (clickedTileHasTower()) {
-
-				if (clickedTowerIsSelected()) {
-					unselectTower();
+			
+			if(gameIsOver()) { // if game is over, check for button clicks
+				if (userWon()) {
+					if (winRestartButtonSelected()) { // did user click on the restart button?
+						enterGameplay();
+					} else if (winQuitButtonSelected()) { // or did user click on the quit button?
+						exitGame();
+					}
 				} else {
-					selectClickedTower();
+					if (loseRestartButtonSelected()) {
+						enterGameplay();
+					} else if (loseQuitButtonSelected()) {
+						exitGame();
+					}
 				}
-			}
-			// otherwise, place a Tower
-			else {
-				// either speedy or medic, pick one
-				// addMedicTowerAtClickedTile();
-				addSpeedyTowerAtClickedTile();
+			} else {
+				// if a Tower is selected, can it be moved to this Tile?
+				if (aTowerIsSelected()) {
+					moveTowerToClickedTile();
+				}
+				// otherwise, if there's a Tower on the tile, toggle selection
+				// of the tower
+				else if (clickedTileHasTower()) {
+
+					if (clickedTowerIsSelected()) {
+						unselectTower();
+					} else {
+						selectClickedTower();
+					}
+				}
+				// otherwise, place a Tower
+				else {
+					// either speedy or medic, pick one
+					// addMedicTowerAtClickedTile();
+					addSpeedyTowerAtClickedTile();
+				}
 			}
 
 		}
@@ -63,12 +89,6 @@ public class Lab10 extends HTLFunctionalAPI
 			}
 		}
 
-		if (gameIsOver()) {
-			if (userWon()) {
-				enterWin();
-			} else {
-				enterLose();
-			}
-		}
+
 	}
 }
