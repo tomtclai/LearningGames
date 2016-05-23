@@ -12,8 +12,6 @@ public class Lab10 extends HTLFunctionalAPI
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
 		}
-
-		makePathVisible();
 		
 		preparePathForWalkers(0,5,19,5);
 		// either Walker or QuickWalker, pick one  
@@ -84,7 +82,7 @@ public class Lab10 extends HTLFunctionalAPI
 				if (towerShouldFire(i, j)) {
 					// either speedy or medic, pick one
 					// towerCastMedicSpellOnWalker(i, j);
-					towerCastSpeedySpellOnWalker(i, j);
+					speedyWizardCastSpellOnWalker(i, j);
 				}
 			}
 		}

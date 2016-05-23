@@ -51,7 +51,6 @@ public class Lab7 extends HTLFunctionalAPI
 			addPathLeftRight(currentNum, 5);
 		}
 
-		// 2. Make path visible
-		makePathVisible();
+
 	}
 }

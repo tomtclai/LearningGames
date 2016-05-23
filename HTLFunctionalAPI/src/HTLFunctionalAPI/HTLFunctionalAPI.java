@@ -73,12 +73,11 @@ public class HTLFunctionalAPI extends HTL {
 	*/
 	public void initializeWorld() {
 		super.initializeWorld();
-
-
-
+		grid.setPathTileVisibilityTo(true);
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		enterGameplay();
+		setHUDVisibilityTo(false);
 		
 	}
 
@@ -383,17 +382,6 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	/**
-	 * Make paths in the grid visible. Note that Tiles without paths are never
-	 * drawn, because it ends up being really expensive.
-	 * 
-	 * @param isVisible
-	 *            True if Path Tiles should be visible.
-	 */
-	public void makePathVisible() {
-		grid.setPathTileVisibilityTo(true);
-	}
-
-	/**
 	 * It is necessary to call this method so that walkers can walk on a custom
 	 * path.
 	 * 
@@ -589,8 +577,8 @@ public class HTLFunctionalAPI extends HTL {
 			for (int j = 0; j < numOfWalkers(); j++) {
 				if (towerShouldFire(i, j)) {
 					// either speedy or medic, pick one
-					// towerCastMedicSpellOnWalker(i, j);
-					towerCastSpeedySpellOnWalker(i, j);
+					// medicWizardCastSpellOnWalker(i, j);
+					speedyWizardCastSpellOnWalker(i, j);
 				}
 			}
 		}
@@ -652,7 +640,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @param walkerIndex
 	 *            index for a given walker
 	 */
-	protected void towerCastMedicSpellOnWalker(int towerIndex, int walkerIndex) {
+	protected void medicWizardCastSpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
 		if (!towerSoundPlayed) {
 			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
@@ -671,7 +659,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @param walkerIndex
 	 *            index for a given walker
 	 */
-	protected void towerCastSpeedySpellOnWalker(int towerIndex, int walkerIndex) {
+	protected void speedyWizardCastSpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
 		if (!towerSoundPlayed) {
 			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
@@ -891,5 +879,8 @@ public class HTLFunctionalAPI extends HTL {
 	}
 	protected void exitGame() {
 		System.exit(0);
+	}
+	protected void makeToolbarVisible() {
+		setHUDVisibilityTo(true);
 	}
 }

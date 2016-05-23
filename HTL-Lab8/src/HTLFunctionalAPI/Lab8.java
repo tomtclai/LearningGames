@@ -29,8 +29,5 @@ public class Lab8 extends HTLFunctionalAPI
 			addPathLeftRight(currentNum, 5);
 			currentNum = currentNum + 1;
 		}
-
-		// 2. Make path visible
-		makePathVisible();
 	}
 }
