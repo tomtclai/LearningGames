@@ -8,48 +8,29 @@ import TowerDefense.*;
 public class Lab8 extends HTLFunctionalAPI
 {	
 	public void buildGame()
-	{			
-		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
+	{
+		// 1. Make paths
+		/*      9| 
+		 *      8| 
+		 *      7| 
+		 *      6|               
+		 * rows 5| X X X X X X X X X X X
+		 *      4|                    
+		 *      3|                
+		 *      2|                
+		 *      1|                
+		 *      0|______________________
+		 *         0 1 2 3 4 5 6 7 8 9 ...
+		 *            columns
+		 */
+		
+		int currentNum = 0;
+		while (currentNum < 20) {
 			addPathLeftRight(currentNum, 5);
+			currentNum = currentNum + 1;
 		}
 
+		// 2. Make path visible
 		makePathVisible();
-		
-		preparePathForWalkers(0,5,19,5);
-		// either Walker or QuickWalker, pick one  
-		// addWalker();
-		addQuickWalker();
-	
-	}
-	
-	public void updateGame() {
-		// in-game
-		if (mouseClicked()) {
-
-			// if a Tower is selected, can it be moved to this Tile?
-			if (aTowerIsSelected()) {
-				moveTowerToClickedTile();
-			}
-			// otherwise, if there's a Tower on the tile, toggle selection
-			// of the tower
-			else if (clickedTileHasTower()) {
-
-				if (clickedTowerIsSelected()) {
-					unselectTower();
-				} else {
-					selectClickedTower();
-				}
-			}
-			// otherwise, place a Tower
-			else {
-				// either speedy or medic, pick one
-				// addMedicTowerAtClickedTile();
-				addSpeedyTowerAtClickedTile();
-			}
-
-		}
-		makeTowersFire();
-		
-		
 	}
 }
