@@ -23,6 +23,10 @@ public class HTLFunctionalAPI extends HTL {
 	private float score = 0;
 	private float scoreToWin = -1;
 	private Text winScoreText = null;
+	
+	private static final String TOWER_PLURAL = "wizards";
+	private static final String TILE_PLURAL = "tiles";
+	
 	private static final String MUSIC_TITLE = "audio/Music/Misty Sunshine.mp3";
 	private static final String MUSIC_BACKGROUND = "audio/Music/It's a Wonderful World.mp3";
 	private static final String MUSIC_WIN = "audio/Music/Together we Survive.mp3";
@@ -77,7 +81,7 @@ public class HTLFunctionalAPI extends HTL {
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		enterGameplay();
-		setHUDVisibilityTo(false);
+	
 		
 	}
 
@@ -231,6 +235,8 @@ public class HTLFunctionalAPI extends HTL {
 	public void drawMedicWizard(int x, int y) {
 		Tile position = grid.getTile(x, y);
 		towerSet.addTowerAt(position, true);
+		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER);
+		
 	}
 
 	/**
@@ -242,6 +248,7 @@ public class HTLFunctionalAPI extends HTL {
 		int y = random.nextInt((int) SCREEN_HEIGHT);
 
 		drawSpeedyWizard(x, y);
+		
 	}
 
 	/**
@@ -255,6 +262,7 @@ public class HTLFunctionalAPI extends HTL {
 	public void drawSpeedyWizard(int x, int y) {
 		Tile position = grid.getTile(x, y);
 		towerSet.addTowerAt(position, false);
+		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER);
 	}
 
 	/**
@@ -459,25 +467,53 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * Moves the selected Tower to the clicked Tile via in-game movement.
 	 */
-	public void moveTowerToClickedTile() {
-		selectedTower.teleportTo(grid.getClickedTile());
+	public void moveTowerTo(int x, int y) { //TODO: look into move tower to (i, X, Y) // i out of bounds?
+		Tile tile = getTileAt(x, y);
+		selectedTower.teleportTo(tile);
 		unselectTower();
 		selectedTower.playSoundMove();
 	}
 
+	private Tile getTileAt(int x, int y) {
+		Tile tile = grid.getTile(x, y);
+		if (tile == null) {
+			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
+		}
+		return tile;
+	}
+
+	private void printNoObjectAtCoordinateMessage(String objPlural, int x, int y) {
+		System.out.println("There are no " + objPlural + " at "+ coordinatesToString(x,y));
+	}
+	private String coordinatesToString(int x, int y) {
+		return  "x = "+ x + " y = " + y;
+	}
 	/**
 	 * @return true if the clicked tower is selected; false otherwise
 	 */
-	public boolean clickedTowerIsSelected() {
-		return grid.getClickedTile().getOccupant() == selectedTower;
+	public boolean towerIsSelected(int x, int y) {
+		Tile tile = getTileAt(x, y);
+		if (tile == null) {
+			return false;
+		}
+		Tower tower = tile.getOccupant();
+		if (tower == null) {
+			
+			printNoObjectAtCoordinateMessage(TOWER_PLURAL, x, y);
+		}
+		return tile.getOccupant() == selectedTower;
 	}
 
 	/**
 	 * @return true if the clicked tile is occupied; false otherwise
 	 */
-	public boolean clickedTileHasTower() {
-		if ( grid.getClickedTile() != null){ 
-			return grid.getClickedTile().hasOccupant();
+	public boolean tileHasTower(int x, int y) {
+		Tile tile = getTileAt(x, y);
+		
+		if ( tile != null){ 
+			return tile.hasOccupant();
+		} else {
+			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
 		}
 		return false;
 	}
@@ -485,26 +521,21 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * Selects the tower that was on the clicked tile
 	 */
-	public void selectClickedTower() {
-		selectTower(grid.getClickedTile().getOccupant());
-	}
-
-	/**
-	 * Adds a Medic tower at the clicked tile
-	 */
-	public void addMedicTowerAtClickedTile() {
-		towerSet.addTowerAt(grid.getClickedTile(), true);
-		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER); // The tower has never
-														// fired
-	}
-
-	/**
-	 * Adds a Speedy tower at the clicked tile
-	 */
-	public void addSpeedyTowerAtClickedTile() {
-		towerSet.addTowerAt(grid.getClickedTile(), false);
-		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER); // The tower has never
-														// fired
+	public void selectTower(int x, int y) {
+		
+		Tile tile = getTileAt(x, y);
+		
+		if ( tile == null){ 
+			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
+			return;
+		} 
+		
+		Tower tower = tile.getOccupant();
+		if (tower == null) {
+			printNoObjectAtCoordinateMessage(TOWER_PLURAL, x, y);
+		}
+			selectTower(grid.getClickedTile().getOccupant());
+		
 	}
 
 	/**
@@ -883,4 +914,18 @@ public class HTLFunctionalAPI extends HTL {
 	protected void makeToolbarVisible() {
 		setHUDVisibilityTo(true);
 	}
+	protected int getClickedColumn() {
+		Tile clickedTile = grid.getClickedTile();
+		if (clickedTile == null){
+			return -1;
+		}
+		return clickedTile.getGridColumn();
+	} 
+	protected int getClickedRow() {
+		Tile clickedTile = grid.getClickedTile();
+		if (clickedTile == null){
+			return -1;
+		}
+		return clickedTile.getGridRow();
+	} 
 }

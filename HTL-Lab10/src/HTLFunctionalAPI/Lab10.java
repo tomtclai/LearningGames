@@ -17,7 +17,7 @@ public class Lab10 extends HTLFunctionalAPI
 		// either Walker or QuickWalker, pick one  
 //		addWalkers();
 		addQuickWalkers();
-		
+		drawMedicWizard(19,6);
 		setHUDVisibilityTo(true);
 		setWalkerDamagePerSecond(1);
 	}
@@ -35,7 +35,8 @@ public class Lab10 extends HTLFunctionalAPI
 		} 
 		
 		if (mouseClicked()) {
-			
+			int clickedRow = getClickedRow();
+			int clickedColumn = getClickedColumn();
 			if(gameIsOver()) { // if game is over, check for button clicks
 				if (userWon()) {
 					if (winRestartButtonSelected()) { // did user click on the restart button?
@@ -53,23 +54,24 @@ public class Lab10 extends HTLFunctionalAPI
 			} else {
 				// if a Tower is selected, can it be moved to this Tile?
 				if (aTowerIsSelected()) {
-					moveTowerToClickedTile();
+					moveTowerTo(clickedColumn, clickedRow);
 				}
 				// otherwise, if there's a Tower on the tile, toggle selection
 				// of the tower
-				else if (clickedTileHasTower()) {
+				else if (tileHasTower(clickedRow,clickedColumn)) {
 
-					if (clickedTowerIsSelected()) {
+					if (towerIsSelected(clickedColumn, clickedRow)) {
 						unselectTower();
 					} else {
-						selectClickedTower();
+						selectTower(clickedColumn, clickedRow);
 					}
 				}
 				// otherwise, place a Tower
 				else {
 					// either speedy or medic, pick one
-					// addMedicTowerAtClickedTile();
-					addSpeedyTowerAtClickedTile();
+					// drawMedicWizard(clickedColumn, clickedRow);
+					drawSpeedyWizard(clickedColumn, clickedRow);
+					
 				}
 			}
 

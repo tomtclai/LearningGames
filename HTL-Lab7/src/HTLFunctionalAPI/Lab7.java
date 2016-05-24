@@ -51,6 +51,7 @@ public class Lab7 extends HTLFunctionalAPI
 			addPathLeftRight(currentNum, 5);
 		}
 
+		//TODO: add walkers here
 
 	}
 }

@@ -16,34 +16,42 @@ public class Lab9 extends HTLFunctionalAPI
 		preparePathForWalkers(0,5,19,5);
 		// either Walker or QuickWalker, pick one  
 		// addWalker();
-		addQuickWalker();
+		addQuickWalkers();
 	
 	}
 	
 	public void updateGame() {
 		
+//		if (returnTrueEveryPoint7Sec()) {
+//			
+//			addWalker();
+//		}
+//		
 		// in-game
 		if (mouseClicked()) {
-
+			int clickedRow = getClickedRow();
+			int clickedColumn = getClickedColumn();
+			
 			// if a Tower is selected, can it be moved to this Tile?
 			if (aTowerIsSelected()) {
-				moveTowerToClickedTile();
+				moveTowerTo(clickedColumn, clickedRow);
 			}
 			// otherwise, if there's a Tower on the tile, toggle selection
 			// of the tower
-			else if (clickedTileHasTower()) {
+			else if (tileHasTower(clickedRow,clickedColumn)) {
 
-				if (clickedTowerIsSelected()) {
+				if (towerIsSelected(clickedColumn, clickedRow)) {
 					unselectTower();
 				} else {
-					selectClickedTower();
+					selectTower(clickedColumn, clickedRow);
 				}
 			}
 			// otherwise, place a Tower
 			else {
 				// either speedy or medic, pick one
-				// addMedicTowerAtClickedTile();
-				addSpeedyTowerAtClickedTile();
+				// drawMedicWizard(clickedColumn, clickedRow);
+				drawSpeedyWizard(clickedColumn, clickedRow);
+				
 			}
 
 		}
