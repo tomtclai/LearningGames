@@ -9,6 +9,7 @@ public class Lab10 extends HTLFunctionalAPI
 {	
 	public void buildGame()
 	{			
+		drawToolbars();
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
 		}
@@ -17,8 +18,6 @@ public class Lab10 extends HTLFunctionalAPI
 		// either Walker or QuickWalker, pick one  
 //		addWalkers();
 		addQuickWalkers();
-		drawMedicWizard(19,6);
-		setHUDVisibilityTo(true);
 		setWalkerDamagePerSecond(1);
 	}
 	

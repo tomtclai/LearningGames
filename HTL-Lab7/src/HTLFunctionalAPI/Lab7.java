@@ -50,8 +50,8 @@ public class Lab7 extends HTLFunctionalAPI
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
 		}
-
+		preparePathForWalkers(0,5,19,5);
 		//TODO: add walkers here
-
+		addWalkers();
 	}
 }

@@ -49,9 +49,9 @@ public class HTLFunctionalAPI extends HTL {
 	
 	
 	private Tower selectedTower = null;
-	protected boolean towerSoundPlayed = false;
+	private boolean towerSoundPlayed = false;
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
-	protected WaveSystem spawner = new WaveSystem();
+	private WaveSystem spawner = new WaveSystem();
 	
 	
 	// HUD stuff
@@ -78,6 +78,7 @@ public class HTLFunctionalAPI extends HTL {
 	public void initializeWorld() {
 		super.initializeWorld();
 		grid.setPathTileVisibilityTo(true);
+		setHUDVisibilityTo(false);
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		enterGameplay();
@@ -306,6 +307,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathUpDown(int x, int y) {
+		//TODO: add blocking path too so wizards can't step on it
 		return grid.addPathUpDown(x, y);
 	}
 
@@ -434,7 +436,7 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public void addWalkers() {
 		
-		spawner.addWave((float) 0.1, (float) 0.1, "bbbbbb");
+		spawner.addWave((float) 2, (float) 0.1, "bbbbbb");
 		spawner.startWaves();
 	}
 
@@ -442,7 +444,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * Add a fast walker
 	 */
 	public void addQuickWalkers() {
-		spawner.addWave((float) 0.1, (float) 0.1, "qqqqqq");
+		spawner.addWave((float) 2, (float) 0.1, "qqqqqq");
 		spawner.startWaves();
 	}
 
@@ -467,11 +469,17 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * Moves the selected Tower to the clicked Tile via in-game movement.
 	 */
-	public void moveWizardTo(int x, int y) { //TODO: look into move tower to (i, X, Y) // i out of bounds?
+	public void moveWizardTo(int x, int y) { 
 		Tile tile = getTileAt(x, y);
-		selectedTower.teleportTo(tile);
+		if (tile == null) {
+			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
+			return;
+		}
+		if (selectedTower.teleportTo(tile)) {
+			selectedTower.playSoundMove();	
+		}
 		unselectWizard();
-		selectedTower.playSoundMove();
+		
 	}
 
 	private Tile getTileAt(int x, int y) {
@@ -911,7 +919,7 @@ public class HTLFunctionalAPI extends HTL {
 	protected void exitGame() {
 		System.exit(0);
 	}
-	protected void makeToolbarVisible() {
+	protected void drawToolbars() {
 		setHUDVisibilityTo(true);
 	}
 	protected int getClickedColumn() {
