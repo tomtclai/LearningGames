@@ -467,10 +467,10 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * Moves the selected Tower to the clicked Tile via in-game movement.
 	 */
-	public void moveTowerTo(int x, int y) { //TODO: look into move tower to (i, X, Y) // i out of bounds?
+	public void moveWizardTo(int x, int y) { //TODO: look into move tower to (i, X, Y) // i out of bounds?
 		Tile tile = getTileAt(x, y);
 		selectedTower.teleportTo(tile);
-		unselectTower();
+		unselectWizard();
 		selectedTower.playSoundMove();
 	}
 
@@ -489,9 +489,9 @@ public class HTLFunctionalAPI extends HTL {
 		return  "x = "+ x + " y = " + y;
 	}
 	/**
-	 * @return true if the clicked tower is selected; false otherwise
+	 * @return true if the clicked wizard is selected; false otherwise
 	 */
-	public boolean towerIsSelected(int x, int y) {
+	public boolean wizardIsSelected(int x, int y) {
 		Tile tile = getTileAt(x, y);
 		if (tile == null) {
 			return false;
@@ -507,7 +507,7 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * @return true if the clicked tile is occupied; false otherwise
 	 */
-	public boolean tileHasTower(int x, int y) {
+	public boolean tileHasWizard(int x, int y) {
 		Tile tile = getTileAt(x, y);
 		
 		if ( tile != null){ 
@@ -519,9 +519,9 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	/**
-	 * Selects the tower that was on the clicked tile
+	 * Selects the wizard that was on the clicked tile
 	 */
-	public void selectTower(int x, int y) {
+	public void selectWizard(int x, int y) {
 		
 		Tile tile = getTileAt(x, y);
 		
@@ -545,9 +545,9 @@ public class HTLFunctionalAPI extends HTL {
 	 * @param tower
 	 *            The tower to select.
 	 */
-	protected void selectTower(Tower tower) {
+	private void selectTower(Tower tower) {
 		if (tower != null) {
-			unselectTower();
+			unselectWizard();
 			selectedTower = tower;
 			selectedTower.setSelectedTo(true);
 		}
@@ -556,7 +556,7 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * If there is a selected tower, it is no longer selected.
 	 */
-	protected void unselectTower() {
+	protected void unselectWizard() {
 		if (selectedTower != null) {
 			selectedTower.setSelectedTo(false);
 		}
@@ -565,9 +565,9 @@ public class HTLFunctionalAPI extends HTL {
 
 	/**
 	 * 
-	 * @return the number of towers
+	 * @return the number of wizards
 	 */
-	protected int numOfTowers() {
+	protected int numOfWizards() {
 		return towerSet.getArrayOfTowers().length;
 	}
 
@@ -602,11 +602,11 @@ public class HTLFunctionalAPI extends HTL {
 	/**
 	 * Make towers fire appropriately
 	 */
-	protected void makeTowersFire() {
+	protected void makeWizardsFire() {
 		// heal walkers or make walkers faster
-		for (int i = 0; i < numOfTowers(); i++) {
+		for (int i = 0; i < numOfWizards(); i++) {
 			for (int j = 0; j < numOfWalkers(); j++) {
-				if (towerShouldFire(i, j)) {
+				if (wizardShouldFire(i, j)) {
 					// either speedy or medic, pick one
 					// medicWizardCastSpellOnWalker(i, j);
 					speedyWizardCastSpellOnWalker(i, j);
@@ -625,7 +625,7 @@ public class HTLFunctionalAPI extends HTL {
 	 *            index for a given walker
 	 * @return true if the tower should fire; false otherwise
 	 */
-	protected boolean towerShouldFire(int towerIndex, int walkerIndex) {
+	protected boolean wizardShouldFire(int towerIndex, int walkerIndex) {
 		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
 		if (System.currentTimeMillis() - lastSoundTime > 5000) { //todo: check with branden how often they should fire
 			towerSoundPlayed = false;

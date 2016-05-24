@@ -15,16 +15,16 @@ public class Lab5 extends HTLFunctionalAPI
 			
 			// if a Tower is selected, can it be moved to this Tile?
 			if (aTowerIsSelected()) {
-				moveTowerTo(clickedColumn, clickedRow);
+				moveWizardTo(clickedColumn, clickedRow);
 			}
 			// otherwise, if there's a Tower on the tile, toggle selection
 			// of the tower
-			else if (tileHasTower(clickedColumn, clickedRow)) {
+			else if (tileHasWizard(clickedColumn, clickedRow)) {
 
-				if (towerIsSelected(clickedColumn, clickedRow)) {
-					unselectTower();
+				if (wizardIsSelected(clickedColumn, clickedRow)) {
+					unselectWizard();
 				} else {
-					selectTower(clickedColumn, clickedRow);
+					selectWizard(clickedColumn, clickedRow);
 				}
 			}
 			// otherwise, place a Tower
@@ -36,7 +36,7 @@ public class Lab5 extends HTLFunctionalAPI
 			}
 
 		}
-		makeTowersFire();
+		makeWizardsFire();
 		
 		
 	}

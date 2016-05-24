@@ -509,7 +509,9 @@ public class Grid
 	
 	
 	
-	
+	public void coordinatesOfClickedTile() {
+		
+	}
 	
 	
 	

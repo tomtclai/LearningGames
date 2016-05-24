@@ -34,16 +34,16 @@ public class Lab9 extends HTLFunctionalAPI
 			
 			// if a Tower is selected, can it be moved to this Tile?
 			if (aTowerIsSelected()) {
-				moveTowerTo(clickedColumn, clickedRow);
+				moveWizardTo(clickedColumn, clickedRow);
 			}
 			// otherwise, if there's a Tower on the tile, toggle selection
 			// of the tower
-			else if (tileHasTower(clickedColumn, clickedRow)) {
+			else if (tileHasWizard(clickedColumn, clickedRow)) {
 
-				if (towerIsSelected(clickedColumn, clickedRow)) {
-					unselectTower();
+				if (wizardIsSelected(clickedColumn, clickedRow)) {
+					unselectWizard();
 				} else {
-					selectTower(clickedColumn, clickedRow);
+					selectWizard(clickedColumn, clickedRow);
 				}
 			}
 			// otherwise, place a Tower
@@ -58,9 +58,9 @@ public class Lab9 extends HTLFunctionalAPI
 		
 		
 		// heal walkers or make walkers faster
-		for (int i = 0; i < numOfTowers(); i++) {
+		for (int i = 0; i < numOfWizards(); i++) {
 			for (int j = 0; j < numOfWalkers(); j++) {
-				if (towerShouldFire(i, j)) {
+				if (wizardShouldFire(i, j)) {
 					// either speedy or medic, pick one
 					// medicWizardCastSpellOnWalker(i, j);
 					speedyWizardCastSpellOnWalker(i, j);
