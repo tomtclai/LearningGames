@@ -58,7 +58,7 @@ public class Lab10 extends HTLFunctionalAPI
 				}
 				// otherwise, if there's a Tower on the tile, toggle selection
 				// of the tower
-				else if (tileHasTower(clickedRow,clickedColumn)) {
+				else if (tileHasTower(clickedColumn, clickedRow)) {
 
 					if (towerIsSelected(clickedColumn, clickedRow)) {
 						unselectTower();
