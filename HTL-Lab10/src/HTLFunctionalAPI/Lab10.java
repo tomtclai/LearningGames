@@ -1,48 +1,50 @@
 package HTLFunctionalAPI;
+
 import TowerDefense.*;
 
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab10 extends HTLFunctionalAPI
-{	
-	public void buildGame()
-	{			
+public class Lab10 extends HTLFunctionalAPI {
+	public void buildGame() {
 		drawToolbars();
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
 		}
-		
-		preparePathForWalkers(0,5,19,5);
+
+		preparePathForWalkers(0, 5, 19, 5);
 		setWalkerDamagePerSecond(1);
 		setCountdownFrom(1);
 	}
-	
+
 	public void updateGame() {
-		
+
 		if (countdownFired()) {
-			addQuickWalker();
+			addWalker();
 		}
 
 		// in-game
-		
+
 		if (gameIsOver()) {
 			if (userWon()) {
 				enterWin();
 			} else {
 				enterLose();
 			}
-		} 
-		
+		}
+
 		if (mouseClicked()) {
 			int clickedRow = getClickedRow();
 			int clickedColumn = getClickedColumn();
-			if(gameIsOver()) { // if game is over, check for button clicks
+			if (gameIsOver()) { // if game is over, check for button clicks
 				if (userWon()) {
-					if (winRestartButtonSelected()) { // did user click on the restart button?
+					if (winRestartButtonSelected()) { // did user click on the
+														// restart button?
 						enterGameplay();
-					} else if (winQuitButtonSelected()) { // or did user click on the quit button?
+					} else if (winQuitButtonSelected()) { // or did user click
+															// on the quit
+															// button?
 						exitGame();
 					}
 				} else {
@@ -72,24 +74,22 @@ public class Lab10 extends HTLFunctionalAPI
 					// either speedy or medic, pick one
 					// drawMedicWizard(clickedColumn, clickedRow);
 					drawSpeedyWizard(clickedColumn, clickedRow);
-					
+
 				}
 			}
 
 		}
-		
-		
+
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
-			for (int j = 0; j < numOfWalkers(); j++) {
-				if (wizardShouldFire(i, j)) {
+			if (wizardShouldFire(i, j)) {
+				for (int j = 0; j < numOfWalkers(); j++) {
 					// either speedy or medic, pick one
 					// towerCastMedicSpellOnWalker(i, j);
 					speedyWizardCastSpellOnWalker(i, j);
 				}
 			}
 		}
-
 
 	}
 }
