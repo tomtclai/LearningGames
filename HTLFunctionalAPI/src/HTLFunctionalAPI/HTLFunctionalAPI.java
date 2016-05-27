@@ -618,7 +618,7 @@ public class HTLFunctionalAPI extends HTL {
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
 			for (int j = 0; j < numOfWalkers(); j++) {
-				if (wizardShouldFire(i, j)) {
+				if (walkerIsInRange(i, j)) {
 					// either speedy or medic, pick one
 					// medicWizardCastSpellOnWalker(i, j);
 					speedyWizardCastSpellOnWalker(i, j);
@@ -628,6 +628,16 @@ public class HTLFunctionalAPI extends HTL {
 
 	}
 
+	protected boolean towerIsReady(int towerIndex) {
+		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
+		if (System.currentTimeMillis() - lastSoundTime > 3000) { 
+			towerSoundPlayed = false;
+			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
+			
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * returns true if the tower should fire; false otherwise
 	 * 
@@ -637,18 +647,8 @@ public class HTLFunctionalAPI extends HTL {
 	 *            index for a given walker
 	 * @return true if the tower should fire; false otherwise
 	 */
-	protected boolean wizardShouldFire(int towerIndex, int walkerIndex) {
-		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
-		if (System.currentTimeMillis() - lastSoundTime > 5000) { // todo: check
-																	// with
-																	// branden
-																	// how often
-																	// they
-																	// should
-																	// fire
-			towerSoundPlayed = false;
-			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
-		}
+	protected boolean walkerIsInRange(int towerIndex, int walkerIndex) {
+
 
 		Walker walker = walkerSet.getArrayOfWalkers()[walkerIndex];
 		Tower tower = towerSet.getArrayOfTowers()[towerIndex];
@@ -691,13 +691,13 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected void medicWizardCastSpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
+		Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
 		if (!towerSoundPlayed) {
-			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
-			t.playEffectSpellcast();
 			t.playSoundSpellcast();
 			towerSoundPlayed = true;
-			w.addHealth(t.getCastHealthAdjust());
 		}
+		t.playEffectSpellcast();
+		w.addHealth(t.getCastHealthAdjust());
 	}
 
 	/**
@@ -710,13 +710,13 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected void speedyWizardCastSpellOnWalker(int towerIndex, int walkerIndex) {
 		Tower t = towerSet.getArrayOfTowers()[towerIndex];
+		Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
 		if (!towerSoundPlayed) {
-			Walker w = walkerSet.getArrayOfWalkers()[walkerIndex];
-			t.playEffectSpellcast();
 			t.playSoundSpellcast();
 			towerSoundPlayed = true;
-			w.applySpeedBuff(t.getCastSpeedAdjustMultiplier(), t.getCastSpeedAdjustDuration());
 		}
+		w.applySpeedBuff(t.getCastSpeedAdjustMultiplier(), t.getCastSpeedAdjustDuration());
+		t.playEffectSpellcast();
 	}
 
 	/**

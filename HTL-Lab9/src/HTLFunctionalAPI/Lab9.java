@@ -56,7 +56,7 @@ public class Lab9 extends HTLFunctionalAPI
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
 			for (int j = 0; j < numOfWalkers(); j++) {
-				if (wizardShouldFire(i, j)) {
+				if (walkerIsInRange(i, j)) {
 					// either speedy or medic, pick one
 					// medicWizardCastSpellOnWalker(i, j);
 					speedyWizardCastSpellOnWalker(i, j);
