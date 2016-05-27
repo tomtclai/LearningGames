@@ -45,7 +45,6 @@ public class HTLFunctionalAPI extends HTL {
 	private Tower selectedTower = null;
 	private boolean towerSoundPlayed = false;
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
-	private WaveSystem spawner = new WaveSystem();
 	private int numOfMedicsCreated = 0;
 	private int numOfSpeedysCreated = 0;
 	private float walkerSpeed = -1;
@@ -119,7 +118,6 @@ public class HTLFunctionalAPI extends HTL {
 		super.initializeWorld();
 		grid.setPathTileVisibilityTo(true);
 		setHUDVisibilityTo(false);
-		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		enterGameplay();
 
@@ -185,7 +183,6 @@ public class HTLFunctionalAPI extends HTL {
 	public void updateWorld() {
 		super.updateWorld();
 		towerSet.update();
-		spawner.update();
 		walkerSet.update();
 		updateGame();
 		updateUI();
@@ -432,8 +429,6 @@ public class HTLFunctionalAPI extends HTL {
 	protected boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
 		// TODO: try to hide this function from students
 		if (grid.constructPath(startColumn, startRow, endColumn, endRow)) {
-
-			spawner.setPath(grid.getPath());
 			return true;
 		} else {
 			return false;
@@ -798,18 +793,13 @@ public class HTLFunctionalAPI extends HTL {
 		resources.stopSound(MUSIC_WIN);
 		resources.stopSound(MUSIC_LOSE);
 		if (currentGamePhase != gamePhase.PAUSE) {
-			spawner.clearWaves();
 			buildGame();
 			initializeSettings();
 			initializeWinScreenAssets();
 			initializeLoseScreenAssets();
 			initializeDrawingLayers();
 
-			spawner.setDrawingLayer(null);
-//			Walker.setRepository(walkerSet);
-
 			// logic
-			spawner.startWaves();
 			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerWin.setVisibilityTo(false);
 		}
