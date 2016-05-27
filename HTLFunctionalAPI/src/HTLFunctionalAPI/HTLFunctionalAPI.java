@@ -76,17 +76,18 @@ public class HTLFunctionalAPI extends HTL {
 	
 	
 	/**
-	 * The function returns true if 1) timer is at 0 and 2) the function has not returned true in the last 1 second
+	 * The function returns true if 1) countdown finishes and 2) the function has not returned true in the last 1 second
 	 */
 	public boolean countdownFired() {
-		if (countdownCurrent == 0 && System.currentTimeMillis() - lastTimeTimerWasFired > 1000) {
+		if (countdownCurrent < 0 && System.currentTimeMillis() - lastTimeTimerWasFired > 1000) {
+			lastTimeTimerWasFired = System.currentTimeMillis();
 			return true;
 		}
 		return false;
 	}
 
 	private void updateTimer() {
-		if (countdownCurrent == 0) {
+		if (countdownCurrent < 0) {
 			countdownCurrent = getCountdownMax();
 			lastTimeTimerWasUpdated = System.currentTimeMillis();
 		} else if (System.currentTimeMillis() - lastTimeTimerWasUpdated > 1000) {
@@ -103,7 +104,8 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	/**
-	 * @param set the number to countdown from
+	 * set the integer to count down from
+	 * @param the number to countdown from
 	 */
 	public void setCountdownFrom(int countdownFrom) {
 		this.countdownFrom = countdownFrom;
@@ -269,6 +271,9 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	private void drawWizard(int x, int y, boolean isMedic) {
 		Tile position = grid.getTile(x, y);
+		if (position.isBlocked()) {
+			return;
+		}
 		towerSet.addTowerAt(position, isMedic);
 		if (isMedic) {
 			numOfMedicsCreated++;
@@ -319,7 +324,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathUpDown(int x, int y) {
-		// TODO: add blocking path too so wizards can't step on it
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathUpDown(x, y);
 	}
 
@@ -336,6 +341,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathLeftRight(int x, int y) {
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathLeftRight(x, y);
 	}
 
@@ -352,6 +358,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathUpLeft(int x, int y) {
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathUpLeft(x, y);
 	}
 
@@ -368,6 +375,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathUpRight(int x, int y) {
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathUpRight(x, y);
 	}
 
@@ -384,6 +392,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathDownLeft(int x, int y) {
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathDownLeft(x, y);
 	}
 
@@ -400,8 +409,11 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathDownRight(int x, int y) {
+		grid.setTileBlockedTo(x, y, true);
 		return grid.addPathDownRight(x, y);
 	}
+
+	
 
 	/**
 	 * It is necessary to call this method so that walkers can walk on a custom
@@ -417,7 +429,8 @@ public class HTLFunctionalAPI extends HTL {
 	 *            The row of the Tile where the Path ends.
 	 * @return True if the Path was successfully prepared.
 	 */
-	public boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
+	protected boolean preparePathForWalkers(int startColumn, int startRow, int endColumn, int endRow) {
+		// TODO: try to hide this function from students
 		if (grid.constructPath(startColumn, startRow, endColumn, endRow)) {
 
 			spawner.setPath(grid.getPath());
@@ -469,7 +482,7 @@ public class HTLFunctionalAPI extends HTL {
 			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
 			return;
 		}
-		if (selectedTower.teleportTo(tile)) {
+		if (!tile.isBlocked() && selectedTower.teleportTo(tile)) {
 			selectedTower.playSoundMove();
 		}
 		unselectWizard();
@@ -946,7 +959,10 @@ public class HTLFunctionalAPI extends HTL {
 	private void updateUI() {
 
 		// top row
-		setHUDTime(countdownCurrent);
+		// countdownCurrent will hit -1 for a frame, but we don't want it to flicker
+		if (countdownCurrent >= 0) { 
+			setHUDTime(countdownCurrent);
+		}
 		// commented out because we don't know what to put on that spot.
 		// setHUDNumberOfMoves( ??? ); 
 		setHUDScore((int) score);

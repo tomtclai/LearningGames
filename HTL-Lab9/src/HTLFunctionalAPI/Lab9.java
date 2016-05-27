@@ -14,19 +14,15 @@ public class Lab9 extends HTLFunctionalAPI
 		}
 		
 		preparePathForWalkers(0,5,19,5);
-		// either Walker or QuickWalker, pick one  
-		// addWalker();
-		addQuickWalkers();
-	
+		setCountdownFrom(3);
 	}
 	
 	public void updateGame() {
 		
-//		if (returnTrueEveryPoint7Sec()) {
-//			
-//			addWalker();
-//		}
-//		
+		if (countdownFired()) {
+			addQuickWalker();
+		}
+
 		// in-game
 		if (mouseClicked()) {
 			int clickedRow = getClickedRow();

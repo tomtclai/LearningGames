@@ -15,16 +15,16 @@ public class Lab10 extends HTLFunctionalAPI
 		}
 		
 		preparePathForWalkers(0,5,19,5);
-		// either Walker or QuickWalker, pick one  
-		//addWalker();
-		addQuickWalker();
 		setWalkerDamagePerSecond(1);
-		
 		setCountdownFrom(1);
 	}
 	
 	public void updateGame() {
 		
+		if (countdownFired()) {
+			addQuickWalker();
+		}
+
 		// in-game
 		
 		if (gameIsOver()) {
@@ -90,9 +90,6 @@ public class Lab10 extends HTLFunctionalAPI
 			}
 		}
 
-		if (countdownFired()) {
-			addQuickWalker();
-		}
 
 	}
 }
