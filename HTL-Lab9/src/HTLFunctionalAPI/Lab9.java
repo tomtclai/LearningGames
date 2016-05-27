@@ -33,7 +33,7 @@ public class Lab9 extends HTLFunctionalAPI
 			int clickedColumn = getClickedColumn();
 			
 			// if a Tower is selected, can it be moved to this Tile?
-			if (aTowerIsSelected()) {
+			if (aWizardIsSelected()) {
 				moveWizardTo(clickedColumn, clickedRow);
 			}
 			// otherwise, if there's a Tower on the tile, toggle selection

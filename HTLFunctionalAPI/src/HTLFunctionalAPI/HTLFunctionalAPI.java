@@ -19,14 +19,7 @@ import TowerDefense.*;
  */
 
 public class HTLFunctionalAPI extends HTL {
-	private static final long FIRED_TIME_NEVER = (long) 0;
-	private float score = 0;
-	private float scoreToWin = -1;
-	private Text winScoreText = null;
-	
-	private static final String TOWER_PLURAL = "wizards";
-	private static final String TILE_PLURAL = "tiles";
-	
+	// Paths
 	private static final String MUSIC_TITLE = "audio/Music/Misty Sunshine.mp3";
 	private static final String MUSIC_BACKGROUND = "audio/Music/It's a Wonderful World.mp3";
 	private static final String MUSIC_WIN = "audio/Music/Together we Survive.mp3";
@@ -34,47 +27,92 @@ public class HTLFunctionalAPI extends HTL {
 	public static final String IMAGE_LOSE_POP_UP = "art/UI/HTL_PopUp_Lose.png";
 	public static final String IMAGE_LOSE_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
 	public static final String IMAGE_LOSE_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
-	
+
 	public static final String IMAGE_WIN_POP_UP = "art/UI/HTL_PopUp_Win.png";
 	public static final String IMAGE_WIN_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
 	public static final String IMAGE_WIN_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
-	
+
+	// User Interface
 	private GameObject winPopUp = null;
 	private GameObject winButtonRestart = null;
 	private GameObject winButtonQuit = null;
-	
+
 	private GameObject losePopUp = null;
 	private GameObject loseButtonRestart = null;
 	private GameObject loseButtonQuit = null;
-	
-	
+
+	// Game Data
 	private Tower selectedTower = null;
 	private boolean towerSoundPlayed = false;
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
 	private WaveSystem spawner = new WaveSystem();
-	
-	
-	// HUD stuff
-	private GameObject hud = null;
-	protected GameObject buttonPause = null;
-	private Text textMovesRemaining = null;
-	private Text textTowerMedicRemaining = null;
-	private Text textTowerSpeedyRemaining = null;
-	private Text textSurvivalsBasic = null;
-	private Text textSurvivalsQuick = null;
-	private Text textScore = null;
-	private Text textTimeUntilNextWave = null;
-	
-	private enum gamePhase
-	{
+	private int numOfMedicsCreated = 0;
+	private int numOfSpeedysCreated = 0;
+	private float walkerSpeed = -1;
+	private int numOfDeadWalkers = 0;
+	private int numOfBasicWalkersOnScreen = 0;
+	private int numOfQuickWalkersOnScreen = 0;
+	private float healthSaved = 0;
+	private float score = 0;
+	private float scoreToWin = -1;
+	private int countdownFrom = 3;
+	private int countdownCurrent = 0;
+	private long lastTimeTimerWasUpdated = 0;
+	private long lastTimeTimerWasFired = 0;
+	private Text winScoreText = null;
+	Vector<Walker> walkers = new Vector<Walker>();
+
+	// Constants
+	private static final long FIRED_TIME_NEVER = (long) 0;
+	private static final String TOWER_PLURAL = "wizards";
+	private static final String TILE_PLURAL = "tiles";
+
+	private enum gamePhase {
 		GAMEPLAY, WIN, LOSE, PAUSE, RESTART_CONFIRM, QUIT_CONFIRM
 	}
+
 	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
+
+	
 	
 	/**
-	* Initializes the world
-	* Calls buildGame, the method to be overridden by the student
-	*/
+	 * The function returns true if 1) timer is at 0 and 2) the function has not returned true in the last 1 second
+	 */
+	public boolean countdownFired() {
+		if (countdownCurrent == 0 && System.currentTimeMillis() - lastTimeTimerWasFired > 1000) {
+			return true;
+		}
+		return false;
+	}
+
+	private void updateTimer() {
+		if (countdownCurrent == 0) {
+			countdownCurrent = getCountdownMax();
+			lastTimeTimerWasUpdated = System.currentTimeMillis();
+		} else if (System.currentTimeMillis() - lastTimeTimerWasUpdated > 1000) {
+			countdownCurrent--;
+			lastTimeTimerWasUpdated = System.currentTimeMillis();
+		}
+	}
+
+	/**
+	 * @return the number to countdown from
+	 */
+	public int getCountdownMax() {
+		return countdownFrom;
+	}
+
+	/**
+	 * @param set the number to countdown from
+	 */
+	public void setCountdownFrom(int countdownFrom) {
+		this.countdownFrom = countdownFrom;
+	}
+
+	/**
+	 * Initializes the world Calls buildGame, the method to be overridden by the
+	 * student
+	 */
 	public void initializeWorld() {
 		super.initializeWorld();
 		grid.setPathTileVisibilityTo(true);
@@ -82,8 +120,7 @@ public class HTLFunctionalAPI extends HTL {
 		spawner.setDrawingLayer(null);
 		Walker.setRepository(walkerSet);
 		enterGameplay();
-	
-		
+
 	}
 
 	private void initializeSettings() {
@@ -93,92 +130,49 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	private void initializeWinScreenAssets() {
-		if(winPopUp == null)
-		{
+		if (winPopUp == null) {
 			float popUpWidth = gameUnitsFromPixels(445);
 			float popUpHeight = gameUnitsFromPixels(515);
 			winPopUp = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, popUpWidth, popUpHeight);
 			winPopUp.setImage(IMAGE_WIN_POP_UP);
 			winPopUp.moveToDrawingLayer(phaseLayerWin);
-			
-			float buttonWidth = gameUnitsFromPixels(224); 
-			float buttonHeight = gameUnitsFromPixels(85);			
+
+			float buttonWidth = gameUnitsFromPixels(224);
+			float buttonHeight = gameUnitsFromPixels(85);
 			winButtonRestart = new GameObject(SCREEN_CENTER_X, 5.4f, buttonWidth, buttonHeight);
 			winButtonRestart.setImage(IMAGE_WIN_BUTTON_RESTART);
 			winButtonRestart.moveToDrawingLayer(phaseLayerWin);
-			
+
 			winButtonQuit = new GameObject(SCREEN_CENTER_X, 3.9f, buttonWidth, buttonHeight);
 			winButtonQuit.setImage(IMAGE_WIN_BUTTON_QUIT);
 			winButtonQuit.moveToDrawingLayer(phaseLayerWin);
-			
-			winScoreText = makeText(SCREEN_CENTER_X - .95f, SCREEN_CENTER_Y + 1.3f);	
+
+			winScoreText = makeText(SCREEN_CENTER_X - .95f, SCREEN_CENTER_Y + 1.3f);
 			winScoreText.setFontSize(38);
 			winScoreText.moveToDrawingLayer(phaseLayerWin);
 		}
 	}
+
 	/**
 	 * Initializes assets for Lose screen.
 	 */
-	private void initializeLoseScreenAssets()
-	{
-		if(losePopUp == null)
-		{
+	private void initializeLoseScreenAssets() {
+		if (losePopUp == null) {
 			float popUpWidth = gameUnitsFromPixels(445);
 			float popUpHeight = gameUnitsFromPixels(515);
 			losePopUp = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, popUpWidth, popUpHeight);
 			losePopUp.setImage(IMAGE_LOSE_POP_UP);
 			losePopUp.moveToDrawingLayer(phaseLayerLose);
-			
-			float buttonWidth = gameUnitsFromPixels(224); 
-			float buttonHeight = gameUnitsFromPixels(85);			
+
+			float buttonWidth = gameUnitsFromPixels(224);
+			float buttonHeight = gameUnitsFromPixels(85);
 			loseButtonRestart = new GameObject(SCREEN_CENTER_X, 5.4f, buttonWidth, buttonHeight);
 			loseButtonRestart.setImage(IMAGE_LOSE_BUTTON_RESTART);
 			loseButtonRestart.moveToDrawingLayer(phaseLayerLose);
-			
+
 			loseButtonQuit = new GameObject(SCREEN_CENTER_X, 3.9f, buttonWidth, buttonHeight);
 			loseButtonQuit.setImage(IMAGE_LOSE_BUTTON_QUIT);
 			loseButtonQuit.moveToDrawingLayer(phaseLayerLose);
-		}
-	}
-	/**
-	 * Initialize the Default HUD
-	 */
-	private void initializeHUD()
-	{	
-		// HUD should probably become its own object type someday
-		if(hud == null)
-		{
-			// panes
-			hud = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-			hud.moveToDrawingLayer(layerHUD);		
-			hud.setImage(IMAGE_HUD);
-					
-			// pause button
-			float pauseButtonSize = gameUnitsFromPixels(31);
-			buttonPause = new GameObject(0.95f, 10.67f, pauseButtonSize, pauseButtonSize);
-			buttonPause.setImage(IMAGE_PAUSE_BUTTON);
-			buttonPause.moveToDrawingLayer(layerHUD);
-			
-			float topRowHeight = 10.53f;			
-			
-			textTimeUntilNextWave = makeText(3.62f, topRowHeight);
-			textMovesRemaining = makeText(6.1f, topRowHeight);
-			textScore = makeText(18.2f, topRowHeight);			
-			
-			float bottomRowHeight = 0.2f;
-			
-			textTowerMedicRemaining = makeText(0.55f, bottomRowHeight);
-			textTowerSpeedyRemaining = makeText(2.4f, bottomRowHeight);	
-			textSurvivalsQuick = makeText(16.6f, bottomRowHeight);
-			textSurvivalsBasic = makeText(18.46f, bottomRowHeight);
-
-			textTimeUntilNextWave.moveToDrawingLayer(layerHUD);
-			textMovesRemaining.moveToDrawingLayer(layerHUD);
-			textScore.moveToDrawingLayer(layerHUD);
-			textTowerMedicRemaining.moveToDrawingLayer(layerHUD);
-			textTowerSpeedyRemaining.moveToDrawingLayer(layerHUD);
-			textSurvivalsQuick.moveToDrawingLayer(layerHUD);
-			textSurvivalsBasic.moveToDrawingLayer(layerHUD);
 		}
 	}
 
@@ -192,8 +186,9 @@ public class HTLFunctionalAPI extends HTL {
 		spawner.update();
 		walkerSet.update();
 		updateGame();
-		
-
+		updateUI();
+		updateScore();
+		updateTimer();
 	}
 
 	/**
@@ -234,10 +229,7 @@ public class HTLFunctionalAPI extends HTL {
 	 *            The y coordinate of the position of the medic wizard
 	 */
 	public void drawMedicWizard(int x, int y) {
-		Tile position = grid.getTile(x, y);
-		towerSet.addTowerAt(position, true);
-		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER);
-		
+		drawWizard(x, y, true);
 	}
 
 	/**
@@ -247,9 +239,9 @@ public class HTLFunctionalAPI extends HTL {
 		Random random = new Random();
 		int x = random.nextInt((int) SCREEN_WIDTH - 1);
 		int y = random.nextInt((int) SCREEN_HEIGHT);
-
-		drawSpeedyWizard(x, y);
 		
+		drawSpeedyWizard(x, y);
+
 	}
 
 	/**
@@ -261,8 +253,28 @@ public class HTLFunctionalAPI extends HTL {
 	 *            The y coordinate of the position of the speedy wizard
 	 */
 	public void drawSpeedyWizard(int x, int y) {
+		drawWizard(x, y, false);
+	}
+
+	/**
+	 * Draws a speedy tower at the given x and y coordinate.
+	 * 
+	 * @param x
+	 *            The x coordinate of the position of the speedy wizard
+	 * @param y
+	 *            The y coordinate of the position of the speedy wizard
+	 * @param isMedic
+	 *            If a medic tower should be drawn (true) or speedy tower
+	 *            (false)
+	 */
+	private void drawWizard(int x, int y, boolean isMedic) {
 		Tile position = grid.getTile(x, y);
-		towerSet.addTowerAt(position, false);
+		towerSet.addTowerAt(position, isMedic);
+		if (isMedic) {
+			numOfMedicsCreated++;
+		} else {
+			numOfSpeedysCreated++;
+		}
 		lastTimeTowersHaveFired.add(FIRED_TIME_NEVER);
 	}
 
@@ -307,7 +319,7 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return True if Tile was successfully marked
 	 */
 	public boolean addPathUpDown(int x, int y) {
-		//TODO: add blocking path too so wizards can't step on it
+		// TODO: add blocking path too so wizards can't step on it
 		return grid.addPathUpDown(x, y);
 	}
 
@@ -414,40 +426,22 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 	}
+
 	/**
 	 * Add a basic walker
 	 */
 	public void addWalker() {
-		
-		spawner.addWave((float) 0.1, (float) 0.1, "b");
-		spawner.startWaves();
+		walkers.add(new WalkerBasic(grid.getPath()));
+		numOfBasicWalkersOnScreen++;
 	}
-
+	
 	/**
 	 * Add a fast walker
 	 */
 	public void addQuickWalker() {
-		spawner.addWave((float) 0.1, (float) 0.1, "q");
-		spawner.startWaves();
+		walkers.add(new WalkerQuick(grid.getPath()));
+		numOfQuickWalkersOnScreen++;
 	}
-
-	/**
-	 * Add a basic walker
-	 */
-	public void addWalkers() {
-		
-		spawner.addWave((float) 2, (float) 0.1, "bbbbbb");
-		spawner.startWaves();
-	}
-
-	/**
-	 * Add a fast walker
-	 */
-	public void addQuickWalkers() {
-		spawner.addWave((float) 2, (float) 0.1, "qqqqqq");
-		spawner.startWaves();
-	}
-
 	/**
 	 * Returns true if the user left clicks
 	 * 
@@ -458,28 +452,28 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	/**
-	 * Returns true if a tower is selected
+	 * Returns true if a wizard is selected
 	 * 
 	 * @return true
 	 */
-	public boolean aTowerIsSelected() {
+	public boolean aWizardIsSelected() {
 		return selectedTower != null;
 	}
 
 	/**
 	 * Moves the selected Tower to the clicked Tile via in-game movement.
 	 */
-	public void moveWizardTo(int x, int y) { 
+	public void moveWizardTo(int x, int y) {
 		Tile tile = getTileAt(x, y);
 		if (tile == null) {
 			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
 			return;
 		}
 		if (selectedTower.teleportTo(tile)) {
-			selectedTower.playSoundMove();	
+			selectedTower.playSoundMove();
 		}
 		unselectWizard();
-		
+
 	}
 
 	private Tile getTileAt(int x, int y) {
@@ -491,11 +485,13 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	private void printNoObjectAtCoordinateMessage(String objPlural, int x, int y) {
-		System.out.println("There are no " + objPlural + " at "+ coordinatesToString(x,y));
+		System.out.println("There are no " + objPlural + " at " + coordinatesToString(x, y));
 	}
+
 	private String coordinatesToString(int x, int y) {
-		return  "x = "+ x + " y = " + y;
+		return "x = " + x + " y = " + y;
 	}
+
 	/**
 	 * @return true if the clicked wizard is selected; false otherwise
 	 */
@@ -506,7 +502,7 @@ public class HTLFunctionalAPI extends HTL {
 		}
 		Tower tower = tile.getOccupant();
 		if (tower == null) {
-			
+
 			printNoObjectAtCoordinateMessage(TOWER_PLURAL, x, y);
 		}
 		return tile.getOccupant() == selectedTower;
@@ -517,8 +513,8 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public boolean tileHasWizard(int x, int y) {
 		Tile tile = getTileAt(x, y);
-		
-		if ( tile != null){ 
+
+		if (tile != null) {
 			return tile.hasOccupant();
 		} else {
 			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
@@ -530,20 +526,20 @@ public class HTLFunctionalAPI extends HTL {
 	 * Selects the wizard that was on the clicked tile
 	 */
 	public void selectWizard(int x, int y) {
-		
+
 		Tile tile = getTileAt(x, y);
-		
-		if ( tile == null){ 
+
+		if (tile == null) {
 			printNoObjectAtCoordinateMessage(TILE_PLURAL, x, y);
 			return;
-		} 
-		
+		}
+
 		Tower tower = tile.getOccupant();
 		if (tower == null) {
 			printNoObjectAtCoordinateMessage(TOWER_PLURAL, x, y);
 		}
-			selectTower(grid.getClickedTile().getOccupant());
-		
+		selectTower(grid.getClickedTile().getOccupant());
+
 	}
 
 	/**
@@ -635,7 +631,13 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected boolean wizardShouldFire(int towerIndex, int walkerIndex) {
 		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
-		if (System.currentTimeMillis() - lastSoundTime > 5000) { //todo: check with branden how often they should fire
+		if (System.currentTimeMillis() - lastSoundTime > 5000) { // todo: check
+																	// with
+																	// branden
+																	// how often
+																	// they
+																	// should
+																	// fire
 			towerSoundPlayed = false;
 			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
 		}
@@ -720,7 +722,8 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 		for (Walker walker : walkerSet.getArrayOfWalkers()) {
-			if (!walker.isAtPathEnd()) { //expected isDead to return true; but it is false
+			if (!walker.isAtPathEnd()) { // expected isDead to return true; but
+											// it is false
 				return false;
 			}
 		}
@@ -739,19 +742,15 @@ public class HTLFunctionalAPI extends HTL {
 		this.scoreToWin = scoreToWin;
 	}
 
-	
-	
 	/**
-	 * Creates the DrawingLayers in order from bottom to top,
-	 * which makes sure things in upper layers draw last,
-	 * and hence on top.
+	 * Creates the DrawingLayers in order from bottom to top, which makes sure
+	 * things in upper layers draw last, and hence on top.
 	 */
-	private void initializeDrawingLayers()
-	{
-		if(layerBackground == null)
-		{
-			// ORDER MATTERS - later ones are on top of the others in the same layer
-			phaseLayerGameplay = new DrawingLayer();			
+	private void initializeDrawingLayers() {
+		if (layerBackground == null) {
+			// ORDER MATTERS - later ones are on top of the others in the same
+			// layer
+			phaseLayerGameplay = new DrawingLayer();
 			phaseLayerLose = new DrawingLayer();
 			phaseLayerWin = new DrawingLayer();
 			phaseLayerPause = new DrawingLayer();
@@ -777,47 +776,44 @@ public class HTLFunctionalAPI extends HTL {
 			layerScreenDarkener.setVisibilityTo(false);
 		}
 	}
-	
+
 	/**
-	 * When the game transitions from the pre-level message to the actual game level,
-	 * do this.
+	 * When the game transitions from the pre-level message to the actual game
+	 * level, do this.
 	 */
-	protected void enterGameplay()
-	{
+	protected void enterGameplay() {
 		resources.stopSound(MUSIC_WIN);
 		resources.stopSound(MUSIC_LOSE);
-		if(currentGamePhase != gamePhase.PAUSE)
-		{
+		if (currentGamePhase != gamePhase.PAUSE) {
 			spawner.clearWaves();
 			buildGame();
 			initializeSettings();
 			initializeWinScreenAssets();
 			initializeLoseScreenAssets();
 			initializeDrawingLayers();
-			initializeHUD();
+
 			spawner.setDrawingLayer(null);
-			Walker.setRepository(walkerSet);
-	
-			
+//			Walker.setRepository(walkerSet);
+
 			// logic
 			spawner.startWaves();
 			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerWin.setVisibilityTo(false);
 		}
-		
+
 		// logic
 		paused = false;
 		CooldownTimer.unpauseAll();
-		//setAnimationPauseStatus(false);
-		
+		// setAnimationPauseStatus(false);
+
 		// music
-		//resources.resumeSound();
-		
+		// resources.resumeSound();
+
 		// visuals
 		phaseLayerGameplay.setVisibilityTo(true);
-		
-		phaseLayerTitleScreen.setVisibilityTo(false);		
-		phaseLayerCredits.setVisibilityTo(false);		
+
+		phaseLayerTitleScreen.setVisibilityTo(false);
+		phaseLayerCredits.setVisibilityTo(false);
 		phaseLayerRestartConfirm.setVisibilityTo(false);
 		phaseLayerQuitConfirm.setVisibilityTo(false);
 		phaseLayerPause.setVisibilityTo(false);
@@ -825,11 +821,11 @@ public class HTLFunctionalAPI extends HTL {
 		phaseLayerLose.setVisibilityTo(false);
 		phaseLayerLevelIntro.setVisibilityTo(false);
 		layerScreenDarkener.setVisibilityTo(false);
-		
+
 		// done
 		currentGamePhase = gamePhase.GAMEPLAY;
-	}	
-	
+	}
+
 	/**
 	 * Transition to the win screen.
 	 */
@@ -854,7 +850,7 @@ public class HTLFunctionalAPI extends HTL {
 			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerLevelIntro.setVisibilityTo(false);
 			phaseLayerPause.setVisibilityTo(false);
-			
+
 			setCurrentGamePhase(gamePhase.WIN);
 		}
 	}
@@ -881,59 +877,118 @@ public class HTLFunctionalAPI extends HTL {
 			phaseLayerWin.setVisibilityTo(false);
 			phaseLayerLevelIntro.setVisibilityTo(false);
 			phaseLayerPause.setVisibilityTo(false);
-			
+
 			setCurrentGamePhase(gamePhase.LOSE);
 		}
 	}
 
 	private void setCurrentGamePhase(gamePhase currentGamePhase) {
-		
+
 		this.currentGamePhase = currentGamePhase;
 	}
-	
+
 	protected void setWalkerDamagePerSecond(int damage) {
 		Walker.setDamageTakenPerSecond(damage);
 	}
+
 	protected boolean winRestartButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
 		return winButtonRestart.containsPoint(mouseX, mouseY);
 	}
-	
+
 	protected boolean winQuitButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
 		return winButtonQuit.containsPoint(mouseX, mouseY);
 	}
+
 	protected boolean loseRestartButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
 		return loseButtonRestart.containsPoint(mouseX, mouseY);
 	}
-	
+
 	protected boolean loseQuitButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
 		return loseButtonQuit.containsPoint(mouseX, mouseY);
 	}
+
 	protected void exitGame() {
 		System.exit(0);
 	}
+
 	protected void drawToolbars() {
 		setHUDVisibilityTo(true);
 	}
+
 	protected int getClickedColumn() {
 		Tile clickedTile = grid.getClickedTile();
-		if (clickedTile == null){
+		if (clickedTile == null) {
 			return -1;
 		}
 		return clickedTile.getGridColumn();
-	} 
+	}
+
 	protected int getClickedRow() {
 		Tile clickedTile = grid.getClickedTile();
-		if (clickedTile == null){
+		if (clickedTile == null) {
 			return -1;
 		}
 		return clickedTile.getGridRow();
-	} 
+	}
+
+	/**
+	 * Updates everything on the HUD, the wave sign, and some optional debug
+	 * output.
+	 */
+	private void updateUI() {
+
+		// top row
+		setHUDTime(countdownCurrent);
+		// commented out because we don't know what to put on that spot.
+		// setHUDNumberOfMoves( ??? ); 
+		setHUDScore((int) score);
+
+		// bottom row
+		setHUDNumberOfTowersMedic(numOfMedicsCreated);
+		setHUDNumberOfTowersSpeedy(numOfSpeedysCreated);
+		setHUDNumberOfWalkersBasic(numOfBasicWalkersOnScreen);
+		setHUDNumberOfWalkersQuick(numOfQuickWalkersOnScreen);
+	}
+	/**
+	 * Update the score if a Walker makes it to the end of the path or dies.
+	 * Also gets rid of Walkers who made it to the end of the path.
+	 */
+	private void updateScore()
+	{
+		for (Walker walker : walkerSet.getArrayOfWalkers())
+		{
+			if(walker.hasJustDied())
+			{
+				numOfDeadWalkers++;
+				walker.playSoundDeath();
+			}
+			else if(walker.isAtPathEnd())
+			{
+				walker.playSoundSurvival();
+				
+				float healthToAdd = walker.getHealth();
+				if(walker.getWalkerType() == Walker.Type.BASIC)
+				{
+					numOfBasicWalkersOnScreen--;
+				}
+				else
+				{
+					numOfQuickWalkersOnScreen--;
+					healthToAdd *= 2;
+				}
+				healthSaved += healthToAdd;
+				walker.destroy();
+			}
+		}
+	}
+
+
 }

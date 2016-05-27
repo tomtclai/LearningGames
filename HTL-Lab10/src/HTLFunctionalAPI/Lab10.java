@@ -16,9 +16,11 @@ public class Lab10 extends HTLFunctionalAPI
 		
 		preparePathForWalkers(0,5,19,5);
 		// either Walker or QuickWalker, pick one  
-//		addWalkers();
-		addQuickWalkers();
+		//addWalker();
+		addQuickWalker();
 		setWalkerDamagePerSecond(1);
+		
+		setCountdownFrom(1);
 	}
 	
 	public void updateGame() {
@@ -52,7 +54,7 @@ public class Lab10 extends HTLFunctionalAPI
 				}
 			} else {
 				// if a Tower is selected, can it be moved to this Tile?
-				if (aTowerIsSelected()) {
+				if (aWizardIsSelected()) {
 					moveWizardTo(clickedColumn, clickedRow);
 				}
 				// otherwise, if there's a Tower on the tile, toggle selection
@@ -88,6 +90,9 @@ public class Lab10 extends HTLFunctionalAPI
 			}
 		}
 
+		if (countdownFired()) {
+			addQuickWalker();
+		}
 
 	}
 }
