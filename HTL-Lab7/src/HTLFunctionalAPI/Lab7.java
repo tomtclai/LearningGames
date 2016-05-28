@@ -51,6 +51,14 @@ public class Lab7 extends HTLFunctionalAPI
 			addPathLeftRight(currentNum, 5);
 		}
 		preparePathForWalkers(0,5,19,5);
-		addWalker();
+	}
+	
+	public void updateGame() {
+
+		if (countdownFired()) {
+			addWalker();
+		}
 	}
 }
+
+
