@@ -114,6 +114,7 @@ public class HTLFunctionalAPI extends HTL {
 		enterGameplay();
 
 	}
+
 	private void initializeStates() {
 		lastTimeTimerWasUpdated = 0;
 		lastTimeTimerWasFired = 0;
@@ -127,10 +128,11 @@ public class HTLFunctionalAPI extends HTL {
 		healthSaved = 0;
 		// TODO: looks like if we remove towers the Grid still thinks they exist
 		// This will crash the game.
-		// towerSet.removeAll();  
+		// towerSet.removeAll();
 		walkerSet.removeAll();
-		
+
 	}
+
 	private void initializeSettings() {
 		TowerMedic.setCastHealthAdjust(10);
 		TowerSpeedy.setCastSpeedAdjustDuration(1);
@@ -167,12 +169,14 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public void updateWorld() {
 		super.updateWorld();
-		towerSet.update();
-		walkerSet.update();
+		if (currentGamePhase == gamePhase.GAMEPLAY) {
+			towerSet.update();
+			walkerSet.update();
+			updateTimer();
+			updateStats();
+		}
 		updateGame();
 		updateUI();
-		updateStats();
-		updateTimer();
 	}
 
 	/**
@@ -642,12 +646,14 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	protected boolean towerIsReady(int towerIndex) {
-		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
-		if (System.currentTimeMillis() - lastSoundTime > 3000) {
-			towerSoundPlayed = false;
-			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
+		if (currentGamePhase == gamePhase.GAMEPLAY) {
+			long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
+			if (System.currentTimeMillis() - lastSoundTime > 3000) {
+				towerSoundPlayed = false;
+				lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
 
-			return true;
+				return true;
+			}
 		}
 		return false;
 	}
