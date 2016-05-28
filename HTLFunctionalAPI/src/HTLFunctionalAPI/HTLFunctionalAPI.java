@@ -38,7 +38,6 @@ public class HTLFunctionalAPI extends HTL {
 	ArrayList<Long> lastTimeTowersHaveFired = new ArrayList<Long>();
 	private int numOfMedicsCreated = 0;
 	private int numOfSpeedysCreated = 0;
-	private float walkerSpeed = -1;
 	private int numOfDeadWalkers = 0;
 	private int numOfWalkersCreated = 0;
 	private int numOfBasicWalkersOnScreen = 0;
@@ -115,7 +114,23 @@ public class HTLFunctionalAPI extends HTL {
 		enterGameplay();
 
 	}
-
+	private void initializeStates() {
+		lastTimeTimerWasUpdated = 0;
+		lastTimeTimerWasFired = 0;
+		score = 0;
+		numOfMedicsCreated = 0;
+		numOfSpeedysCreated = 0;
+		numOfDeadWalkers = 0;
+		numOfWalkersCreated = 0;
+		numOfBasicWalkersOnScreen = 0;
+		numOfQuickWalkersOnScreen = 0;
+		healthSaved = 0;
+		// TODO: looks like if we remove towers the Grid still thinks they exist
+		// This will crash the game.
+		// towerSet.removeAll();  
+		walkerSet.removeAll();
+		
+	}
 	private void initializeSettings() {
 		TowerMedic.setCastHealthAdjust(10);
 		TowerSpeedy.setCastSpeedAdjustDuration(1);
@@ -738,15 +753,8 @@ public class HTLFunctionalAPI extends HTL {
 			// ORDER MATTERS - later ones are on top of the others in the same
 			// layer
 			phaseLayerGameplay = new DrawingLayer();
-			phaseLayerLose = new DrawingLayer();
 			phaseLayerWin = new DrawingLayer();
 			phaseLayerPause = new DrawingLayer();
-			phaseLayerRestartConfirm = new DrawingLayer();
-			phaseLayerQuitConfirm = new DrawingLayer();
-			phaseLayerLevelIntro = new DrawingLayer();
-			phaseLayerTitleScreen = new DrawingLayer();
-			phaseLayerCredits = new DrawingLayer();
-			phaseLayerDebug = new DrawingLayer();
 
 			layerBackground = new DrawingLayer(phaseLayerGameplay);
 			layerPath = new DrawingLayer(phaseLayerGameplay);
@@ -770,18 +778,14 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected void enterGameplay() {
 		resources.stopSound(MUSIC_WIN);
-	
+
 		if (currentGamePhase != gamePhase.PAUSE) {
-			System.out.println("enterGameplay");
-			walkerSet.removeAll();
-			towerSet.removeAll();
-			setScore(0);
-			buildGame();
+			initializeStates();
 			initializeSettings();
 			initializeWinScreenAssets();
 			initializeDrawingLayers();
+			buildGame();
 			// logic
-			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerWin.setVisibilityTo(false);
 		}
 
@@ -795,15 +799,8 @@ public class HTLFunctionalAPI extends HTL {
 
 		// visuals
 		phaseLayerGameplay.setVisibilityTo(true);
-
-		phaseLayerTitleScreen.setVisibilityTo(false);
-		phaseLayerCredits.setVisibilityTo(false);
-		phaseLayerRestartConfirm.setVisibilityTo(false);
-		phaseLayerQuitConfirm.setVisibilityTo(false);
 		phaseLayerPause.setVisibilityTo(false);
 		phaseLayerWin.setVisibilityTo(false);
-		phaseLayerLose.setVisibilityTo(false);
-		phaseLayerLevelIntro.setVisibilityTo(false);
 		layerScreenDarkener.setVisibilityTo(false);
 
 		// done
@@ -825,12 +822,10 @@ public class HTLFunctionalAPI extends HTL {
 			phaseLayerWin.setVisibilityTo(true);
 			layerScreenDarkener.setVisibilityTo(true);
 			phaseLayerGameplay.setVisibilityTo(true);
-
 			phaseLayerTitleScreen.setVisibilityTo(false);
 			phaseLayerCredits.setVisibilityTo(false);
 			phaseLayerRestartConfirm.setVisibilityTo(false);
 			phaseLayerQuitConfirm.setVisibilityTo(false);
-			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerLevelIntro.setVisibilityTo(false);
 			phaseLayerPause.setVisibilityTo(false);
 
@@ -859,6 +854,7 @@ public class HTLFunctionalAPI extends HTL {
 		float mouseY = mouse.getWorldY();
 		return winButtonQuit.containsPoint(mouseX, mouseY);
 	}
+
 	protected void exitGame() {
 		System.exit(0);
 	}
@@ -904,10 +900,10 @@ public class HTLFunctionalAPI extends HTL {
 		setHUDNumberOfTowersSpeedy(numOfSpeedysCreated);
 		setHUDNumberOfWalkersBasic(numOfBasicWalkersOnScreen);
 		setHUDNumberOfWalkersQuick(numOfQuickWalkersOnScreen);
-		
+
 		// win screen
 		winScoreText.setText("" + (int) getScore());
-		
+
 	}
 
 	/**
