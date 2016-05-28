@@ -56,7 +56,7 @@ public class Lab7 extends HTLFunctionalAPI
 	public void updateGame() {
 
 		if (countdownFired()) {
-			addWalker();
+			addBasicWalker();
 		}
 	}
 }

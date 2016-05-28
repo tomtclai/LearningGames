@@ -275,7 +275,8 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	private void drawWizard(int x, int y, boolean isMedic) {
 		Tile position = grid.getTile(x, y);
-		if (position.isBlocked()) {
+
+		if (position == null || position.isBlocked()) {
 			return;
 		}
 		towerSet.addTowerAt(position, isMedic);
@@ -439,11 +440,24 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 	}
-
+	/**
+	 * Add a walker
+	 * 
+	 * @param type
+	 *            Either "basic" or "quick", case insensitive.
+	 */
+	public void addWalker(String type) {
+		if (type.toLowerCase().equals("basic")) {
+			addBasicWalker();
+		} else if (type.toLowerCase().equals("quick")) {
+			addQuickWalker();
+		}
+	}
+	
 	/**
 	 * Add a basic walker
 	 */
-	public void addWalker() {
+	public void addBasicWalker() {
 		Walker w = new WalkerBasic(grid.getPath());
 		w.moveToDrawingLayer(layerWalkers);
 		walkers.add(w);
