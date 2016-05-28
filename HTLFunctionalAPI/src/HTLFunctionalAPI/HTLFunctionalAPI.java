@@ -37,10 +37,6 @@ public class HTLFunctionalAPI extends HTL {
 	private GameObject winButtonRestart = null;
 	private GameObject winButtonQuit = null;
 
-	private GameObject losePopUp = null;
-	private GameObject loseButtonRestart = null;
-	private GameObject loseButtonQuit = null;
-
 	// Game Data
 	private Tower selectedTower = null;
 	private boolean towerSoundPlayed = false;
@@ -67,16 +63,15 @@ public class HTLFunctionalAPI extends HTL {
 	private static final String TILE_PLURAL = "tiles";
 
 	private enum gamePhase {
-		GAMEPLAY, WIN, LOSE, PAUSE, RESTART_CONFIRM, QUIT_CONFIRM
+		GAMEPLAY, WIN, PAUSE, RESTART_CONFIRM, QUIT_CONFIRM
 	}
 
 	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
 	private float healthSaved;
 
-	
-	
 	/**
-	 * The function returns true if 1) countdown finishes and 2) the function has not returned true in the last 1 second
+	 * The function returns true if 1) countdown finishes and 2) the function
+	 * has not returned true in the last 1 second
 	 */
 	public boolean countdownFired() {
 		if (countdownCurrent < 0 && System.currentTimeMillis() - lastTimeTimerWasFired > 1000) {
@@ -105,7 +100,9 @@ public class HTLFunctionalAPI extends HTL {
 
 	/**
 	 * set the integer to count down from
-	 * @param the number to countdown from
+	 * 
+	 * @param the
+	 *            number to countdown from
 	 */
 	public void setCountdownFrom(int countdownFrom) {
 		this.countdownFrom = countdownFrom;
@@ -151,29 +148,6 @@ public class HTLFunctionalAPI extends HTL {
 			winScoreText = makeText(SCREEN_CENTER_X - .95f, SCREEN_CENTER_Y + 1.3f);
 			winScoreText.setFontSize(38);
 			winScoreText.moveToDrawingLayer(phaseLayerWin);
-		}
-	}
-
-	/**
-	 * Initializes assets for Lose screen.
-	 */
-	private void initializeLoseScreenAssets() {
-		if (losePopUp == null) {
-			float popUpWidth = gameUnitsFromPixels(445);
-			float popUpHeight = gameUnitsFromPixels(515);
-			losePopUp = new GameObject(SCREEN_CENTER_X, SCREEN_CENTER_Y, popUpWidth, popUpHeight);
-			losePopUp.setImage(IMAGE_LOSE_POP_UP);
-			losePopUp.moveToDrawingLayer(phaseLayerLose);
-
-			float buttonWidth = gameUnitsFromPixels(224);
-			float buttonHeight = gameUnitsFromPixels(85);
-			loseButtonRestart = new GameObject(SCREEN_CENTER_X, 5.4f, buttonWidth, buttonHeight);
-			loseButtonRestart.setImage(IMAGE_LOSE_BUTTON_RESTART);
-			loseButtonRestart.moveToDrawingLayer(phaseLayerLose);
-
-			loseButtonQuit = new GameObject(SCREEN_CENTER_X, 3.9f, buttonWidth, buttonHeight);
-			loseButtonQuit.setImage(IMAGE_LOSE_BUTTON_QUIT);
-			loseButtonQuit.moveToDrawingLayer(phaseLayerLose);
 		}
 	}
 
@@ -239,7 +213,7 @@ public class HTLFunctionalAPI extends HTL {
 		Random random = new Random();
 		int x = random.nextInt((int) SCREEN_WIDTH - 1);
 		int y = random.nextInt((int) SCREEN_HEIGHT);
-		
+
 		drawSpeedyWizard(x, y);
 
 	}
@@ -263,8 +237,8 @@ public class HTLFunctionalAPI extends HTL {
 	 *            The x coordinate of the position of the speedy wizard
 	 * @param y
 	 *            The y coordinate of the position of the speedy wizard
-	 * @param type 
-	 * 			  Either "medic" or "speedy", case insensitive.
+	 * @param type
+	 *            Either "medic" or "speedy", case insensitive.
 	 */
 	public void drawWizard(int x, int y, String type) {
 		if (type.toLowerCase().equals("medic")) {
@@ -429,8 +403,6 @@ public class HTLFunctionalAPI extends HTL {
 		return grid.addPathDownRight(x, y);
 	}
 
-	
-
 	/**
 	 * It is necessary to call this method so that walkers can walk on a custom
 	 * path.
@@ -458,19 +430,24 @@ public class HTLFunctionalAPI extends HTL {
 	 * Add a basic walker
 	 */
 	public void addWalker() {
-		walkers.add(new WalkerBasic(grid.getPath()));
+		Walker w = new WalkerBasic(grid.getPath());
+		w.moveToDrawingLayer(layerWalkers);
+		walkers.add(w);
 		numOfBasicWalkersOnScreen++;
 		numOfWalkersCreated++;
 	}
-	
+
 	/**
 	 * Add a fast walker
 	 */
 	public void addQuickWalker() {
-		walkers.add(new WalkerQuick(grid.getPath()));
+		Walker w = new WalkerQuick(grid.getPath());
+		w.moveToDrawingLayer(layerWalkers);
+		walkers.add(w);
 		numOfQuickWalkersOnScreen++;
 		numOfWalkersCreated++;
 	}
+
 	/**
 	 * Returns true if the user left clicks
 	 * 
@@ -541,6 +518,7 @@ public class HTLFunctionalAPI extends HTL {
 		Tower t = towerSet.getArrayOfTowers()[wizardIndex];
 		return t.getTowerType() == Tower.Type.MEDIC;
 	}
+
 	/**
 	 * @return true if the clicked tile is occupied; false otherwise
 	 */
@@ -655,14 +633,15 @@ public class HTLFunctionalAPI extends HTL {
 
 	protected boolean towerIsReady(int towerIndex) {
 		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
-		if (System.currentTimeMillis() - lastSoundTime > 3000) { 
+		if (System.currentTimeMillis() - lastSoundTime > 3000) {
 			towerSoundPlayed = false;
 			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
-			
+
 			return true;
 		}
 		return false;
 	}
+
 	/**
 	 * returns true if the tower should fire; false otherwise
 	 * 
@@ -673,7 +652,6 @@ public class HTLFunctionalAPI extends HTL {
 	 * @return true if the tower should fire; false otherwise
 	 */
 	protected boolean walkerIsInRange(int towerIndex, int walkerIndex) {
-
 
 		Walker walker = walkerSet.getArrayOfWalkers()[walkerIndex];
 		Tower tower = towerSet.getArrayOfTowers()[towerIndex];
@@ -744,25 +722,6 @@ public class HTLFunctionalAPI extends HTL {
 		t.playEffectSpellcast();
 	}
 
-	/**
-	 * Returns true if the game is considered over.
-	 * 
-	 * @return Whether the game is considered over.
-	 */
-	protected boolean gameIsOver() {
-
-		if (walkerSet.isEmpty()) {
-			return false;
-		}
-		for (Walker walker : walkerSet.getArrayOfWalkers()) {
-			if (!walker.isAtPathEnd()) { // expected isDead to return true; but
-											// it is false
-				return false;
-			}
-		}
-		return true;
-	}
-
 	protected boolean userWon() {
 		return getScore() >= getScoreToWin();
 	}
@@ -821,7 +780,6 @@ public class HTLFunctionalAPI extends HTL {
 			buildGame();
 			initializeSettings();
 			initializeWinScreenAssets();
-			initializeLoseScreenAssets();
 			initializeDrawingLayers();
 
 			// logic
@@ -883,33 +841,6 @@ public class HTLFunctionalAPI extends HTL {
 		}
 	}
 
-	/**
-	 * Transition to the Lose screen.
-	 */
-	protected void enterLose() {
-		if (currentGamePhase == gamePhase.GAMEPLAY) {
-			resources.stopSound(MUSIC_TITLE);
-			resources.stopSound(MUSIC_WIN);
-			resources.stopSound(MUSIC_BACKGROUND);
-			resources.playSound(MUSIC_LOSE);
-
-			// visuals
-			phaseLayerLose.setVisibilityTo(true);
-			layerScreenDarkener.setVisibilityTo(true);
-			phaseLayerGameplay.setVisibilityTo(true);
-
-			phaseLayerTitleScreen.setVisibilityTo(false);
-			phaseLayerCredits.setVisibilityTo(false);
-			phaseLayerRestartConfirm.setVisibilityTo(false);
-			phaseLayerQuitConfirm.setVisibilityTo(false);
-			phaseLayerWin.setVisibilityTo(false);
-			phaseLayerLevelIntro.setVisibilityTo(false);
-			phaseLayerPause.setVisibilityTo(false);
-
-			setCurrentGamePhase(gamePhase.LOSE);
-		}
-	}
-
 	private void setCurrentGamePhase(gamePhase currentGamePhase) {
 
 		this.currentGamePhase = currentGamePhase;
@@ -930,19 +861,6 @@ public class HTLFunctionalAPI extends HTL {
 		float mouseY = mouse.getWorldY();
 		return winButtonQuit.containsPoint(mouseX, mouseY);
 	}
-
-	protected boolean loseRestartButtonSelected() {
-		float mouseX = mouse.getWorldX();
-		float mouseY = mouse.getWorldY();
-		return loseButtonRestart.containsPoint(mouseX, mouseY);
-	}
-
-	protected boolean loseQuitButtonSelected() {
-		float mouseX = mouse.getWorldX();
-		float mouseY = mouse.getWorldY();
-		return loseButtonQuit.containsPoint(mouseX, mouseY);
-	}
-
 	protected void exitGame() {
 		System.exit(0);
 	}
@@ -974,12 +892,13 @@ public class HTLFunctionalAPI extends HTL {
 	private void updateUI() {
 
 		// top row
-		// countdownCurrent will hit -1 for a frame, but we don't want it to flicker
-		if (countdownCurrent >= 0) { 
+		// countdownCurrent will hit -1 for a frame, but we don't want it to
+		// flicker
+		if (countdownCurrent >= 0) {
 			setHUDTime(countdownCurrent);
 		}
 		// commented out because we don't know what to put on that spot.
-		// setHUDNumberOfMoves( ??? ); 
+		// setHUDNumberOfMoves( ??? );
 		setHUDScore((int) getScore());
 
 		// bottom row
@@ -987,31 +906,28 @@ public class HTLFunctionalAPI extends HTL {
 		setHUDNumberOfTowersSpeedy(numOfSpeedysCreated);
 		setHUDNumberOfWalkersBasic(numOfBasicWalkersOnScreen);
 		setHUDNumberOfWalkersQuick(numOfQuickWalkersOnScreen);
+		
+		// win screen
+		winScoreText.setText("" + (int) getScore());
+		
 	}
+
 	/**
 	 * Update the stats if a Walker makes it to the end of the path or dies.
 	 * Also gets rid of Walkers who made it to the end of the path.
 	 */
-	private void updateStats()
-	{
-		for (Walker walker : walkerSet.getArrayOfWalkers())
-		{
-			if(walker.hasJustDied())
-			{
+	private void updateStats() {
+		for (Walker walker : walkerSet.getArrayOfWalkers()) {
+			if (walker.hasJustDied()) {
 				numOfDeadWalkers = getNumOfDeadWalkers() + 1;
 				walker.playSoundDeath();
-			}
-			else if(walker.isAtPathEnd())
-			{
+			} else if (walker.isAtPathEnd()) {
 				walker.playSoundSurvival();
-				
+
 				float healthToAdd = walker.getHealth();
-				if(walker.getWalkerType() == Walker.Type.BASIC)
-				{
+				if (walker.getWalkerType() == Walker.Type.BASIC) {
 					numOfBasicWalkersOnScreen--;
-				}
-				else
-				{
+				} else {
 					numOfQuickWalkersOnScreen--;
 					healthToAdd *= 2;
 				}
@@ -1032,15 +948,13 @@ public class HTLFunctionalAPI extends HTL {
 	protected int getNumOfDeadWalkers() {
 		return numOfDeadWalkers;
 	}
-	
+
 	protected int getNumOfWalkersSaved() {
 		return numOfWalkersCreated - numOfDeadWalkers;
 	}
-	
+
 	protected float getHealthSaved() {
 		return healthSaved;
 	}
-
-
 
 }

@@ -1,59 +1,50 @@
 package HTLFunctionalAPI;
+
 import TowerDefense.*;
 
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab10 extends HTLFunctionalAPI
-{	
-	// TODO: I forgot if we are allowed to have variables at this level. 
-	// But if not I can hide it and make students use a method instead 
+public class Lab10 extends HTLFunctionalAPI {
+	// TODO: I forgot if we are allowed to have variables at this level.
+	// But if not I can hide it and make students use a method instead
 	String defaultWizardType = "medic";
-	public void buildGame()
-	{			
+
+	public void buildGame() {
 		drawToolbars();
 		for (int currentNum = 0; currentNum < 20; currentNum = currentNum + 1) {
 			addPathLeftRight(currentNum, 5);
 		}
-		
-		preparePathForWalkers(0,5,19,5);
+
+		preparePathForWalkers(0, 5, 19, 5);
 		setWalkerDamagePerSecond(5);
 		setCountdownFrom(1);
+		setScoreToWin(5000);
 	}
-	
+
 	public void updateGame() {
-		
+
 		if (countdownFired()) {
 			addWalker();
 		}
 
 		// in-game
-		
-		if (gameIsOver()) {
-			if (userWon()) {
-				enterWin();
-			} else {
-				enterLose();
-			}
-		} 
-		
+
+		if (userWon()) {
+			enterWin();
+		}
+
 		if (mouseClicked()) {
 			int clickedRow = getClickedRow();
 			int clickedColumn = getClickedColumn();
-			if(gameIsOver()) { // if game is over, check for button clicks
-				if (userWon()) {
-					if (winRestartButtonSelected()) { // did user click on the restart button?
-						enterGameplay();
-					} else if (winQuitButtonSelected()) { // or did user click on the quit button?
-						exitGame();
-					}
-				} else {
-					if (loseRestartButtonSelected()) {
-						enterGameplay();
-					} else if (loseQuitButtonSelected()) {
-						exitGame();
-					}
+			if (userWon()) { // if user won, check for button clicks
+				if (winRestartButtonSelected()) { // did user click on the
+													// restart button?
+					enterGameplay();
+				} else if (winQuitButtonSelected()) { // or did user click on
+														// the quit button?
+					exitGame();
 				}
 			} else {
 				// if a Tower is selected, can it be moved to this Tile?
@@ -78,20 +69,20 @@ public class Lab10 extends HTLFunctionalAPI
 			}
 
 		}
-		
-		if (keyboardIsPressingLeft()){
+
+		if (keyboardIsPressingLeft()) {
 			defaultWizardType = "medic";
 		} else if (keyboardIsPressingRight()) {
 			defaultWizardType = "speedy";
 		}
-		
+
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
 			if (towerIsReady(i)) {
 				for (int j = 0; j < numOfWalkers(); j++) {
 					if (walkerIsInRange(i, j)) {
 						if (wizardIsMedic(i)) {
-							medicWizardCastSpellOnWalker(i, j);	
+							medicWizardCastSpellOnWalker(i, j);
 						} else {
 							speedyWizardCastSpellOnWalker(i, j);
 						}
@@ -99,9 +90,8 @@ public class Lab10 extends HTLFunctionalAPI
 				}
 			}
 		}
-		
-		setScore(getNumOfWalkersSaved() * getHealthSaved());
 
+		setScore(getNumOfWalkersSaved() * getHealthSaved());
 
 	}
 }
