@@ -23,11 +23,6 @@ public class HTLFunctionalAPI extends HTL {
 	private static final String MUSIC_TITLE = "audio/Music/Misty Sunshine.mp3";
 	private static final String MUSIC_BACKGROUND = "audio/Music/It's a Wonderful World.mp3";
 	private static final String MUSIC_WIN = "audio/Music/Together we Survive.mp3";
-	private static final String MUSIC_LOSE = "audio/Music/Sea of Sadness.mp3";
-	public static final String IMAGE_LOSE_POP_UP = "art/UI/HTL_PopUp_Lose.png";
-	public static final String IMAGE_LOSE_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
-	public static final String IMAGE_LOSE_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
-
 	public static final String IMAGE_WIN_POP_UP = "art/UI/HTL_PopUp_Win.png";
 	public static final String IMAGE_WIN_BUTTON_RESTART = "art/UI/HTL_PopUp_ButtonRestart.png";
 	public static final String IMAGE_WIN_BUTTON_QUIT = "art/UI/HTL_PopUp_ButtonQuit.png";
@@ -775,13 +770,16 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	protected void enterGameplay() {
 		resources.stopSound(MUSIC_WIN);
-		resources.stopSound(MUSIC_LOSE);
+	
 		if (currentGamePhase != gamePhase.PAUSE) {
+			System.out.println("enterGameplay");
+			walkerSet.removeAll();
+			towerSet.removeAll();
+			setScore(0);
 			buildGame();
 			initializeSettings();
 			initializeWinScreenAssets();
 			initializeDrawingLayers();
-
 			// logic
 			phaseLayerLose.setVisibilityTo(false);
 			phaseLayerWin.setVisibilityTo(false);
@@ -818,7 +816,6 @@ public class HTLFunctionalAPI extends HTL {
 	protected void enterWin() {
 		if (currentGamePhase == gamePhase.GAMEPLAY) {
 			resources.stopSound(MUSIC_TITLE);
-			resources.stopSound(MUSIC_LOSE);
 			resources.stopSound(MUSIC_BACKGROUND);
 			resources.playSound(MUSIC_WIN);
 
@@ -853,6 +850,7 @@ public class HTLFunctionalAPI extends HTL {
 	protected boolean winRestartButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
+
 		return winButtonRestart.containsPoint(mouseX, mouseY);
 	}
 

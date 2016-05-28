@@ -20,7 +20,7 @@ public class Lab10 extends HTLFunctionalAPI {
 		preparePathForWalkers(0, 5, 19, 5);
 		setWalkerDamagePerSecond(5);
 		setCountdownFrom(1);
-		setScoreToWin(5000);
+		setScoreToWin(1);
 	}
 
 	public void updateGame() {
