@@ -49,9 +49,9 @@ public class HTLFunctionalAPI extends HTL {
 	private int numOfSpeedysCreated = 0;
 	private float walkerSpeed = -1;
 	private int numOfDeadWalkers = 0;
+	private int numOfWalkersCreated = 0;
 	private int numOfBasicWalkersOnScreen = 0;
 	private int numOfQuickWalkersOnScreen = 0;
-	private float healthSaved = 0;
 	private float score = 0;
 	private float scoreToWin = -1;
 	private int countdownFrom = 3;
@@ -71,6 +71,7 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
+	private float healthSaved;
 
 	
 	
@@ -186,7 +187,7 @@ public class HTLFunctionalAPI extends HTL {
 		walkerSet.update();
 		updateGame();
 		updateUI();
-		updateScore();
+		updateStats();
 		updateTimer();
 	}
 
@@ -253,6 +254,24 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public void drawSpeedyWizard(int x, int y) {
 		drawWizard(x, y, false);
+	}
+
+	/**
+	 * Draws a tower at the given x and y coordinate.
+	 * 
+	 * @param x
+	 *            The x coordinate of the position of the speedy wizard
+	 * @param y
+	 *            The y coordinate of the position of the speedy wizard
+	 * @param type 
+	 * 			  Either "medic" or "speedy", case insensitive.
+	 */
+	public void drawWizard(int x, int y, String type) {
+		if (type.toLowerCase().equals("medic")) {
+			drawWizard(x, y, true);
+		} else if (type.toLowerCase().equals("speedy")) {
+			drawWizard(x, y, false);
+		}
 	}
 
 	/**
@@ -441,6 +460,7 @@ public class HTLFunctionalAPI extends HTL {
 	public void addWalker() {
 		walkers.add(new WalkerBasic(grid.getPath()));
 		numOfBasicWalkersOnScreen++;
+		numOfWalkersCreated++;
 	}
 	
 	/**
@@ -449,6 +469,7 @@ public class HTLFunctionalAPI extends HTL {
 	public void addQuickWalker() {
 		walkers.add(new WalkerQuick(grid.getPath()));
 		numOfQuickWalkersOnScreen++;
+		numOfWalkersCreated++;
 	}
 	/**
 	 * Returns true if the user left clicks
@@ -516,6 +537,10 @@ public class HTLFunctionalAPI extends HTL {
 		return tile.getOccupant() == selectedTower;
 	}
 
+	public boolean wizardIsMedic(int wizardIndex) {
+		Tower t = towerSet.getArrayOfTowers()[wizardIndex];
+		return t.getTowerType() == Tower.Type.MEDIC;
+	}
 	/**
 	 * @return true if the clicked tile is occupied; false otherwise
 	 */
@@ -739,7 +764,7 @@ public class HTLFunctionalAPI extends HTL {
 	}
 
 	protected boolean userWon() {
-		return score >= getScoreToWin();
+		return getScore() >= getScoreToWin();
 	}
 
 	protected float getScoreToWin() {
@@ -839,7 +864,7 @@ public class HTLFunctionalAPI extends HTL {
 			resources.stopSound(MUSIC_BACKGROUND);
 			resources.playSound(MUSIC_WIN);
 
-			winScoreText.setText("" + (int) score);
+			winScoreText.setText("" + (int) getScore());
 
 			// visuals
 			phaseLayerWin.setVisibilityTo(true);
@@ -955,7 +980,7 @@ public class HTLFunctionalAPI extends HTL {
 		}
 		// commented out because we don't know what to put on that spot.
 		// setHUDNumberOfMoves( ??? ); 
-		setHUDScore((int) score);
+		setHUDScore((int) getScore());
 
 		// bottom row
 		setHUDNumberOfTowersMedic(numOfMedicsCreated);
@@ -964,16 +989,16 @@ public class HTLFunctionalAPI extends HTL {
 		setHUDNumberOfWalkersQuick(numOfQuickWalkersOnScreen);
 	}
 	/**
-	 * Update the score if a Walker makes it to the end of the path or dies.
+	 * Update the stats if a Walker makes it to the end of the path or dies.
 	 * Also gets rid of Walkers who made it to the end of the path.
 	 */
-	private void updateScore()
+	private void updateStats()
 	{
 		for (Walker walker : walkerSet.getArrayOfWalkers())
 		{
 			if(walker.hasJustDied())
 			{
-				numOfDeadWalkers++;
+				numOfDeadWalkers = getNumOfDeadWalkers() + 1;
 				walker.playSoundDeath();
 			}
 			else if(walker.isAtPathEnd())
@@ -995,6 +1020,27 @@ public class HTLFunctionalAPI extends HTL {
 			}
 		}
 	}
+
+	protected float getScore() {
+		return score;
+	}
+
+	protected void setScore(float score) {
+		this.score = score;
+	}
+
+	protected int getNumOfDeadWalkers() {
+		return numOfDeadWalkers;
+	}
+	
+	protected int getNumOfWalkersSaved() {
+		return numOfWalkersCreated - numOfDeadWalkers;
+	}
+	
+	protected float getHealthSaved() {
+		return healthSaved;
+	}
+
 
 
 }

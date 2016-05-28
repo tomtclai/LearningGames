@@ -7,6 +7,9 @@ import TowerDefense.*;
  */
 public class Lab10 extends HTLFunctionalAPI
 {	
+	// TODO: I forgot if we are allowed to have variables at this level. 
+	// But if not I can hide it and make students use a method instead 
+	String defaultWizardType = "medic";
 	public void buildGame()
 	{			
 		drawToolbars();
@@ -15,7 +18,7 @@ public class Lab10 extends HTLFunctionalAPI
 		}
 		
 		preparePathForWalkers(0,5,19,5);
-		setWalkerDamagePerSecond(1);
+		setWalkerDamagePerSecond(5);
 		setCountdownFrom(1);
 	}
 	
@@ -69,28 +72,35 @@ public class Lab10 extends HTLFunctionalAPI
 				}
 				// otherwise, place a Tower
 				else {
-					// either speedy or medic, pick one
-					// drawMedicWizard(clickedColumn, clickedRow);
-					drawSpeedyWizard(clickedColumn, clickedRow);
-					
+					// either speedy or medic
+					drawWizard(clickedColumn, clickedRow, defaultWizardType);
 				}
 			}
 
 		}
 		
+		if (keyboardIsPressingLeft()){
+			defaultWizardType = "medic";
+		} else if (keyboardIsPressingRight()) {
+			defaultWizardType = "speedy";
+		}
 		
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
 			if (towerIsReady(i)) {
 				for (int j = 0; j < numOfWalkers(); j++) {
 					if (walkerIsInRange(i, j)) {
-						// either speedy or medic, pick one
-						// towerCastMedicSpellOnWalker(i, j);
-						speedyWizardCastSpellOnWalker(i, j);
+						if (wizardIsMedic(i)) {
+							medicWizardCastSpellOnWalker(i, j);	
+						} else {
+							speedyWizardCastSpellOnWalker(i, j);
+						}
 					}
 				}
 			}
 		}
+		
+		setScore(getNumOfWalkersSaved() * getHealthSaved());
 
 
 	}
