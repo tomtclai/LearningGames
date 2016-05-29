@@ -40,6 +40,7 @@ public class HTLFunctionalAPI extends HTL {
 	private int numOfSpeedysCreated = 0;
 	private int numOfDeadWalkers = 0;
 	private int numOfWalkersCreated = 0;
+	private int numOfWalkerSaved = 0;
 	private int numOfBasicWalkersOnScreen = 0;
 	private int numOfQuickWalkersOnScreen = 0;
 	private float score = 0;
@@ -938,7 +939,7 @@ public class HTLFunctionalAPI extends HTL {
 				walker.playSoundDeath();
 			} else if (walker.isAtPathEnd()) {
 				walker.playSoundSurvival();
-
+				numOfWalkerSaved++;
 				float healthToAdd = walker.getHealth();
 				if (walker.getWalkerType() == Walker.Type.BASIC) {
 					numOfBasicWalkersOnScreen--;
@@ -963,9 +964,11 @@ public class HTLFunctionalAPI extends HTL {
 	protected int getNumOfDeadWalkers() {
 		return numOfDeadWalkers;
 	}
-
+	protected int getNumOfWalkersCreated() {
+		return numOfWalkersCreated;
+	}
 	protected int getNumOfWalkersSaved() {
-		return numOfWalkersCreated - numOfDeadWalkers;
+		return numOfWalkerSaved;
 	}
 
 	protected float getHealthSaved() {
