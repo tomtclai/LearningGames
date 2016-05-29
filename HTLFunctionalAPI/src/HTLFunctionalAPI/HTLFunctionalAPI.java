@@ -126,10 +126,9 @@ public class HTLFunctionalAPI extends HTL {
 		numOfBasicWalkersOnScreen = 0;
 		numOfQuickWalkersOnScreen = 0;
 		healthSaved = 0;
-		// TODO: looks like if we remove towers the Grid still thinks they exist
-		// This will crash the game.
-		// towerSet.removeAll();
+		towerSet.removeAll();
 		walkerSet.removeAll();
+	
 
 	}
 
