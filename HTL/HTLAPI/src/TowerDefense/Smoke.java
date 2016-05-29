@@ -10,6 +10,7 @@ import Engine.Vector2;
  */
 public class Smoke extends GameObjectPlus
 {		
+	private static int transitionDelay = 1;
 	public static final AnimationData ANIM_APPEAR = new AnimationData("smoke_appear.png", 280, 70, 70, 70, 4, 30);
 	public static final AnimationData ANIM_DISAPPEAR = new AnimationData("smoke_disappear.png", 280, 70, 70, 70, 4, 30);
 	
@@ -199,7 +200,7 @@ public class Smoke extends GameObjectPlus
 		this.setVisibilityTo(false);
 		
 		// start the timer until we can go to the next step
-		movementDelayTimer.start(1);
+		movementDelayTimer.start(getTransitionDelay()); 
 		
 		// time for the next phase of movement
 		movementPhase = MovementPhase.DELAY;				
@@ -274,5 +275,23 @@ public class Smoke extends GameObjectPlus
 	public boolean isActive()
 	{
 		return movementPhase != MovementPhase.NOT_MOVING;
+	}
+
+
+
+	/**
+	 * @return the delay between disappearing at origin and appearing at destination
+	 */
+	public static int getTransitionDelay() {
+		return transitionDelay;
+	}
+
+
+
+	/**
+	 * @param transitionDelay the delay between disappearing at origin and appearing at destination
+	 */
+	public static void setTransitionDelay(int transitionDelay) {
+		Smoke.transitionDelay = transitionDelay;
 	}
 }

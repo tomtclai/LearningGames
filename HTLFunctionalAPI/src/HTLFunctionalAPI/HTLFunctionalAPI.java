@@ -111,11 +111,13 @@ public class HTLFunctionalAPI extends HTL {
 		grid.setPathTileVisibilityTo(true);
 		setHUDVisibilityTo(false);
 		Walker.setRepository(walkerSet);
+		Smoke.setTransitionDelay(0);
 		enterGameplay();
 
 	}
 
 	private void initializeStates() {
+		numOfWalkerSaved = 0;
 		lastTimeTimerWasUpdated = 0;
 		lastTimeTimerWasFired = 0;
 		score = 0;
