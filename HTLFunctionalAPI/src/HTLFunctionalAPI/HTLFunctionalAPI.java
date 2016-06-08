@@ -135,7 +135,6 @@ public class HTLFunctionalAPI extends HTL {
 		healthSaved = 0;
 		towerSet.removeAll();
 		walkerSet.removeAll();
-	
 
 	}
 
@@ -446,6 +445,7 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 	}
+
 	/**
 	 * Add a walker
 	 * 
@@ -459,7 +459,7 @@ public class HTLFunctionalAPI extends HTL {
 			addQuickWalker();
 		}
 	}
-	
+
 	/**
 	 * Add a basic walker
 	 */
@@ -681,9 +681,9 @@ public class HTLFunctionalAPI extends HTL {
 			towerSoundPlayed = false;
 			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
 
-				return true;
-			}
+			return true;
 		}
+
 		return false;
 	}
 
@@ -977,9 +977,11 @@ public class HTLFunctionalAPI extends HTL {
 	protected int getNumOfDeadWalkers() {
 		return numOfDeadWalkers;
 	}
+
 	protected int getNumOfWalkersCreated() {
 		return numOfWalkersCreated;
 	}
+
 	protected int getNumOfWalkersSaved() {
 		return numOfWalkerSaved;
 	}
@@ -998,11 +1000,13 @@ public class HTLFunctionalAPI extends HTL {
 	protected void setMedicWizardHealthAdjust(double h) {
 		TowerMedic.setCastHealthAdjust((float) h);
 	}
+
 	/**
 	 * if the function is never called, we will use the default, which is 3.0
 	 * 
 	 * @param multiplier
-	 *            how much to multiply the speed with, you can use negative to make it go backwards
+	 *            how much to multiply the speed with, you can use negative to
+	 *            make it go backwards
 	 */
 	protected void setSpeedyWizardSpeedBoostMultipler(double multiplier) {
 		TowerSpeedy.setCastSpeedAdjustMultiplier((float) multiplier);
