@@ -8,6 +8,7 @@ import TowerDefense.*;
  */
 public class Lab10 extends HTLFunctionalAPI {
 	String defaultWizardType = "medic";
+	String defaultWalkerType = "basic";
 
 	public void buildGame() {
 		drawToolbars();
@@ -17,14 +18,14 @@ public class Lab10 extends HTLFunctionalAPI {
 
 		preparePathForWalkers(0, 5, 19, 5);
 		setWalkerDamagePerSecond(5);
-		setCountdownFrom(1);
-		setScoreToWin(1);
+		setCountdownFrom(3);
+		setScoreToWin(5000);
 	}
 
 	public void updateGame() {
 
 		if (countdownFired()) {
-			addWalker();
+			addWalker(defaultWalkerType);
 		}
 
 		// in-game
@@ -72,6 +73,10 @@ public class Lab10 extends HTLFunctionalAPI {
 			defaultWizardType = "medic";
 		} else if (keyboardIsPressingRight()) {
 			defaultWizardType = "speedy";
+		} else if (keyboardIsPressingUp()) {
+			defaultWalkerType = "quick";
+		} else if (keyboardIsPressingUp()) {
+			defaultWalkerType = "basic";
 		}
 
 		// heal walkers or make walkers faster

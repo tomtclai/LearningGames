@@ -40,6 +40,7 @@ public class HTLFunctionalAPI extends HTL {
 	private int numOfSpeedysCreated = 0;
 	private int numOfDeadWalkers = 0;
 	private int numOfWalkersCreated = 0;
+	private int numOfWalkerSaved = 0;
 	private int numOfBasicWalkersOnScreen = 0;
 	private int numOfQuickWalkersOnScreen = 0;
 	private float score = 0;
@@ -115,11 +116,13 @@ public class HTLFunctionalAPI extends HTL {
 		grid.setPathTileVisibilityTo(true);
 		setHUDVisibilityTo(false);
 		Walker.setRepository(walkerSet);
+		Smoke.setTransitionDelay(0);
 		enterGameplay();
 
 	}
 
 	private void initializeStates() {
+		numOfWalkerSaved = 0;
 		lastTimeTimerWasUpdated = 0;
 		lastTimeTimerWasFired = 0;
 		score = 0;
@@ -130,10 +133,9 @@ public class HTLFunctionalAPI extends HTL {
 		numOfBasicWalkersOnScreen = 0;
 		numOfQuickWalkersOnScreen = 0;
 		healthSaved = 0;
-		// TODO: looks like if we remove towers the Grid still thinks they exist
-		// This will crash the game.
-		// towerSet.removeAll();
+		towerSet.removeAll();
 		walkerSet.removeAll();
+	
 
 	}
 
@@ -173,12 +175,14 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public void updateWorld() {
 		super.updateWorld();
-		towerSet.update();
-		walkerSet.update();
+		if (currentGamePhase == gamePhase.GAMEPLAY) {
+			towerSet.update();
+			walkerSet.update();
+			updateTimer();
+			updateStats();
+		}
 		updateGame();
 		updateUI();
-		updateStats();
-		updateTimer();
 	}
 
 	/**
@@ -277,7 +281,8 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	private void drawWizard(int x, int y, boolean isMedic) {
 		Tile position = grid.getTile(x, y);
-		if (position.isBlocked()) {
+
+		if (position == null || position.isBlocked()) {
 			return;
 		}
 		towerSet.addTowerAt(position, isMedic);
@@ -441,11 +446,24 @@ public class HTLFunctionalAPI extends HTL {
 			return false;
 		}
 	}
-
+	/**
+	 * Add a walker
+	 * 
+	 * @param type
+	 *            Either "basic" or "quick", case insensitive.
+	 */
+	public void addWalker(String type) {
+		if (type.toLowerCase().equals("basic")) {
+			addBasicWalker();
+		} else if (type.toLowerCase().equals("quick")) {
+			addQuickWalker();
+		}
+	}
+	
 	/**
 	 * Add a basic walker
 	 */
-	public void addWalker() {
+	public void addBasicWalker() {
 		Walker w = new WalkerBasic(grid.getPath());
 		w.moveToDrawingLayer(layerWalkers);
 		walkers.add(w);
@@ -663,7 +681,8 @@ public class HTLFunctionalAPI extends HTL {
 			towerSoundPlayed = false;
 			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
 
-			return true;
+				return true;
+			}
 		}
 		return false;
 	}
@@ -933,7 +952,7 @@ public class HTLFunctionalAPI extends HTL {
 				walker.playSoundDeath();
 			} else if (walker.isAtPathEnd()) {
 				walker.playSoundSurvival();
-
+				numOfWalkerSaved++;
 				float healthToAdd = walker.getHealth();
 				if (walker.getWalkerType() == Walker.Type.BASIC) {
 					numOfBasicWalkersOnScreen--;
@@ -958,9 +977,11 @@ public class HTLFunctionalAPI extends HTL {
 	protected int getNumOfDeadWalkers() {
 		return numOfDeadWalkers;
 	}
-
+	protected int getNumOfWalkersCreated() {
+		return numOfWalkersCreated;
+	}
 	protected int getNumOfWalkersSaved() {
-		return numOfWalkersCreated - numOfDeadWalkers;
+		return numOfWalkerSaved;
 	}
 
 	protected float getHealthSaved() {

@@ -111,6 +111,7 @@ public abstract class Tower extends Character
 		// why did we make a repository for the Walker and not one for the Towers?
 		// is it because of the spawners?  Look into this when you have time.
 		
+		tile.removeOccupant();
 		tile = null;
 		
 		mySmoke.destroy();
