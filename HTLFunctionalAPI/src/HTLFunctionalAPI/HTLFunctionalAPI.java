@@ -51,6 +51,10 @@ public class HTLFunctionalAPI extends HTL {
 	private Text winScoreText = null;
 	Vector<Walker> walkers = new Vector<Walker>();
 
+	// Settings
+	private int medicTimeBetweenSpellcastsInMS = 3000;
+	private int speedyTimeBetweenSpellcastsInMS = 3000;
+
 	// Constants
 	private static final long FIRED_TIME_NEVER = (long) 0;
 	private static final String TOWER_PLURAL = "wizards";
@@ -114,6 +118,7 @@ public class HTLFunctionalAPI extends HTL {
 		enterGameplay();
 
 	}
+
 	private void initializeStates() {
 		lastTimeTimerWasUpdated = 0;
 		lastTimeTimerWasFired = 0;
@@ -127,10 +132,11 @@ public class HTLFunctionalAPI extends HTL {
 		healthSaved = 0;
 		// TODO: looks like if we remove towers the Grid still thinks they exist
 		// This will crash the game.
-		// towerSet.removeAll();  
+		// towerSet.removeAll();
 		walkerSet.removeAll();
-		
+
 	}
+
 	private void initializeSettings() {
 		TowerMedic.setCastHealthAdjust(10);
 		TowerSpeedy.setCastSpeedAdjustDuration(1);
@@ -643,7 +649,17 @@ public class HTLFunctionalAPI extends HTL {
 
 	protected boolean towerIsReady(int towerIndex) {
 		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
-		if (System.currentTimeMillis() - lastSoundTime > 3000) {
+		// So, turns out we have a CooldownTimer class...
+		// This function could use some refactoring :)
+		int delay = 0;
+
+		if (towerIsMedic(towerIndex)) {
+			delay = medicTimeBetweenSpellcastsInMS;
+		} else {
+			delay = speedyTimeBetweenSpellcastsInMS;
+		}
+
+		if (System.currentTimeMillis() - lastSoundTime > delay) {
 			towerSoundPlayed = false;
 			lastTimeTowersHaveFired.set(towerIndex, System.currentTimeMillis());
 
@@ -949,6 +965,58 @@ public class HTLFunctionalAPI extends HTL {
 
 	protected float getHealthSaved() {
 		return healthSaved;
+	}
+
+	/**
+	 * if the function is never called, we will use the default, which is 10.0
+	 * 
+	 * @param h
+	 *            the health to add to the walkers, if h is negative, we will
+	 *            subtract from the walker's health
+	 */
+	protected void setMedicWizardHealthAdjust(double h) {
+		TowerMedic.setCastHealthAdjust((float) h);
+	}
+	/**
+	 * if the function is never called, we will use the default, which is 3.0
+	 * 
+	 * @param multiplier
+	 *            how much to multiply the speed with, you can use negative to make it go backwards
+	 */
+	protected void setSpeedyWizardSpeedBoostMultipler(double multiplier) {
+		TowerSpeedy.setCastSpeedAdjustMultiplier((float) multiplier);
+	}
+
+	/**
+	 * if the function is never called, we will use the default, which is 1.0
+	 * 
+	 * @param duration
+	 *            how long does the speedboost last, this cannot be negative
+	 */
+	protected void setSpeedyWizardSpeedBoostDuration(double duration) {
+		if (duration >= 0) {
+			TowerSpeedy.setCastSpeedAdjustDuration((float) duration);
+		}
+	}
+
+	/**
+	 * if the function is never called, we will use the default, which is 3.0
+	 * 
+	 * @param t
+	 *            the time between spellcasts to set
+	 */
+	protected void setSpeedyTimeBetweenSpellcasts(double t) {
+		this.speedyTimeBetweenSpellcastsInMS = (int) (t * (double) 1000);
+	}
+
+	/**
+	 * if the function is never called, we will use the default, which is 3.0
+	 * 
+	 * @param t
+	 *            the time between spellcasts to set
+	 */
+	protected void setMedicTimeBetweenSpellcasts(double t) {
+		this.medicTimeBetweenSpellcastsInMS = (int) (t * (double) 1000);
 	}
 
 }
