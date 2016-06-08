@@ -7,8 +7,6 @@ import TowerDefense.*;
  * @author Jeen Cherdchusilp
  */
 public class Lab10 extends HTLFunctionalAPI {
-	// TODO: I forgot if we are allowed to have variables at this level.
-	// But if not I can hide it and make students use a method instead
 	String defaultWizardType = "medic";
 
 	public void buildGame() {
