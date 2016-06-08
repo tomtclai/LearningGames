@@ -21,10 +21,10 @@ public class Lab11 extends HTLFunctionalAPI {
 		setScoreToWin(1);
 		
 		// Settings
-		setSpeedyTimeBetweenSpellcasts(0.0); 
+		setSpeedyTimeBetweenSpellcasts(1.0); 
 		setMedicTimeBetweenSpellcasts(3.0);
 		setMedicWizardHealthAdjust(10.0);
-		setSpeedyWizardSpeedBoostDuration(10.0);
+		setSpeedyWizardSpeedBoostDuration(1.0);
 		setSpeedyWizardSpeedBoostMultipler(3.0);
 	}
 

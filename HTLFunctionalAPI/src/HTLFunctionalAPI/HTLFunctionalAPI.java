@@ -1006,42 +1006,60 @@ public class HTLFunctionalAPI extends HTL {
 	 * 
 	 * @param multiplier
 	 *            how much to multiply the speed with, you can use negative to
-	 *            make it go backwards
+	 *            make it go backwards. Multiplier cannot be higher than 25x or
+	 *            lower than -25x
 	 */
 	protected void setSpeedyWizardSpeedBoostMultipler(double multiplier) {
-		TowerSpeedy.setCastSpeedAdjustMultiplier((float) multiplier);
+		if (Math.abs(multiplier) <= 25.0) {
+			TowerSpeedy.setCastSpeedAdjustMultiplier((float) multiplier);
+		} else {
+			System.out.println("Multiplier cannot be higher than 25x or lower than -25x");
+		}
 	}
 
 	/**
 	 * if the function is never called, we will use the default, which is 1.0
 	 * 
 	 * @param duration
-	 *            how long does the speedboost last, this cannot be negative
+	 *            how long does the speedboost last, this cannot be negative or
+	 *            0
 	 */
 	protected void setSpeedyWizardSpeedBoostDuration(double duration) {
-		if (duration >= 0) {
+		if (duration > 0) {
 			TowerSpeedy.setCastSpeedAdjustDuration((float) duration);
+		} else {
+			System.out.println("Duration cannot be lower or equal than 0");
 		}
 	}
 
 	/**
 	 * if the function is never called, we will use the default, which is 3.0
 	 * 
-	 * @param t
-	 *            the time between spellcasts to set
+	 * @param duration
+	 *            the time between spellcasts to set, this cannot be negative or
+	 *            0
 	 */
-	protected void setSpeedyTimeBetweenSpellcasts(double t) {
-		this.speedyTimeBetweenSpellcastsInMS = (int) (t * (double) 1000);
+	protected void setSpeedyTimeBetweenSpellcasts(double duration) {
+		if (duration > 0.0) {
+			this.speedyTimeBetweenSpellcastsInMS = (int) (duration * (double) 1000);
+		} else {
+			System.out.println("Duration cannot be lower or equal than 0");
+		}
 	}
 
 	/**
 	 * if the function is never called, we will use the default, which is 3.0
 	 * 
-	 * @param t
-	 *            the time between spellcasts to set
+	 * @param duration
+	 *            the time between spellcasts to set, this cannot be negative or
+	 *            0
 	 */
-	protected void setMedicTimeBetweenSpellcasts(double t) {
-		this.medicTimeBetweenSpellcastsInMS = (int) (t * (double) 1000);
+	protected void setMedicTimeBetweenSpellcasts(double duration) {
+		if (duration > 0.0) {
+			this.medicTimeBetweenSpellcastsInMS = (int) (duration * (double) 1000);
+		} else {
+			System.out.println("Duration cannot be lower or equal than 0");
+		}
 	}
 
 }
