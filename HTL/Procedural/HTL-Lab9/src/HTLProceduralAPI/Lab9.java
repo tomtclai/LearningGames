@@ -1,6 +1,4 @@
 package HTLProceduralAPI;
-import HTLProceduralAPI.HTLProceduralAPI;
-import TowerDefense.*;
 
 /**
  * @author Tom Lai

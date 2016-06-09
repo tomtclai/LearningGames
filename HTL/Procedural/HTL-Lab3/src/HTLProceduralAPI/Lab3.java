@@ -1,6 +1,5 @@
 package HTLProceduralAPI;
 
-import HTLProceduralAPI.HTLProceduralAPI;
 
 /**
  * @author Tom Lai

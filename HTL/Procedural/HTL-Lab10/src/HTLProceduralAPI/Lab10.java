@@ -1,8 +1,5 @@
 package HTLProceduralAPI;
 
-import HTLProceduralAPI.HTLProceduralAPI;
-import TowerDefense.*;
-
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
@@ -19,7 +16,7 @@ public class Lab10 extends HTLProceduralAPI {
 
 		preparePathForWalkers(0, 5, 19, 5);
 		setWalkerDamagePerSecond(5);
-		setCountdownFrom(3);
+		setCountdownFrom(3.5);
 		setScoreToWin(5000);
 	}
 

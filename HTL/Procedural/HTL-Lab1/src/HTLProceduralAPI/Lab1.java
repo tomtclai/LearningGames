@@ -1,7 +1,5 @@
 package HTLProceduralAPI;
 
-import HTLProceduralAPI.HTLProceduralAPI;
-
 /**
  * LAB1: What does a Method look like?
  * 
