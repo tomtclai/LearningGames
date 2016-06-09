@@ -337,9 +337,9 @@ public class HTLProceduralAPI extends HTL {
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
@@ -354,9 +354,9 @@ public class HTLProceduralAPI extends HTL {
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
@@ -371,9 +371,9 @@ public class HTLProceduralAPI extends HTL {
 	 * Path is created using constructPath(), this Tile can be included in the
 	 * Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
@@ -388,9 +388,9 @@ public class HTLProceduralAPI extends HTL {
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
@@ -405,9 +405,9 @@ public class HTLProceduralAPI extends HTL {
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
@@ -422,9 +422,9 @@ public class HTLProceduralAPI extends HTL {
 	 * the Path is created using constructPath(), this Tile can be included in
 	 * the Path.
 	 * 
-	 * @param column
+	 * @param x
 	 *            Column of the Tile to include in the Path
-	 * @param row
+	 * @param y
 	 *            Row of the Tile to include in the Path
 	 * @return True if Tile was successfully marked
 	 */
