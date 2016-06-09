@@ -61,11 +61,11 @@ public class HTLFunctionalAPI extends HTL {
 	private static final String TOWER_PLURAL = "wizards";
 	private static final String TILE_PLURAL = "tiles";
 
-	private enum gamePhase {
+	private enum GamePhase {
 		GAMEPLAY, WIN, PAUSE, RESTART_CONFIRM, QUIT_CONFIRM
 	}
 
-	private gamePhase currentGamePhase = gamePhase.GAMEPLAY;
+	private GamePhase currentGamePhase = GamePhase.GAMEPLAY;
 	private float healthSaved;
 
 	/**
@@ -177,7 +177,7 @@ public class HTLFunctionalAPI extends HTL {
 	 */
 	public void updateWorld() {
 		super.updateWorld();
-		if (currentGamePhase == gamePhase.GAMEPLAY) {
+		if (currentGamePhase == GamePhase.GAMEPLAY) {
 			towerSet.update();
 			walkerSet.update();
 			updateTimer();
@@ -817,7 +817,7 @@ public class HTLFunctionalAPI extends HTL {
 	protected void enterGameplay() {
 		resources.stopSound(MUSIC_WIN);
 
-		if (currentGamePhase != gamePhase.PAUSE) {
+		if (currentGamePhase != GamePhase.PAUSE) {
 			initializeStates();
 			initializeSettings();
 			initializeWinScreenAssets();
@@ -842,14 +842,14 @@ public class HTLFunctionalAPI extends HTL {
 		layerScreenDarkener.setVisibilityTo(false);
 
 		// done
-		currentGamePhase = gamePhase.GAMEPLAY;
+		currentGamePhase = GamePhase.GAMEPLAY;
 	}
 
 	/**
 	 * Transition to the win screen.
 	 */
 	protected void enterWin() {
-		if (currentGamePhase == gamePhase.GAMEPLAY) {
+		if (currentGamePhase == GamePhase.GAMEPLAY) {
 			resources.stopSound(MUSIC_TITLE);
 			resources.stopSound(MUSIC_BACKGROUND);
 			resources.playSound(MUSIC_WIN);
@@ -867,19 +867,30 @@ public class HTLFunctionalAPI extends HTL {
 			phaseLayerLevelIntro.setVisibilityTo(false);
 			phaseLayerPause.setVisibilityTo(false);
 
-			setCurrentGamePhase(gamePhase.WIN);
+			setCurrentGamePhase(GamePhase.WIN);
 		}
 	}
 
-	private void setCurrentGamePhase(gamePhase currentGamePhase) {
+	/**
+	 * Set the current game phase
+	 * @param currentGamePhase
+	 */
+	private void setCurrentGamePhase(GamePhase currentGamePhase) {
 
 		this.currentGamePhase = currentGamePhase;
 	}
 
+	/**
+	 * Set Walker's damage per second
+	 * @param damage
+	 */
 	protected void setWalkerDamagePerSecond(int damage) {
 		Walker.setDamageTakenPerSecond(damage);
 	}
 
+	/**
+	 * @return true if the restart button was selected
+	 */
 	protected boolean winRestartButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
@@ -887,20 +898,32 @@ public class HTLFunctionalAPI extends HTL {
 		return winButtonRestart.containsPoint(mouseX, mouseY);
 	}
 
+	/**
+	 * @return true if the quit button was selected
+	 */
 	protected boolean winQuitButtonSelected() {
 		float mouseX = mouse.getWorldX();
 		float mouseY = mouse.getWorldY();
 		return winButtonQuit.containsPoint(mouseX, mouseY);
 	}
 
+	/**
+	 * Exit the game
+	 */
 	protected void exitGame() {
 		System.exit(0);
 	}
 
+	/**
+	 * Draw the HUD toolbars
+	 */
 	protected void drawToolbars() {
 		setHUDVisibilityTo(true);
 	}
 
+	/**
+	 * @return the clicked column # in the grid 
+	 */
 	protected int getClickedColumn() {
 		Tile clickedTile = grid.getClickedTile();
 		if (clickedTile == null) {
@@ -909,6 +932,9 @@ public class HTLFunctionalAPI extends HTL {
 		return clickedTile.getGridColumn();
 	}
 
+	/**
+	 * @return  the clicked row # in the grid 
+	 */
 	protected int getClickedRow() {
 		Tile clickedTile = grid.getClickedTile();
 		if (clickedTile == null) {
@@ -969,6 +995,8 @@ public class HTLFunctionalAPI extends HTL {
 		}
 	}
 
+	// Game Stats
+	
 	protected float getScore() {
 		return score;
 	}

@@ -16,11 +16,11 @@ public class Lab11 extends HTLFunctionalAPI {
 		}
 
 		preparePathForWalkers(0, 5, 19, 5);
+		
+		// Settings
 		setWalkerDamagePerSecond(5);
 		setCountdownFrom(1);
 		setScoreToWin(1);
-		
-		// Settings
 		setSpeedyTimeBetweenSpellcasts(1.0); 
 		setMedicTimeBetweenSpellcasts(3.0);
 		setMedicWizardHealthAdjust(10.0);
