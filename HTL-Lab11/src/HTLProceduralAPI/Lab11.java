@@ -89,7 +89,7 @@ public class Lab11 extends HTLProceduralAPI {
 
 		// heal walkers or make walkers faster
 		for (int i = 0; i < numOfWizards(); i++) {
-			if (towerIsReady(i)) {
+			if (wizardIsReady(i)) {
 				for (int j = 0; j < numOfWalkers(); j++) {
 					if (walkerIsInRange(i, j)) {
 						if (wizardIsMedic(i)) {

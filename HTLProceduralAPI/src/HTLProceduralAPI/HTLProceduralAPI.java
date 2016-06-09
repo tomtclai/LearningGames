@@ -668,7 +668,7 @@ public class HTLProceduralAPI extends HTL {
 
 	}
 
-	protected boolean towerIsReady(int towerIndex) {
+	protected boolean wizardIsReady(int towerIndex) {
 		long lastSoundTime = lastTimeTowersHaveFired.get(towerIndex);
 		// So, turns out we have a CooldownTimer class...
 		// This function could use some refactoring :)
