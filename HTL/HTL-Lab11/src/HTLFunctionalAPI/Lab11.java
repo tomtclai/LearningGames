@@ -24,8 +24,10 @@ public class Lab11 extends HTLFunctionalAPI {
 		setSpeedyTimeBetweenSpellcasts(1.0); 
 		setMedicTimeBetweenSpellcasts(3.0);
 		setMedicWizardHealthAdjust(10.0);
+		// setMedicWizardHealthAdjust(-10.0); // if negative, reduce health
 		setSpeedyWizardSpeedBoostDuration(1.0);
-		setSpeedyWizardSpeedBoostMultipler(3.0);
+		setSpeedyWizardSpeedBoostMultipler(3.0); 
+		// setSpeedyWizardSpeedBoostMultipler(-3.0); // if negative, walker goes backwards
 	}
 
 	public void updateGame() {
