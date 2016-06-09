@@ -1,4 +1,4 @@
-package HTLFunctionalAPI;
+package HTLProceduralAPI;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -18,7 +18,7 @@ import TowerDefense.*;
  *
  */
 
-public class HTLFunctionalAPI extends HTL {
+public class HTLProceduralAPI extends HTL {
 	// Paths
 	private static final String MUSIC_TITLE = "audio/Music/Misty Sunshine.mp3";
 	private static final String MUSIC_BACKGROUND = "audio/Music/It's a Wonderful World.mp3";

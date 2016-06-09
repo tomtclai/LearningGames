@@ -1,10 +1,12 @@
 package HTLFunctionalAPI;
 
+import HTLProceduralAPI.HTLProceduralAPI;
+
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab2 extends HTLFunctionalAPI
+public class Lab2 extends HTLProceduralAPI
 {
 	public void buildGame()
 	{

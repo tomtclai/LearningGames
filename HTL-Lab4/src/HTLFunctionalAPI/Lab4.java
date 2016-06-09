@@ -1,10 +1,12 @@
 package HTLFunctionalAPI;
 
+import HTLProceduralAPI.HTLProceduralAPI;
+
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab4 extends HTLFunctionalAPI
+public class Lab4 extends HTLProceduralAPI
 {
 	
     //Declare variables for the start position of the "player wizard"

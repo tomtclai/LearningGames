@@ -1,11 +1,12 @@
 package HTLFunctionalAPI;
+import HTLProceduralAPI.HTLProceduralAPI;
 import TowerDefense.*;
 
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab8 extends HTLFunctionalAPI
+public class Lab8 extends HTLProceduralAPI
 {	
 	public void buildGame()
 	{

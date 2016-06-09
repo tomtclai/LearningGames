@@ -1,12 +1,13 @@
 package HTLFunctionalAPI;
 
+import HTLProceduralAPI.HTLProceduralAPI;
 import TowerDefense.*;
 
 /**
  * @author Tom Lai
  * @author Jeen Cherdchusilp
  */
-public class Lab10 extends HTLFunctionalAPI {
+public class Lab10 extends HTLProceduralAPI {
 	String defaultWizardType = "medic";
 	String defaultWalkerType = "basic";
 
